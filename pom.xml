@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.maxur</groupId>
+    <artifactId>super-pom</artifactId>
+    <version>1.0</version>
+
+    <url>http://www.maxur.org</url>
+
+    <name>Super POM (maxur.org)</name>
+
+    <description>Top-level POM for the maxur.org development</description>
+
+    <organization>
+        <name>Maxim Yunusov</name>
+        <url>http://www.maxur.org</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <scm>
+        <developerConnection>scm:git@github.com:myunusov/maxur.org.git</developerConnection>
+        <url>https://github.com/myunusov/maxur.org</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Social Coding</system>
+        <url>https://github.com/myunusov/maxur.org/issues</url>
+    </issueManagement>
+
+    <properties>
+        <project.root>${project.basedir}</project.root>
+        <project.source.encoding>UTF-8</project.source.encoding>
+        <project.source.compile>1.6</project.source.compile>
+        <project.target.compile>1.6</project.target.compile>
+        <clover.version>3.1.0</clover.version>
+        <sonar.version>2.0</sonar.version>        
+    </properties>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>poms</module>
+    </modules>
+
+    <profiles>
+        <!--SONAR PROFILE -->
+        <profile>
+            <id>sonar</id>
+            <properties>
+                <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+                <sonar.surefire.reportsPath>${project.basedir}/target/surefire-reports</sonar.surefire.reportsPath>
+                <sonar.clover.reportPath>${project.basedir}/target/site/clover/clover.xml</sonar.clover.reportPath>
+                <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
+                <sonar.host.url>http://localhost:9000/sonar</sonar.host.url>
+                <sonar.jdbc.url>jdbc:postgresql://localhost/sonar</sonar.jdbc.url>
+                <sonar.jdbc.driverClassName>org.postgresql.Driver</sonar.jdbc.driverClassName>
+                <sonar.jdbc.validationQuery>select 1</sonar.jdbc.validationQuery>
+                <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                <sonar.jdbc.password>sonar</sonar.jdbc.password>
+                <sonar.java.source>${project.source.compile}</sonar.java.source>
+                <sonar.java.target>${project.target.compile}</sonar.java.target>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+        <!--CLOVER PROFILE -->
+        <profile>
+            <id>clover</id>
+            <properties>
+                <maven.clover.context.block.names>assert</maven.clover.context.block.names>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <configuration>
+                            <licenseLocation>${project.root}/clover.license</licenseLocation>
+                            <targetPercentage>75%</targetPercentage>
+                            <includesTestSourceRoots>false</includesTestSourceRoots>
+                            <jdk>${project.source.compile}</jdk>
+                            <snapshot>
+                                ${project.root}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot
+                            </snapshot>
+                            <historyDir>${project.root}/.clover/history/${project.groupId}-${project.artifactId}
+                            </historyDir>
+                            <generateXml>true</generateXml>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>instrument</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>main</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>instrument</goal>
+                                    <goal>aggregate</goal>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>site</id>
+                                <phase>pre-site</phase>
+                                <goals>
+                                    <goal>instrument</goal>
+                                    <goal>aggregate</goal>
+                                    <goal>clover</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <configuration>
+                            <includesTestSourceRoots>false</includesTestSourceRoots>
+                            <jdk>${project.source.compile}</jdk>
+                            <generateXml>true</generateXml>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+        <!--DEV PROFILE -->
+        <profile>
+            <id>DEV</id>
+            <properties>
+                <env>DEV</env>
+            </properties>
+        </profile>
+        <!--QA PROFILE -->
+        <profile>
+            <id>QA</id>
+            <properties>
+                <env>QA</env>
+            </properties>
+        </profile>
+        <!--PROD PROFILE -->
+        <profile>
+            <id>PROD</id>
+            <properties>
+                <env>PROD</env>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>taskun</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.ops4j</groupId>
+                <artifactId>maven-pax-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <provision>
+                        <param>--platform=equinox</param>
+                        <param>--profiles=log,web,war,compendium,config,confman</param>
+                        <param>--log=debug</param>
+                        <param>--ee=J2SE-1.6</param>
+                        <param>--vmo=-Dosgi.classloader.lock=classname -Xmx1024M</param>
+                        <param>--startLevel=5</param>
+                        <param>--bundleStartLevel=4</param>
+                        <!--<param>mvn:org.slf4j/com.springsource.slf4j.log4j/${slf4j.version}@nostart</param>-->
+                        <param>mvn:com.google.inject.extensions/guice-servlet/${guice.version}@nostart</param>
+                    </provision>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <outputEncoding>${project.source.encoding}</outputEncoding>
+                </configuration>
+                <version>3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <encoding>${project.source.encoding}</encoding>
+                    <enableRulesSummary>false</enableRulesSummary>
+                </configuration>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.atlassian.maven.plugins</groupId>
+                    <artifactId>maven-clover2-plugin</artifactId>
+                    <version>${clover.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.9</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>native2ascii-maven-plugin</artifactId>
+                    <version>1.0-alpha-1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>2.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>javancss-maven-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.8.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>1.8.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.ttdev</groupId>
+                <artifactId>wpt-core</artifactId>
+                <version>2.0.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.ttdev</groupId>
+                <artifactId>wpt-runtime-guice</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.6.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <version>1.6.1</version>
+                <scope>test</scope>
+            </dependency>
+
+
+            <!-- Pax-Exam dependencies -->
+            <dependency>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>pax-exam</artifactId>
+                <version>${pax-exam.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>pax-exam-junit</artifactId>
+                <version>${pax-exam.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>pax-exam-container-default</artifactId>
+                <version>${pax-exam.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.exam</groupId>
+                <artifactId>pax-exam-junit-extender-impl</artifactId>
+                <version>${pax-exam.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>com.springsource.slf4j.api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>com.springsource.slf4j.log4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.log4j</groupId>
+                <artifactId>com.springsource.org.apache.log4j</artifactId>
+                <version>1.2.16</version>
+            </dependency>
+            <!--AOP-->
+            <dependency>
+                <groupId>org.aopalliance</groupId>
+                <artifactId>com.springsource.org.aopalliance</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <!-- JavaX -->
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>com.springsource.javax.inject</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>com.springsource.javax.servlet</artifactId>
+                <version>2.4.0</version>
+            </dependency>
+            <!-- Apache Wicket -->
+            <dependency>
+                <groupId>org.apache.wicket</groupId>
+                <artifactId>wicket-core</artifactId>
+                <version>${wicket.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
+            <!--            <dependency>
+                <groupId>org.apache.wicket</groupId>
+                <artifactId>wicket</artifactId>
+                <version>${apache.wicket.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>-->
+
+            <dependency>
+                <groupId>org.apache.wicket</groupId>
+                <artifactId>wicket-guice</artifactId>
+                <version>${wicket.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.google.code.guice</groupId>
+                        <artifactId>guice</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-servlet</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.web</groupId>
+                <artifactId>pax-web-extender-war</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.web</groupId>
+                <artifactId>pax-web-jetty-bundle</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>com.springsource.repository.bundles.release</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/release</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.external</id>
+            <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/external</url>
+        </repository>
+        <repository>
+            <id>Apache Nexus</id>
+            <url>https://repository.apache.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>wpt-release</id>
+            <url>http://wicketpagetest.sourceforge.net/m2-repo/releases</url>
+        </repository>
+    </repositories>
+
+</project>
