@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>war-compiled-bundle-settings</artifactId>
+    <packaging>pom</packaging>
+    <name>maxur.org - war bundle instructions</name>
+
+    <parent>
+        <groupId>org.maxur</groupId>
+        <artifactId>compiled-bundle-settings</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <properties>
+        <project.root>${project.basedir}/../../../</project.root>
+        <bundle.symbolicName>must be overrided</bundle.symbolicName>
+        <bundle.namespace>must be overrided</bundle.namespace>
+    </properties>
+
+    <build>
+        <filters>
+            <filter>${project.basedir}/src/main/filters/${env}.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>${project.basedir}/src/main/messages</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>bundle-manifest</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <supportedProjectTypes>
+                        <supportedProjectType>jar</supportedProjectType>
+                        <supportedProjectType>bundle</supportedProjectType>
+                        <supportedProjectType>war</supportedProjectType>
+                    </supportedProjectTypes>
+                    <instructions>
+                        <Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Export-Package>${bundle.namespace}.*;version="${project.version}"</Export-Package>
+
+                        <_include>${project.basedir}/osgi.bnd</_include>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <filters>
+                        <filter>${project.basedir}/src/main/filters/${env}.properties</filter>
+                    </filters>
+                    <nonFilteredFileExtensions>
+                        <!-- default value contains jpg,jpeg,gif,bmp,png -->
+                        <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                    <webResources>
+                        <resource>
+                            <filtering>true</filtering>
+                            <directory>${project.basedir}/src/main/webapp</directory>
+                        </resource>
+                    </webResources>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>selenium-maven-plugin</artifactId>
+                <version>2.0</version>
+                <executions>
+                    <execution>
+                        <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start-server</goal>
+                        </goals>
+                        <configuration>
+                            <background>true</background>
+                            <logOutput>true</logOutput>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop-server</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

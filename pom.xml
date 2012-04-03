@@ -6,6 +6,7 @@
     <groupId>org.maxur</groupId>
     <artifactId>super-pom</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
 
     <url>http://www.maxur.org</url>
 
@@ -46,7 +47,7 @@
         <sonar.version>2.0</sonar.version>        
     </properties>
 
-    <packaging>pom</packaging>
+
 
     <modules>
         <module>poms</module>
@@ -177,43 +178,6 @@
     </profiles>
 
     <build>
-        <finalName>taskun</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.ops4j</groupId>
-                <artifactId>maven-pax-plugin</artifactId>
-                <version>1.5</version>
-                <configuration>
-                    <provision>
-                        <param>--platform=equinox</param>
-                        <param>--profiles=log,web,war,compendium,config,confman</param>
-                        <param>--log=debug</param>
-                        <param>--ee=J2SE-1.6</param>
-                        <param>--vmo=-Dosgi.classloader.lock=classname -Xmx1024M</param>
-                        <param>--startLevel=5</param>
-                        <param>--bundleStartLevel=4</param>
-                        <!--<param>mvn:org.slf4j/com.springsource.slf4j.log4j/${slf4j.version}@nostart</param>-->
-                        <param>mvn:com.google.inject.extensions/guice-servlet/${guice.version}@nostart</param>
-                    </provision>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <configuration>
-                    <outputEncoding>${project.source.encoding}</outputEncoding>
-                </configuration>
-                <version>3.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <encoding>${project.source.encoding}</encoding>
-                    <enableRulesSummary>false</enableRulesSummary>
-                </configuration>
-            </plugin>
-        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -275,169 +239,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.8.1</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>1.8.5</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.ttdev</groupId>
-                <artifactId>wpt-core</artifactId>
-                <version>2.0.1</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.ttdev</groupId>
-                <artifactId>wpt-runtime-guice</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.6.1</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-jdk14</artifactId>
-                <version>1.6.1</version>
-                <scope>test</scope>
-            </dependency>
-
-
-            <!-- Pax-Exam dependencies -->
-            <dependency>
-                <groupId>org.ops4j.pax.exam</groupId>
-                <artifactId>pax-exam</artifactId>
-                <version>${pax-exam.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.exam</groupId>
-                <artifactId>pax-exam-junit</artifactId>
-                <version>${pax-exam.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.exam</groupId>
-                <artifactId>pax-exam-container-default</artifactId>
-                <version>${pax-exam.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.exam</groupId>
-                <artifactId>pax-exam-junit-extender-impl</artifactId>
-                <version>${pax-exam.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <!-- Logging -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>com.springsource.slf4j.api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>com.springsource.slf4j.log4j</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.log4j</groupId>
-                <artifactId>com.springsource.org.apache.log4j</artifactId>
-                <version>1.2.16</version>
-            </dependency>
-            <!--AOP-->
-            <dependency>
-                <groupId>org.aopalliance</groupId>
-                <artifactId>com.springsource.org.aopalliance</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-            <!-- JavaX -->
-            <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>com.springsource.javax.inject</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>com.springsource.javax.servlet</artifactId>
-                <version>2.4.0</version>
-            </dependency>
-            <!-- Apache Wicket -->
-            <dependency>
-                <groupId>org.apache.wicket</groupId>
-                <artifactId>wicket-core</artifactId>
-                <version>${wicket.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-
-            <!--            <dependency>
-                <groupId>org.apache.wicket</groupId>
-                <artifactId>wicket</artifactId>
-                <version>${apache.wicket.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>-->
-
-            <dependency>
-                <groupId>org.apache.wicket</groupId>
-                <artifactId>wicket-guice</artifactId>
-                <version>${wicket.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.google.code.guice</groupId>
-                        <artifactId>guice</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.inject</groupId>
-                <artifactId>guice</artifactId>
-                <version>${guice.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.inject.extensions</groupId>
-                <artifactId>guice-servlet</artifactId>
-                <version>${guice.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.web</groupId>
-                <artifactId>pax-web-extender-war</artifactId>
-                <version>1.1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ops4j.pax.web</groupId>
-                <artifactId>pax-web-jetty-bundle</artifactId>
-                <version>1.1.1</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -453,6 +254,10 @@
             <url>http://repository.springsource.com/maven/bundles/external</url>
         </repository>
         <repository>
+            <id>wpt-release</id>
+            <url>http://wicketpagetest.sourceforge.net/m2-repo/releases</url>
+        </repository>
+        <repository>
             <id>Apache Nexus</id>
             <url>https://repository.apache.org/content/repositories/snapshots/</url>
             <releases>
@@ -461,11 +266,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>wpt-release</id>
-            <url>http://wicketpagetest.sourceforge.net/m2-repo/releases</url>
-        </repository>
+        </repository>        
     </repositories>
 
 </project>
