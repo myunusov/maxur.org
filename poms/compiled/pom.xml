@@ -3,20 +3,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>compiled-bundle-settings</artifactId>
+    <artifactId>abstract-compiled-bundle</artifactId>
     <packaging>pom</packaging>
-    <name>maxur.org - bundle instructions</name>
+    <name>Abstract Compiled bundle</name>
 
     <parent>
         <groupId>org.maxur</groupId>
-        <artifactId>shared-plugin-settings</artifactId>
+        <artifactId>abstract-bundle</artifactId>
         <version>1.0</version>
     </parent>
 
     <modules>
         <module>war</module>
     </modules>
-
 
     <properties>
         <project.root>${project.basedir}/../../</project.root>

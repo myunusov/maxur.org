@@ -1,0 +1,8 @@
+Bundle-ClassPath: .,WEB-INF/classes
+Embed-Directory: WEB-INF/lib
+Embed-Dependency: *;scope=compile|runtime
+Embed-Transitive: true
+Import-Package: *,com.google.inject,org.apache.wicket.protocol.http,org.apache.wicket.markup.html.form.upload,org.apache.wicket.markup.html.panel,org.slf4j
+Web-ContextPath: share
+Webapp-Context:  share
+

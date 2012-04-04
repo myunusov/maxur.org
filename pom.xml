@@ -50,7 +50,9 @@
 
 
     <modules>
+        <module>projects</module>
         <module>poms</module>
+        <module>dependencies</module>
     </modules>
 
     <profiles>
