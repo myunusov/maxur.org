@@ -6,7 +6,7 @@
 
     <artifactId>maxur-commons-war</artifactId>
     <version>1.0</version>
-    <name>${bundle.symbolicName}</name>
+    <name>Maxur Commons View Bundle</name>
     <packaging>war</packaging>
 
     <parent>
@@ -18,7 +18,7 @@
 
     <properties>
         <project.root>${project.basedir}/../../../</project.root>
-        <bundle.symbolicName>Maxur Commons View Bundle</bundle.symbolicName>
+        <bundle.symbolicName>org.maxur.commons.view</bundle.symbolicName>
         <bundle.namespace>org.maxur.commons.view</bundle.namespace>
     </properties>
 
@@ -28,12 +28,14 @@
             <artifactId>unit-tests-jars</artifactId>
             <version>1.0</version>
             <type>pom</type>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>wicket-jars</artifactId>
             <version>1.0</version>
             <type>pom</type>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

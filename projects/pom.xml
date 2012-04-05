@@ -23,6 +23,105 @@
 
     <properties>
         <project.root>${project.basedir}/../</project.root>
+        <bundles.configuration.location>${project.basedir}/config/${env}</bundles.configuration.location>
+        <guice.version>3.0</guice.version>
+        <shell.tui.checkinput>false</shell.tui.checkinput>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>DEV</id>
+            <properties>
+                <maven-pax-plugin-log.param>debug</maven-pax-plugin-log.param>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.shell</artifactId>
+                    <version>1.4.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.shell.tui</artifactId>
+                    <version>1.4.1</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>QA</id>
+        </profile>
+        <profile>
+            <id>PROD</id>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>taskun</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.ops4j</groupId>
+                <artifactId>maven-pax-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <provision>
+                        <param>--platform=felix</param>
+                        <param>--profiles=compendium,web</param>
+                        <!--log,confman, web,war,compendium,config,confman,felix.webconsole-->
+                        <param>--console=false</param>
+                        <param>--log=${maven-pax-plugin-log.param}</param>
+                        <param>--ee=J2SE-1.6</param>
+                        <param>--vmo=-Dosgi.classloader.lock=classname -Xmx1024M</param>
+                        <param>--startLevel=5</param>
+                        <param>--bundleStartLevel=4</param>
+                        <param>mvn:com.google.inject.extensions/guice-servlet/${guice.version}@nostart</param>
+                    </provision>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <outputEncoding>${project.source.encoding}</outputEncoding>
+                </configuration>
+                <version>3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <encoding>${project.source.encoding}</encoding>
+                    <enableRulesSummary>false</enableRulesSummary>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.configadmin</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.confman</groupId>
+            <artifactId>pax-confman-propsloader</artifactId>
+            <version>0.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-api</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-service</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.webconsole</artifactId>
+            <version>3.1.8</version>
+        </dependency>
+    </dependencies>
 
 </project>

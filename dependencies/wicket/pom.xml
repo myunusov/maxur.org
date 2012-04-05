@@ -21,6 +21,12 @@
     </properties>
 
     <dependencies>
+        <!--AOP-->
+        <dependency>
+            <groupId>org.aopalliance</groupId>
+            <artifactId>com.springsource.org.aopalliance</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- JavaX -->
         <dependency>
             <groupId>javax.inject</groupId>

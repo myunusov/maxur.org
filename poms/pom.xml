@@ -6,7 +6,7 @@
     <artifactId>abstract-bundle</artifactId>
     <packaging>pom</packaging>
 
-    <name>abstract OSGi bundle</name>
+    <name>Abstract OSGi bundle</name>
 
     <parent>
         <groupId>org.maxur</groupId>
