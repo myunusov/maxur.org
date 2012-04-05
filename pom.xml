@@ -78,6 +78,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${sonar.version}</version>
                     </plugin>
                 </plugins>
             </build>
@@ -86,6 +87,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${sonar.version}</version>
                     </plugin>
                 </plugins>
             </reporting>
@@ -258,6 +260,10 @@
         <repository>
             <id>wpt-release</id>
             <url>http://wicketpagetest.sourceforge.net/m2-repo/releases</url>
+        </repository>
+        <repository>
+            <id>ops4j.repository</id>
+            <url>http://repository.ops4j.org/maven2</url>
         </repository>
         <repository>
             <id>Apache Nexus</id>

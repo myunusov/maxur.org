@@ -81,17 +81,6 @@
             <version>${guice.version}</version>
         </dependency>
 
-        <!-- PAX -->
-        <dependency>
-            <groupId>org.ops4j.pax.web</groupId>
-            <artifactId>pax-web-extender-war</artifactId>
-            <version>${pax-web.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ops4j.pax.web</groupId>
-            <artifactId>pax-web-jetty-bundle</artifactId>
-            <version>${pax-web.version}</version>
-        </dependency>
     </dependencies>
 
 </project>

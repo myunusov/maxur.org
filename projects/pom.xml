@@ -88,6 +88,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.7</version>
                 <configuration>
                     <encoding>${project.source.encoding}</encoding>
                     <enableRulesSummary>false</enableRulesSummary>
@@ -97,6 +98,35 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.aopalliance</groupId>
+            <artifactId>com.springsource.org.aopalliance</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.cglib</groupId>
+            <artifactId>com.springsource.net.sf.cglib</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.objectweb.asm</groupId>
+            <artifactId>com.springsource.org.objectweb.asm</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>com.springsource.javax.servlet</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>com.springsource.javax.inject</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.configadmin</artifactId>
@@ -128,33 +158,6 @@
             <version>1.1.2</version>
         </dependency>
 
-<!--        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-xml</artifactId>
-            <version>7.1.6.v20100715</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-            <version>7.1.6.v20100715</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-security</artifactId>
-            <version>7.1.6.v20100715</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-http</artifactId>
-            <version>7.1.6.v20100715</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.ops4j.pax.web</groupId>
-            <artifactId>pax-web-jetty</artifactId>
-            <version>1.1.2</version>
-        </dependency>-->
-
         <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-jetty-bundle</artifactId>
@@ -166,18 +169,18 @@
             <version>1.1.1</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>com.springsource.javax.servlet</artifactId>
-            <version>2.5.0</version>
-        </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>com.springsource.org.json</artifactId>
             <version>1.0.0</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.scr</artifactId>
+            <version>1.0.2</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.webconsole</artifactId>
@@ -198,12 +201,6 @@
             <artifactId>org.apache.felix.webconsole.plugins.upnp</artifactId>
             <version>1.0.0</version>
         </dependency>
-
-        <!--        ID   State         Level  Name
-[  14] [Active     ] [    4] osgi.cmpn (4.2.0.200908310645)
-[  15] [Active     ] [    4] OPS4J Pax Web - Jetty Bundle (1.0.2)
-[  16] [Active     ] [    4] OPS4J Pax Web - Service SPI (1.0.2)
-  -->
 
 
 <!--        ID   State         Level  Name

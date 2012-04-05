@@ -143,6 +143,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.7</version>
                 <configuration>
                     <configLocation>${project.root}/check-style-conf.xml</configLocation>
                 </configuration>
