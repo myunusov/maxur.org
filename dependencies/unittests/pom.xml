@@ -31,19 +31,16 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito-core.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.ttdev</groupId>
                 <artifactId>wpt-core</artifactId>
                 <version>${wpt.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.ttdev</groupId>
@@ -54,13 +51,11 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j-api.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-jdk14</artifactId>
                 <version>${slf4j-api.version}</version>
-                <scope>test</scope>
             </dependency>
 
 
@@ -69,25 +64,21 @@
                 <groupId>org.ops4j.pax.exam</groupId>
                 <artifactId>pax-exam</artifactId>
                 <version>${pax-exam.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.ops4j.pax.exam</groupId>
                 <artifactId>pax-exam-junit</artifactId>
                 <version>${pax-exam.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.ops4j.pax.exam</groupId>
                 <artifactId>pax-exam-container-default</artifactId>
                 <version>${pax-exam.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.ops4j.pax.exam</groupId>
                 <artifactId>pax-exam-junit-extender-impl</artifactId>
                 <version>${pax-exam.version}</version>
-                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -96,23 +87,45 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
-            <scope>test</scope>
         </dependency>
+
+
+        <!-- Pax-Exam dependencies -->
+        <dependency>
+            <groupId>org.ops4j.pax.exam</groupId>
+            <artifactId>pax-exam</artifactId>
+            <version>${pax-exam.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.exam</groupId>
+            <artifactId>pax-exam-junit</artifactId>
+            <version>${pax-exam.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.exam</groupId>
+            <artifactId>pax-exam-container-default</artifactId>
+            <version>${pax-exam.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.exam</groupId>
+            <artifactId>pax-exam-junit-extender-impl</artifactId>
+            <version>${pax-exam.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

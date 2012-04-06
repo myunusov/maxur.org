@@ -25,10 +25,16 @@
     <dependencies>
         <dependency>
             <groupId>org.maxur</groupId>
+            <artifactId>commons-core.bundle</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.maxur</groupId>
             <artifactId>unit-tests-jars</artifactId>
             <version>1.0</version>
             <type>pom</type>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.maxur</groupId>

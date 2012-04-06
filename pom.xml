@@ -111,8 +111,12 @@
                             <snapshot>
                                 ${project.root}/.clover/${project.groupId}-${project.artifactId}/clover.snapshot
                             </snapshot>
-                            <historyDir>${project.root}/.clover/history/${project.groupId}-${project.artifactId}
+                            <historyDir>
+                                ${project.root}/.clover/history/${project.groupId}-${project.artifactId}
                             </historyDir>
+                            <baseDir>
+                                ${project.root}/.clover/base//${project.groupId}-${project.artifactId}
+                            </baseDir>
                             <generateXml>true</generateXml>
                         </configuration>
                         <executions>
@@ -149,6 +153,7 @@
                     <plugin>
                         <groupId>com.atlassian.maven.plugins</groupId>
                         <artifactId>maven-clover2-plugin</artifactId>
+                        <version>3.1.0</version>
                         <configuration>
                             <includesTestSourceRoots>false</includesTestSourceRoots>
                             <jdk>${project.source.compile}</jdk>
