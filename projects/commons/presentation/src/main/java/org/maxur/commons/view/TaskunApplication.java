@@ -13,6 +13,7 @@ import org.maxur.commons.view.pages.home.HomePage;
 public class TaskunApplication extends WebApplication {
 
     private static final String CURRENT_ENCODING = "UTF-8";
+
     private final Injector injector;
 
     public TaskunApplication(final Injector injector) {

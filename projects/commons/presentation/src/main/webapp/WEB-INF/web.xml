@@ -9,8 +9,13 @@
     <description>The System of maintain and monitoring office's tasks</description>
 
     <context-param>
-        <param-name>configuration</param-name>
+        <param-name>configuration1</param-name>
         <param-value>${wicket.configuration}</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>configuration</param-name>
+        <param-value>development</param-value>
     </context-param>
 
     <filter>
