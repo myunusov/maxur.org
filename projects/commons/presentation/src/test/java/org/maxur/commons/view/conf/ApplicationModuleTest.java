@@ -1,25 +1,24 @@
-package org.maxur.commons.view;
+package org.maxur.commons.view.conf;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.junit.Before;
 import org.junit.Test;
-import org.maxur.commons.view.conf.ApplicationModule;
-import org.maxur.commons.view.pages.home.HomePage;
+import org.maxur.commons.view.MaxurApplication;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Maxim Yunusov
- * @version 1.0 15.10.11
+ * @version 1.0 14.04.12
  */
-public class TaskunApplicationTest {
+public class ApplicationModuleTest {
 
     @Inject
     private WebApplication application;
+
 
     @Before
     public void setUp() throws Exception {
@@ -28,8 +27,7 @@ public class TaskunApplicationTest {
     }
 
     @Test
-    public void shouldBeStartWithHomePage() throws Exception {
-        final Class<? extends Page> homePage = application.getHomePage();
-        assertSame(HomePage.class, homePage);
+    public void shouldBeInjectedMaxurApplication() throws Exception {
+        assertTrue(application instanceof MaxurApplication);
     }
 }

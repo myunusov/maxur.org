@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.maxur.commons.view.pages.FooterPanel;
 import org.maxur.commons.view.pages.HeaderPanel;
-import org.maxur.commons.view.pages.MenuPanel;
+import org.maxur.commons.view.components.menu.MenuPanel;
 
 /**
  * @author Maxim Yunusov

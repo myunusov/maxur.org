@@ -5,9 +5,9 @@
       xml:lang="en" lang="en">
 <wicket:remove>
     <head>
-        <link href="../../../../../../webapp/css/my_layout.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../../../../../webapp/css/my_layout.css" rel="stylesheet" type="text/css"/>
         <!--[if lte IE 7]>
-        <link href="../../../../../../webapp/css/patches/patch_my_layout.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../../../../../webapp/css/patches/patch_my_layout.css" rel="stylesheet" type="text/css"/>
         <![endif]-->
     </head>
 </wicket:remove>
@@ -15,19 +15,25 @@
 <wicket:panel>
     <!-- skiplink anchor: navigation -->
     <a id="navigation" name="navigation"></a>
-
-    <div class="hlist">
+    <!-- start menu -->
+    <div id="mainmenu" class="hlist">
         <!-- main navigation: horizontal list -->
         <ul>
-            <li class="active"><strong>[Вводная]</strong></li>
-            <li><a href="#">[О программе]</a></li>
+            <li wicket:id="menu_items"><span wicket:id="menu_item">
+                <wicket:remove>
+                    <a href="#">Button 1</a>
+                </wicket:remove>
+            </span></li>
             <wicket:remove>
+                <li class="active"><strong>Button 2</strong></li>
                 <li><a href="#">Button 3</a></li>
                 <li><a href="#">Button 4</a></li>
                 <li><a href="#">Button 5</a></li>
             </wicket:remove>
         </ul>
+        <div style="clear:both"></div>
     </div>
+    <!-- end menu -->
 </wicket:panel>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package org.maxur.commons.view;
+package org.maxur.commons.view.pages;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

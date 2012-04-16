@@ -1,4 +1,4 @@
-package org.maxur.commons.view;
+package org.maxur.commons.it;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
