@@ -2,6 +2,8 @@ package org.maxur.commons.view;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.maxur.commons.view.conf.ApplicationModuleTest;
+import org.maxur.commons.view.pages.UTPageSuite;
 
 /**
  * @author Maxim Yunusov
@@ -10,7 +12,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         UTPageSuite.class,
-        TaskunApplicationTest.class
+        MaxurApplicationTest.class,
+        ApplicationModuleTest.class
 })
 public class UTSuite {
 }

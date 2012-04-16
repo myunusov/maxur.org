@@ -5,15 +5,16 @@
       xml:lang="en" lang="en">
 <wicket:remove>
     <head>
-        <link href="../../../../../../webapp/css/my_layout.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../../../../../webapp/css/my_layout.css" rel="stylesheet" type="text/css"/>
         <!--[if lte IE 7]>
-        <link href="../../../../../../webapp/css/patches/patch_my_layout.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../../../../../webapp/css/patches/patch_my_layout.css" rel="stylesheet" type="text/css"/>
         <![endif]-->
     </head>
 </wicket:remove>
 <body>
 <wicket:panel>
-    <p>&copy;2011-2012, <a href="http://www.maxur.org/">Maxim Yunusov</a>. All Rights Reserved.
+    <a wicket:id="menu_link" href="#"><span wicket:id="menu_item_title">Button 1</span></a>
+    <a wicket:id="ajax_menu_link" href="#"><span wicket:id="menu_item_title">Button 1</span></a>
 </wicket:panel>
 </body>
 </html>

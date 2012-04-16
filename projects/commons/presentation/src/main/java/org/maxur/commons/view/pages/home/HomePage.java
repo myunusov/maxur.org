@@ -1,6 +1,5 @@
 package org.maxur.commons.view.pages.home;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.maxur.commons.view.pages.BasePage;
 
 
@@ -19,9 +18,8 @@ public class HomePage extends BasePage {
 
 
     /**
-     * It's Base Page constructor.
+     * It's Home Page constructor.
      */
     public HomePage() {
-        add(new Label("version", getApplication().getFrameworkSettings().getVersion()));
     }
 }

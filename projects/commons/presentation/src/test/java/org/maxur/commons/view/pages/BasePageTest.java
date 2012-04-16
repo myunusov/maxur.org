@@ -1,12 +1,10 @@
-package org.maxur.commons.view;
+package org.maxur.commons.view.pages;
 
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.maxur.commons.view.pages.BasePage;
-import org.maxur.commons.view.pages.FooterPanel;
-import org.maxur.commons.view.pages.HeaderPanel;
-import org.maxur.commons.view.pages.MenuPanel;
+import org.maxur.commons.view.components.menu.MenuPanel;
 
 /**
  * @author Maxim Yunusov
@@ -68,6 +66,12 @@ public class BasePageTest {
     public void shouldBeHasMenu() {
         tester.assertComponent("menu", MenuPanel.class);
     }
+
+    @Test
+    public void shouldBeHasApplicationTitle() {
+        tester.assertComponent("application.title", Label.class);
+    }
+
 
 
 }
