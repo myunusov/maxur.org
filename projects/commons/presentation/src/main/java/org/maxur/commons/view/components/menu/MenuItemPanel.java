@@ -1,15 +1,13 @@
 package org.maxur.commons.view.components.menu;
 
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.event.IEvent;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.html.WebComponent;
+import org.apache.wicket.markup.html.link.ILinkListener;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.maxur.commons.view.components.model.Command;
 
 /**
@@ -18,12 +16,14 @@ import org.maxur.commons.view.components.model.Command;
  * @author Maxim Yunusov
  * @version 1.0 15.04.12
  */
-public class MenuItemPanel extends Panel {
+public class MenuItemPanel extends WebComponent implements ILinkListener {
 
     /**
      * Serial Version UID.
      */
     private static final long serialVersionUID = -899628430579241468L;
+
+    private final Model<Command> model;
 
     /**
      * Constructs the MenuItemPanel instance.
@@ -33,70 +33,50 @@ public class MenuItemPanel extends Panel {
      */
     public MenuItemPanel(final String id, final Model<Command> model) {
         super(id, model);
-        model.getObject().setComponent(this);
+        this.model = model;
+        final Command command = model.getObject();
+        command.bind(this);
         setRenderBodyOnly(true);
-        add(new RegularMenuLink("menu_link", model));
-        add(new AjaxMenuLink("ajax_menu_link", model));
     }
 
-    private static class RegularMenuLink extends Link<Command> {
-
-        private static final long serialVersionUID = 1499964362961000751L;
-
-        public RegularMenuLink(final String id, Model<Command> model) {
-            super(id, model);
-            final Command command = model.getObject();
-            setVisible(!command.isAjax());
-            final Label label = new Label("menu_item_title", new ResourceModel(command.getTitleKey()));
-            label.setRenderBodyOnly(true);
-            add(label);
+    @Override
+    public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
+        final Command command = model.getObject();
+        final StringBuilder markup = new StringBuilder();
+        if (!command.isActive()) {
+            renderMenuItem(markup);
+        } else {
+            renderActiveMenuItem(markup);
         }
-
-        /**
-         * Is called on Event.
-         */
-        @Override
-        public void onEvent(IEvent<?> event) {
-            super.onEvent(event);
-            if (getModelObject() instanceof GoToCommand && event.getPayload() instanceof PageUpdate) {
-                final PageUpdate update = (PageUpdate) event.getPayload();
-                final GoToCommand command = (GoToCommand) getModelObject();
-                final IModel<String> className = command.isActive() ?
-                        new Model<>("active") : new Model<>("");
-                add(new AttributeModifier("class", className));
-            }
-        }
-
-        /**
-         * Is called on Click.
-         */
-        @Override
-        public void onClick() {
-            final Command item = getModelObject();
-            item.execute();
-        }
+        replaceComponentTagBody(markupStream, openTag, markup);
     }
 
-    private class AjaxMenuLink extends AjaxLink<Command> {
-
-        private static final long serialVersionUID = -7812753270345223776L;
-
-        public AjaxMenuLink(String id, Model<Command> model) {
-            super(id, model);
-            final Command command = model.getObject();
-            setVisible(command.isAjax());
-            add(new Label("menu_item_title", new ResourceModel(command.getTitleKey())));
-
-        }
-
-        /**
-         * Is called on Click.
-         */
-        @Override
-        public void onClick(final AjaxRequestTarget target) {
-            final Command item = getModelObject();
-            item.execute(target);
-        }
-
+    private void renderMenuItem(final StringBuilder markup) {
+        final CharSequence url = getURL();
+        markup.append("<a href=\"").append(url).append("\">");
+        markup.append(getItemTitle().getObject());
+        markup.append("</a>");
     }
+
+    private void renderActiveMenuItem(final StringBuilder markup) {
+        markup.append("<strong>");
+        markup.append(getItemTitle().getObject());
+        markup.append("</strong>");
+    }
+
+    private IModel<String> getItemTitle() {
+        final Command command = model.getObject();
+        return new ResourceModel(command.getTitleKey()).wrapOnAssignment(getPage());
+    }
+
+    @Override
+    public void onLinkClicked() {
+        final Command command = model.getObject();
+        command.execute();
+    }
+
+    protected CharSequence getURL() {
+        return urlFor(ILinkListener.INTERFACE, new PageParameters());
+    }
+
 }

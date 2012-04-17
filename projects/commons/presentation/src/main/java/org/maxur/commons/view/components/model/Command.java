@@ -43,7 +43,7 @@ public abstract class Command implements Serializable {
         return false;
     }
 
-    public void setComponent(final MenuItemPanel component) {
+    public void bind(final MenuItemPanel component) {
         this.component = component;
     }
 
