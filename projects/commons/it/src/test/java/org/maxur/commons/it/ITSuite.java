@@ -10,7 +10,10 @@ import org.junit.runners.Suite;
  * @version 1.0 29.09.11
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({})
+@Suite.SuiteClasses({
+        CommonsBundleIT.class,
+        TaskunBundleIT.class
+})
 public class ITSuite {
 
     @BeforeClass
