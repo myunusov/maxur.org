@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.maxur.commons.view.pages.about.AboutPage;
 import org.maxur.commons.view.pages.home.HomePage;
 
 /**
@@ -39,6 +40,8 @@ public class MaxurApplication extends WebApplication {
         getMarkupSettings().setDefaultMarkupEncoding(CURRENT_ENCODING);
         getRequestCycleSettings().setResponseRequestEncoding(CURRENT_ENCODING);
         getComponentInstantiationListeners().add(new GuiceComponentInjector(this, injector));
+        mountPage("/home", HomePage.class);
+        mountPage("/about", AboutPage.class);
     }
 
     /**
