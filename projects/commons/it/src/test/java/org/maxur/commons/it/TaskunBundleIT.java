@@ -1,13 +1,9 @@
 package org.maxur.commons.it;
 
-/**
- * @author Maxim Yunusov
- * @version 1.0 25.09.11
- */
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.maxur.commons.ExampleService;
+import org.maxur.commons.domain.ExampleService;
 import org.ops4j.pax.exam.CoreOptions;
 import org.ops4j.pax.exam.Inject;
 import org.ops4j.pax.exam.Option;
@@ -20,8 +16,13 @@ import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertNotNull;
 
+
+/**
+ * @author Maxim Yunusov
+ * @version 1.0 25.09.11
+ */
 @RunWith(JUnit4TestRunner.class)
-public class CommonsBundleIT {
+public class TaskunBundleIT {
 
     @Inject
     private BundleContext context;

@@ -28,6 +28,7 @@
             <artifactId>unit-tests-jars</artifactId>
             <version>1.0</version>
             <type>pom</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

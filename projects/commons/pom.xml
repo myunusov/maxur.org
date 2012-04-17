@@ -19,6 +19,7 @@
     </parent>
 
     <modules>
+        <module>it</module>
         <module>domain</module>
         <module>datasource</module>
         <module>presentation</module>
