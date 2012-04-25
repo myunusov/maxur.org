@@ -14,7 +14,7 @@
     </parent>
 
     <properties>
-        <project.root>${project.basedir}/../../../</project.root>
+        <project.root>${project.basedir}/../../</project.root>
         <bundle.symbolicName>must be overrided</bundle.symbolicName>
         <bundle.namespace>must be overrided</bundle.namespace>
     </properties>

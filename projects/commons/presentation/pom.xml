@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <parent>
-        <relativePath>../../../poms/compiled/war</relativePath>
+        <relativePath>../../../poms/war</relativePath>
         <groupId>org.maxur</groupId>
         <artifactId>abstract-war-bundle</artifactId>
         <version>1.0</version>
@@ -37,6 +37,7 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
 </project>

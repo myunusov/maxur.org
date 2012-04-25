@@ -1,4 +1,4 @@
-package org.maxur.commons.view.conf;
+package org.maxur.commons.view.config;
 
 import com.google.inject.AbstractModule;
 import org.apache.wicket.protocol.http.WebApplication;

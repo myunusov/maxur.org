@@ -17,10 +17,13 @@
     <modules>
         <module>wrappers</module>
         <module>compiled</module>
+        <module>war</module>
+        <module>jar</module>
     </modules>
 
     <properties>
         <project.root>${project.basedir}/../</project.root>
+        <slf4j-api.version>1.6.3</slf4j-api.version>
     </properties>
 
     <build>
@@ -56,10 +59,54 @@
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.logging</groupId>
+                <artifactId>pax-logging-api</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ops4j.pax.logging</groupId>
+                <artifactId>pax-logging-service</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-api</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-service</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>osgi_R4_core</artifactId>

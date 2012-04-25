@@ -1,10 +1,12 @@
-package org.maxur.commons.view.conf;
+package org.maxur.commons.view.config;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * We are using our own WicketFilter subclass called WicketGuiceFilter in order
@@ -26,6 +28,8 @@ public class WicketGuiceFilter extends WicketFilter {
     protected IWebApplicationFactory getApplicationFactory() {
         return new IWebApplicationFactory() {
             public WebApplication createApplication(final WicketFilter filter) {
+                final Logger logger = LoggerFactory.getLogger(this.getClass());
+                logger.debug("Wicket Application has been created");
                 return application;
             }
 
