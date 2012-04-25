@@ -1,9 +1,8 @@
-package org.maxur.commons.view.conf;
+package org.maxur.commons.view.config;
 
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Inject;
-import org.apache.wicket.protocol.http.IWebApplicationFactory;
+import com.google.inject.Injector;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +14,11 @@ import static org.junit.Assert.assertTrue;
  * @author Maxim Yunusov
  * @version 1.0 14.04.12
  */
-public class WicketGuiceFilterTest {
+public class ApplicationModuleTest {
 
     @Inject
-    private WicketGuiceFilter filter;
+    private WebApplication application;
+
 
     @Before
     public void setUp() throws Exception {
@@ -27,12 +27,7 @@ public class WicketGuiceFilterTest {
     }
 
     @Test
-    public void shouldBeReturnFactoryOfMaxurApplication() throws Exception {
-        final IWebApplicationFactory factory = filter.getApplicationFactory();
-        final WebApplication application = factory.createApplication(filter);
-        factory.destroy(filter);
+    public void shouldBeInjectedMaxurApplication() throws Exception {
         assertTrue(application instanceof MaxurApplication);
     }
-
-
 }

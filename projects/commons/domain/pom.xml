@@ -5,20 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>maxur-commons-core</artifactId>
-    <version>1.0</version>
-    <name>${bundle.symbolicName}</name>
+    <name>${bundle.symbolicName} [${project.version}]</name>
+    <description>Maxur Commons Core Bundle</description>
     <packaging>jar</packaging>
 
     <parent>
-        <relativePath>../../../poms/compiled</relativePath>
+        <relativePath>../../../poms/jar</relativePath>
         <groupId>org.maxur</groupId>
-        <artifactId>abstract-compiled-bundle</artifactId>
+        <artifactId>abstract-jar-bundle</artifactId>
         <version>1.0</version>
     </parent>
 
     <properties>
         <project.root>${project.basedir}/../../../</project.root>
-        <bundle.symbolicName>Maxur Commons Core Bundle</bundle.symbolicName>
+        <bundle.symbolicName>maxur.commons.core.bundle</bundle.symbolicName>
         <bundle.namespace>org.maxur.commons.domain</bundle.namespace>
     </properties>
 

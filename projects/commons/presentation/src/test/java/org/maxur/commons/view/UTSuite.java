@@ -2,7 +2,7 @@ package org.maxur.commons.view;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.maxur.commons.view.conf.ApplicationModuleTest;
+import org.maxur.commons.view.config.ApplicationModuleTest;
 import org.maxur.commons.view.pages.UTPageSuite;
 
 /**

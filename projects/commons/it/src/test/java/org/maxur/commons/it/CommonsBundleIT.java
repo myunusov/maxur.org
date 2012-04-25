@@ -51,7 +51,7 @@ public class CommonsBundleIT {
                 CoreOptions.felix(),
                 CoreOptions.provision(
                         CoreOptions.mavenBundle().groupId("org.ops4j.pax.logging").artifactId("pax-logging-api"),
-                        CoreOptions.mavenBundle().groupId("org.maxur").artifactId("commons-core.bundle")
+                        CoreOptions.mavenBundle().groupId("org.maxur").artifactId("maxur-commons-core")
                 )
         );
     }

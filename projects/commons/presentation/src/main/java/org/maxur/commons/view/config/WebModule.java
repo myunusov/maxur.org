@@ -1,4 +1,4 @@
-package org.maxur.commons.view.conf;
+package org.maxur.commons.view.config;
 
 import com.google.inject.servlet.ServletModule;
 import org.apache.wicket.protocol.http.WicketFilter;
@@ -17,7 +17,7 @@ public class WebModule extends ServletModule {
     @Override
     protected void configureServlets() {
         Map<String, String> params = new HashMap<>();
-        params.put(WicketFilter.FILTER_MAPPING_PARAM, "/app/*"); /// TODO It must be property value.
+        params.put(WicketFilter.FILTER_MAPPING_PARAM, "/main/*"); /// TODO It must be property value.
 
         filter("/*").through(WicketGuiceFilter.class, params);
 
