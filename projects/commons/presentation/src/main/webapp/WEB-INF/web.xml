@@ -24,7 +24,7 @@
     </filter>
 
     <listener>
-        <listener-class>org.maxur.commons.view.config.Bootstrap</listener-class>
+        <listener-class>org.maxur.commons.view.config.GuiceListener</listener-class>
     </listener>
 
     <filter-mapping>

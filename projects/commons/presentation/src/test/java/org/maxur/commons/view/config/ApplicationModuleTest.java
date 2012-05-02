@@ -22,7 +22,7 @@ public class ApplicationModuleTest {
 
     @Before
     public void setUp() throws Exception {
-        final Injector injector = Guice.createInjector(new ApplicationModule());
+        final Injector injector = Guice.createInjector(new TestModule());
         injector.injectMembers(this);
     }
 

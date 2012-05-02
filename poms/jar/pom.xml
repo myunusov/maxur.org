@@ -8,6 +8,7 @@
     <name>Abstract Jar bundle</name>
 
     <parent>
+        <relativePath>../compiled</relativePath>
         <groupId>org.maxur</groupId>
         <artifactId>abstract-compiled-bundle</artifactId>
         <version>1.0</version>
