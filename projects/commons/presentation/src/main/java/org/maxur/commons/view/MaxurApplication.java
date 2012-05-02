@@ -1,6 +1,8 @@
 package org.maxur.commons.view;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.name.Named;
 import org.apache.wicket.Session;
 import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.markup.html.WebPage;
@@ -9,6 +11,8 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.maxur.commons.view.pages.about.AboutPage;
 import org.maxur.commons.view.pages.home.HomePage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Maxim Yunusov
@@ -16,12 +20,22 @@ import org.maxur.commons.view.pages.home.HomePage;
  */
 public class MaxurApplication extends WebApplication {
 
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private static final String CURRENT_ENCODING = "UTF-8";
 
     private final Injector injector;
 
+    @Inject
+    @Named("test.key")
+    private String version;
+
     public MaxurApplication(final Injector injector) {
         this.injector = injector;
+        if (injector != null) {
+            injector.injectMembers(this);
+            logger.debug("Version : " + version);
+        }
     }
 
     /**

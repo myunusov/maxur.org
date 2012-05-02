@@ -1,8 +1,8 @@
 package org.maxur.commons.view.config;
 
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.junit.Before;
@@ -22,7 +22,7 @@ public class WicketGuiceFilterTest {
 
     @Before
     public void setUp() throws Exception {
-        final Injector injector = Guice.createInjector(new ApplicationModule());
+        final Injector injector = Guice.createInjector(new TestModule());
         injector.injectMembers(this);
     }
 
