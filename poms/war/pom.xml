@@ -18,6 +18,7 @@
         <project.root>${project.basedir}/../../</project.root>
         <bundle.symbolicName>must be overrided</bundle.symbolicName>
         <bundle.namespace>must be overrided</bundle.namespace>
+        <sonar.artifact.path>/target/maxur-commons-war-1.0.war</sonar.artifact.path>
     </properties>
 
     <build>

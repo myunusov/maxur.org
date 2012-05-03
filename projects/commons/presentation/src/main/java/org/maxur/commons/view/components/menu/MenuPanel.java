@@ -1,5 +1,7 @@
 package org.maxur.commons.view.components.menu;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -7,8 +9,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.maxur.commons.view.components.model.Command;
-import org.maxur.commons.view.pages.about.AboutPage;
-import org.maxur.commons.view.pages.home.HomePage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,13 @@ public class MenuPanel extends Panel {
      */
     private static final long serialVersionUID = -3793059102648719177L;
 
+    @Inject
+    private transient MenuItemsProvider menuItemsProvider;
+
+    @Inject
+    @Named("test.key")
+    private String version;
+
     /**
      * It's menu panel constructor.
      *
@@ -34,25 +43,22 @@ public class MenuPanel extends Panel {
      */
     public MenuPanel(final String id) {
         super(id);
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.debug("-----" + version + "-----");
         final ListView<Command> listView = new MenuItemsView("menu_items", getMenuItems());
         add(listView);
     }
 
+    private Model<? extends List<Command>> getMenuItems() {
+        return new Model<>(
+                menuItemsProvider == null ?
+                        new ArrayList<Command>() : (ArrayList<Command>) menuItemsProvider.getMenuItems()
+        );
+    }
 
-    public Model<? extends List<Command>> getMenuItems() {
-        // TODO Stub
-        final ArrayList<Command> commands = new ArrayList<>();
-        commands.add(GoToCommand.Builder.instance()
-                .setAsTarget(HomePage.class)
-                .withTitleKey("welcome.page.title")
-                .build()
-        );
-        commands.add(GoToCommand.Builder.instance()
-                .setAsTarget(AboutPage.class)
-                .withTitleKey("about.page.title")
-                .build()
-        );
-        return new Model<>(commands);
+    @SuppressWarnings("UnusedDeclaration")
+    public void setMenuItemsProvider(MenuItemsProvider menuItemsProvider) {
+        this.menuItemsProvider = menuItemsProvider;
     }
 
     /**
@@ -86,16 +92,24 @@ public class MenuPanel extends Panel {
         protected void populateItem(final ListItem<Command> listItem) {
             final Command command = listItem.getModelObject();
             listItem.add(new MenuItemPanel("menu_item", new Model<>(command)));
-
-            //noinspection serial
-            listItem.add(new Behavior() {
-                @Override
-                public void onComponentTag(final org.apache.wicket.Component component, final ComponentTag tag) {
-                    super.onComponentTag(component, tag);
-                    final String className = command.isActive() ? "active" : ""; tag.put("class", className);
-                }
-            });
+            listItem.add(new SetActiveBehavior(command));
         }
 
+        private static class SetActiveBehavior extends Behavior {
+
+            private static final long serialVersionUID = -8913795606334638293L;
+
+            private final Command command;
+
+            public SetActiveBehavior(Command command) {
+                this.command = command;
+            }
+
+            @Override
+            public void onComponentTag(final org.apache.wicket.Component component, final ComponentTag tag) {
+                super.onComponentTag(component, tag);
+                final String className = command.isActive() ? "active" : ""; tag.put("class", className);
+            }
+        }
     }
 }

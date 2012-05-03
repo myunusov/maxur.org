@@ -20,8 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class MaxurApplication extends WebApplication {
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private static final String CURRENT_ENCODING = "UTF-8";
 
     private final Injector injector;
@@ -34,6 +32,7 @@ public class MaxurApplication extends WebApplication {
         this.injector = injector;
         if (injector != null) {
             injector.injectMembers(this);
+            Logger logger = LoggerFactory.getLogger(this.getClass());
             logger.debug("Version : " + version);
         }
     }
@@ -53,9 +52,13 @@ public class MaxurApplication extends WebApplication {
     protected final void init() {
         getMarkupSettings().setDefaultMarkupEncoding(CURRENT_ENCODING);
         getRequestCycleSettings().setResponseRequestEncoding(CURRENT_ENCODING);
-        getComponentInstantiationListeners().add(new GuiceComponentInjector(this, injector));
+        getComponentInstantiationListeners().add(createInjector());
         mountPage("/home", HomePage.class);
         mountPage("/about", AboutPage.class);
+    }
+
+    private GuiceComponentInjector createInjector() {
+        return injector != null ? new GuiceComponentInjector(this, injector) : new GuiceComponentInjector(this);
     }
 
     /**

@@ -47,8 +47,6 @@
         <sonar.version>2.0</sonar.version>        
     </properties>
 
-
-
     <modules>
         <module>projects</module>
         <module>poms</module>
@@ -63,6 +61,7 @@
                 <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
                 <sonar.surefire.reportsPath>${project.basedir}/target/surefire-reports</sonar.surefire.reportsPath>
                 <sonar.clover.reportPath>${project.basedir}/target/site/clover/clover.xml</sonar.clover.reportPath>
+                <sonar.artifact.path>/target/</sonar.artifact.path>
                 <sonar.core.codeCoveragePlugin>clover</sonar.core.codeCoveragePlugin>
                 <sonar.host.url>http://localhost:9090/sonar</sonar.host.url>
                 <sonar.jdbc.url>jdbc:postgresql://localhost/sonar</sonar.jdbc.url>
@@ -108,9 +107,13 @@
                             <targetPercentage>75%</targetPercentage>
                             <includesTestSourceRoots>false</includesTestSourceRoots>
                             <jdk>${project.source.compile}</jdk>
+                            <cloverDatabase>
+                                ${project.root}.clover/${project.groupId}-${project.artifactId}.db
+                            </cloverDatabase>
                             <snapshot>
                                 ${project.root}.clover/${project.groupId}-${project.artifactId}/clover.snapshot
                             </snapshot>
+                            <generateHistorical>true</generateHistorical>
                             <historyDir>
                                 ${project.root}.clover/history
                             </historyDir>
@@ -118,6 +121,7 @@
                                 ${project.root}.clover/base
                             </baseDir>
                             <generateXml>true</generateXml>
+
                         </configuration>
                         <executions>
                             <execution>

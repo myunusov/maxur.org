@@ -1,7 +1,8 @@
-package org.maxur.commons.view.config;
+package org.maxur.commons.view;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
+import org.maxur.commons.view.config.ApplicationModule;
 
 /**
  * @author Maxim Yunusov
