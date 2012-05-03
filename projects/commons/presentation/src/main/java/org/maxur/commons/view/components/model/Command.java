@@ -1,7 +1,7 @@
 package org.maxur.commons.view.components.model;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.maxur.commons.view.components.menu.MenuItemPanel;
+import org.apache.wicket.markup.html.WebComponent;
 
 import java.io.Serializable;
 
@@ -17,7 +17,7 @@ public abstract class Command implements Serializable {
 
     private String titleKey;
 
-    private MenuItemPanel component;
+    private WebComponent component;
 
     public abstract void execute();
 
@@ -43,11 +43,11 @@ public abstract class Command implements Serializable {
         return false;
     }
 
-    public void bind(final MenuItemPanel component) {
+    public void bind(final WebComponent component) {
         this.component = component;
     }
 
-    public MenuItemPanel getComponent() {
+    public WebComponent getComponent() {
         return component;
     }
 }

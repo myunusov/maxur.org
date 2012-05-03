@@ -9,7 +9,7 @@ import org.maxur.commons.view.components.model.Command;
  * @author Maxim Yunusov
  * @version 1.0 15.04.12
  */
-public class GoToCommand extends Command {
+public final class GoToCommand extends Command {
 
     private static final long serialVersionUID = 9012489431437576131L;
 
@@ -34,7 +34,7 @@ public class GoToCommand extends Command {
         return getComponent() != null && this.targetPage.equals(getComponent().getPage().getClass());
     }
 
-    public static class Builder {
+    public static final class Builder {
 
         private final GoToCommand result = new GoToCommand();
 
