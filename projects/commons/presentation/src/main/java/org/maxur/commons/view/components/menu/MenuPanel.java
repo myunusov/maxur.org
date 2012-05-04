@@ -32,7 +32,7 @@ public class MenuPanel extends Panel {
     private transient MenuItemsProvider menuItemsProvider;
 
     @Inject
-    @Named("test.key")
+    @Named("version")
     private String version;
 
     /**

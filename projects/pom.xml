@@ -33,6 +33,7 @@
             <id>DEV</id>
             <properties>
                 <maven-pax-plugin-log.param>debug</maven-pax-plugin-log.param>
+                <debug.opt> </debug.opt>
             </properties>
             <dependencies>
                 <dependency>
@@ -49,10 +50,23 @@
         </profile>
         <profile>
             <id>QA</id>
+            <properties>
+                <debug.opt> </debug.opt>
+            </properties>
         </profile>
         <profile>
             <id>PROD</id>
+            <properties>
+                <debug.opt> </debug.opt>
+            </properties>
         </profile>
+        <profile>
+            <id>DEBUG</id>
+            <properties>
+                <debug.opt>-Xmx1024M -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</debug.opt>
+            </properties>
+        </profile>
+
     </profiles>
 
     <build>
@@ -70,7 +84,9 @@
                         <param>--console=false</param>
                         <param>--log=${maven-pax-plugin-log.param}</param>
                         <param>--ee=J2SE-1.6</param>
-                        <param>--vmo=-Dosgi.classloader.lock=classname -Xmx1024M</param>
+                        <param>
+                            --vmo=-Dosgi.classloader.lock=classname ${debug.opt}
+                        </param>
                         <param>--startLevel=5</param>
                         <param>--bundleStartLevel=4</param>
                         <param>mvn:com.google.inject.extensions/guice-servlet/${guice.version}@nostart</param>

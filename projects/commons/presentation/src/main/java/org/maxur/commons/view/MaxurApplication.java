@@ -1,8 +1,6 @@
 package org.maxur.commons.view;
 
-import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.name.Named;
 import org.apache.wicket.Session;
 import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.markup.html.WebPage;
@@ -13,6 +11,9 @@ import org.maxur.commons.view.pages.about.AboutPage;
 import org.maxur.commons.view.pages.home.HomePage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * @author Maxim Yunusov
@@ -25,8 +26,8 @@ public class MaxurApplication extends WebApplication {
     private final Injector injector;
 
     @Inject
-    @Named("test.key")
-    private String version;
+    @Named("version")
+    private String version = "VVV";
 
     public MaxurApplication(final Injector injector) {
         this.injector = injector;

@@ -13,6 +13,6 @@ public class TestModule extends AbstractModule {
     @Override
     protected void configure() {
         install(new ApplicationModule());
-        bindConstant().annotatedWith(Names.named("test.key")).to("test version");
+        bindConstant().annotatedWith(Names.named("version")).to("test version");
     }
 }
