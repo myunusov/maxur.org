@@ -1,6 +1,6 @@
 package org.maxur.commons.view.config;
 
-import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 
@@ -11,16 +11,16 @@ import com.google.inject.servlet.GuiceServletContextListener;
  */
 public class GuiceListener extends GuiceServletContextListener {
 
-    private Injector webInjector;
+    private static Injector osgiInjector;
+
+    @Inject
+    public static void setOsgiInjector(Injector osgiInjector) {
+        GuiceListener.osgiInjector = osgiInjector;
+    }
 
     @Override
     protected Injector getInjector() {
-        webInjector = webInjector == null ? createInjector() : webInjector;
-        return webInjector;
-    }
-
-    private Injector createInjector() {
-        return Guice.createInjector(new WebModule(), new ApplicationModule());
+        return osgiInjector;
     }
 
 }
