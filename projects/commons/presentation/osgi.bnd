@@ -1,4 +1,4 @@
-Bundle-Module: ${bundle.namespace}.config.MaxurModule
+Bundle-Module: ${bundle.namespace}.config.OSGiModule
 Bundle-ClassPath: .,WEB-INF/classes
 Embed-Directory: WEB-INF/lib
 Embed-Dependency: *;scope=compile|runtime
