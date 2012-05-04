@@ -20,7 +20,7 @@ public class GuiceListener extends GuiceServletContextListener {
     }
 
     private Injector createInjector() {
-        return Guice.createInjector(new WebModule(), new ApplicationModule());
+        return Guice.createInjector(new WebModule(), new ApplicationModule(), new OSGiAdapterModule());
     }
 
 }
