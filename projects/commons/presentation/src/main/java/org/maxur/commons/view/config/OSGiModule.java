@@ -1,6 +1,5 @@
 package org.maxur.commons.view.config;
 
-import com.google.inject.servlet.GuiceServletContextListener;
 import org.ops4j.peaberry.activation.util.PeaberryActivationModule;
 
 /**
@@ -14,7 +13,9 @@ public class OSGiModule extends PeaberryActivationModule {
 
     @Override
     protected void configure() {
-        requestStaticInjection(GuiceServletContextListener.class);
+        requestStaticInjection(GuiceListener.class);
+        install(new WebModule());
+        install(new ApplicationModule());
         bindConfigurable(String.class).from("org.maxur.commons").named(VERSION_KEY);
     }
 
