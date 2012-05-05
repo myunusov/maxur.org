@@ -1,5 +1,6 @@
 package org.maxur.commons.view.config;
 
+import org.maxur.commons.view.MaxurApplication;
 import org.ops4j.peaberry.activation.util.PeaberryActivationModule;
 
 /**
@@ -13,8 +14,7 @@ public class OSGiModule extends PeaberryActivationModule {
 
     @Override
     protected void configure() {
-        requestStaticInjection(GuiceListener.class);
-        install(new WebModule());
+        requestStaticInjection(MaxurApplication.class);
         install(new ApplicationModule());
         bindConfigurable(String.class).from("org.maxur.commons").named(VERSION_KEY);
     }

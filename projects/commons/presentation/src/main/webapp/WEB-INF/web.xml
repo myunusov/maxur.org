@@ -4,32 +4,27 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-    <display-name>TaskUN Web Application</display-name>
+    <display-name>Maxur Web Application</display-name>
 
     <description>The System of maintain and monitoring office's tasks</description>
 
     <context-param>
-        <param-name>configuration1</param-name>
+        <param-name>configuration</param-name>
         <param-value>${wicket.configuration}</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>configuration</param-name>
-        <param-value>development</param-value>
-    </context-param>
-
     <filter>
-        <filter-name>guice.filter</filter-name>
-        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+        <filter-name>wicket.filter</filter-name>
+        <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+        <init-param>
+            <param-name>applicationClassName</param-name>
+            <param-value>org.maxur.commons.view.MaxurApplication</param-value>
+        </init-param>
     </filter>
 
-    <listener>
-        <listener-class>org.maxur.commons.view.config.GuiceListener</listener-class>
-    </listener>
-
     <filter-mapping>
-        <filter-name>guice.filter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>wicket.filter</filter-name>
+        <url-pattern>/main/*</url-pattern>
     </filter-mapping>
 
     <error-page>
