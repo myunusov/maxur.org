@@ -39,6 +39,7 @@ public class MenuItemPanel extends WebComponent implements ILinkListener {
         setRenderBodyOnly(true);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onComponentTagBody(final MarkupStream markupStream, final ComponentTag openTag) {
         final Command command = model.getObject();
@@ -69,12 +70,18 @@ public class MenuItemPanel extends WebComponent implements ILinkListener {
         return new ResourceModel(command.getTitleKey()).wrapOnAssignment(getPage());
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onLinkClicked() {
         final Command command = model.getObject();
         command.execute();
     }
 
+    /**
+     * <p>getURL</p>
+     *
+     * @return a {@link java.lang.CharSequence} object.
+     */
     protected CharSequence getURL() {
         return urlFor(ILinkListener.INTERFACE, new PageParameters());
     }

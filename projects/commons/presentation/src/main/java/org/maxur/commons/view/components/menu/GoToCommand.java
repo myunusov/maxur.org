@@ -6,6 +6,8 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.maxur.commons.view.components.model.Command;
 
 /**
+ * <p>GoToCommand class.</p>
+ *
  * @author Maxim Yunusov
  * @version 1.0 15.04.12
  */
@@ -19,16 +21,19 @@ public final class GoToCommand extends Command {
         super(false);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void execute() {
         RequestCycle.get().setResponsePage(targetPage);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void execute(final AjaxRequestTarget target) {
         execute();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isActive() {
         return getComponent() != null && this.targetPage.equals(getComponent().getPage().getClass());

@@ -19,6 +19,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * <p>MaxurApplication class.</p>
+ *
  * @author Maxim Yunusov
  * @version 1.0 27.09.11
  */
@@ -28,6 +30,11 @@ public class MaxurApplication extends WebApplication {
 
     private static Injector injector;
 
+    /**
+     * <p>Setter for the field <code>injector</code>.</p>
+     *
+     * @param injector a {@link com.google.inject.Injector} object.
+     */
     @Inject
     public static void setInjector(Injector injector) {
         MaxurApplication.injector = injector;
@@ -36,22 +43,23 @@ public class MaxurApplication extends WebApplication {
     private String version;
 
 
+    /**
+     * <p>Setter for the field <code>version</code>.</p>
+     *
+     * @param version a {@link java.lang.String} object.
+     */
     @Inject
     public void setVersion(@Named("version") String version) {
         this.version = version;
     }
 
-    /**
-     * @see org.apache.wicket.Application#getHomePage()
-     */
+    /** {@inheritDoc} */
     @Override
     public final Class<? extends WebPage> getHomePage() {
         return HomePage.class;
     }
 
-    /**
-     * @see org.apache.wicket.Application#init()
-     */
+    /** {@inheritDoc} */
     @Override
     protected final void init() {
         Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -69,16 +77,14 @@ public class MaxurApplication extends WebApplication {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public WebRequest newWebRequest(HttpServletRequest servletRequest, String filterPath) {
         setMetaData(GuiceInjectorHolder.INJECTOR_KEY, new GuiceInjectorHolder(injector));
         return super.newWebRequest(servletRequest, filterPath);
     }
 
-    /**
-     * @see org.apache.wicket.Application#newSession(org.apache.wicket.request.Request,
-     *      org.apache.wicket.request.Response)
-     */
+    /** {@inheritDoc} */
     @Override
     public final Session newSession(final Request request, final Response response) {
         return new MaxurSession(request);

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <p>MaxurMenuItemsProvider class.</p>
+ *
  * @author Maxim Yunusov
  * @version 1.0 03.05.12
  */
@@ -19,6 +21,9 @@ public class MaxurMenuItemsProvider implements MenuItemsProvider {
 
     private final List<Command> commands;
 
+    /**
+     * <p>Constructor for MaxurMenuItemsProvider.</p>
+     */
     public MaxurMenuItemsProvider() {
         // TODO Stub
         commands = new ArrayList<>();
@@ -34,6 +39,7 @@ public class MaxurMenuItemsProvider implements MenuItemsProvider {
         );
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<Command> getMenuItems() {
         return commands;
