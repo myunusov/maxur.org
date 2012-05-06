@@ -4,6 +4,8 @@ import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 
 /**
+ * <p>MaxurSession class.</p>
+ *
  * @author Maxim Yunusov
  * @version 1.0 14.04.12
  */

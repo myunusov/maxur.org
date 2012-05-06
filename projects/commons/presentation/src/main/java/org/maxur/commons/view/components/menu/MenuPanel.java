@@ -56,6 +56,11 @@ public class MenuPanel extends Panel {
         );
     }
 
+    /**
+     * <p>Setter for the field <code>menuItemsProvider</code>.</p>
+     *
+     * @param menuItemsProvider a {@link org.maxur.commons.view.components.menu.MenuItemsProvider} object.
+     */
     @SuppressWarnings("UnusedDeclaration")
     public void setMenuItemsProvider(MenuItemsProvider menuItemsProvider) {
         this.menuItemsProvider = menuItemsProvider;
