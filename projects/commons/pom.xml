@@ -8,6 +8,15 @@
     <version>1.0</version>
     <packaging>pom</packaging>
 
+    <profiles>
+        <profile>
+            <id>integration</id>
+            <modules>
+                <module>it</module>
+            </modules>
+        </profile>
+    </profiles>
+
     <properties>
         <project.root>${project.basedir}/../../</project.root>
         <bundles.configuration.location>${project.basedir}/config/${env}</bundles.configuration.location>
@@ -20,7 +29,6 @@
     </parent>
 
     <modules>
-        <module>it</module>
         <module>domain</module>
         <module>datasource</module>
         <module>presentation</module>

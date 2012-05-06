@@ -44,7 +44,7 @@
         <project.source.compile>1.7</project.source.compile>
         <project.target.compile>1.7</project.target.compile>
         <clover.version>3.1.0</clover.version>
-        <sonar.version>2.0</sonar.version>        
+        <sonar.version>2.0</sonar.version>
     </properties>
 
     <modules>
@@ -196,6 +196,36 @@
                 <env>PROD</env>
             </properties>
         </profile>
+
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/src.xml</descriptor>
+                            </descriptors>
+                            <tarLongFileMode>gnu</tarLongFileMode>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>apache-continuum-${project.version}-src</finalName>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
     <build>
@@ -239,21 +269,26 @@
                     <artifactId>native2ascii-maven-plugin</artifactId>
                     <version>1.0-alpha-1</version>
                 </plugin>
+
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.7</version>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <tagBase>https://svn.apache.org/repos/asf/continuum/tags</tagBase>
+                        <preparationGoals>clean install</preparationGoals>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>javancss-maven-plugin</artifactId>
-                    <version>2.0</version>
+                    <artifactId>appassembler-maven-plugin</artifactId>
+                    <version>1.0-beta-2</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
@@ -291,7 +326,7 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>        
+        </repository>
     </repositories>
 
 </project>
