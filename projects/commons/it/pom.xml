@@ -10,9 +10,9 @@
     <packaging>jar</packaging>
 
     <parent>
-        <relativePath>../../../poms/compiled</relativePath>
+        <relativePath>../../../poms</relativePath>
         <groupId>org.maxur</groupId>
-        <artifactId>abstract-compiled-bundle</artifactId>
+        <artifactId>abstract-bundle</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -20,7 +20,35 @@
         <project.root>${project.basedir}/../../../</project.root>
         <bundle.symbolicName>Maxur Commons Integration Tests</bundle.symbolicName>
         <bundle.namespace>org.maxur.commons.it</bundle.namespace>
+        <maven.clover.check.target>0</maven.clover.check.target>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <forkMode>pertest</forkMode>
+                    <!-- <argLine>-javaagent:tools/org.springframework.instrument-3.0.4.RELEASE.jar -ea</argLine>-->
+                    <encoding>${project.source.encoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
