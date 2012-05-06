@@ -115,41 +115,188 @@
                     </instructions>
                 </configuration>
             </plugin>
-        </plugins>
-    </build>
-    <reporting>
-        <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>2.6</version>
                 <configuration>
-                    <locales>ru</locales>
+                    <linkxref>true</linkxref>
+                    <xreflocation>${project.reporting.outputDirectory}/xref</xreflocation>
+                    <targetJdk>${project.source.compile}</targetJdk>
+                    <sourceEncoding>${project.source.encoding}</sourceEncoding>
+                    <excludes>
+                        <exclude>**/*Advice.java</exclude>
+                        <exclude>**/generated/*.java</exclude>
+                    </excludes>
                 </configuration>
-                <version>3.0</version>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>pmd</goal>
+                            <goal>cpd</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>pmd</groupId>
+                        <artifactId>pmd</artifactId>
+                        <version>4.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8</version>
-                <configuration>
-                    <links>
-                        <link>http://java.sun.com/javase/6/docs/api/</link>
-                        <link>http://java.sun.com/javaee/5/docs/api/</link>
-                        <link>http://static.springsource.org/spring/docs/3.0.x/api/</link>
-                        <link>http://www.slf4j.org/api/</link>
-                        <link>http://commons.apache.org/logging/commons-logging-1.0.3/docs/api/</link>
-                    </links>
-                    <source>${project.source.compile}</source>
-                    <linksource>true</linksource>
-                    <excludePackageNames>*.it,*.test</excludePackageNames>
-                </configuration>
-            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.7</version>
+                <version>2.8</version>
                 <configuration>
+                    <linkxref>true</linkxref>
+                    <xreflocation>${project.reporting.outputDirectory}/xref</xreflocation>
                     <configLocation>${project.root}/check-style-conf.xml</configLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>5.5</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.sun</groupId>
+                                <artifactId>tools</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <locales>en</locales>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.2</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependencies</report>
+                            <report>issue-tracking</report>
+                            <report>license</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <linkxref>true</linkxref>
+                    <xreflocation>${project.reporting.outputDirectory}/xref</xreflocation>
+                    <targetJdk>${project.source.compile}</targetJdk>
+                    <sourceEncoding>${project.source.encoding}</sourceEncoding>
+                    <excludes>
+                        <exclude>**/*Advice.java</exclude>
+                        <exclude>**/generated/*.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <linkxref>true</linkxref>
+                    <xreflocation>${project.reporting.outputDirectory}/xref</xreflocation>
+                    <configLocation>${project.root}/check-style-conf.xml</configLocation>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>2.4.0</version>
+                <configuration>
+                    <xmloutput>true</xmloutput>
+                    <effort>Max</effort>
+                </configuration>
+            </plugin>
+
+            <!--
+             UmlGraph not working with Java 7
+             see http://stackoverflow.com/questions/8609546/umlgraph-not-automatic-integrated-in-javadoc
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8.1</version>
+                <configuration>
+                    <source>${project.source.compile}</source>
+                    <encoding>${project.source.encoding}</encoding>
+                    <linksource>true</linksource>
+                    <excludePackageNames>*.it,*.test</excludePackageNames>
+                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                    <aggregate>true</aggregate>
+                    <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
+                    <docletArtifact>
+                        <groupId>gr.spinellis</groupId>
+                        <artifactId>UmlGraph</artifactId>
+                        <version>4.6</version>
+                    </docletArtifact>
+                    <additionalparam>
+                        -views
+                        -inferrel -inferdep -quiet -hide java.*
+                        -collpackages java.util.* -qualify
+                        -postfixpackage -nodefontsize 9
+                        -nodefontpackagesize 7
+                        -enumerations -enumconstants -visibility
+                        -link "http://java.sun.com/javase/7/docs/api/"
+                    </additionalparam>
+
+                    <links>
+                        <link>http://java.sun.com/javase/7/docs/api/</link>
+                        <link>http://wicket.apache.org/apidocs/1.5/</link>
+                        <link>http://google-guice.googlecode.com/git/javadoc/</link>
+                        <link>http://www.slf4j.org/api/</link>
+                        <link>http://commons.apache.org/logging/commons-logging-1.0.3/docs/api/</link>
+                    </links>
                 </configuration>
             </plugin>
             <plugin>
@@ -174,91 +321,60 @@
                     <showSuccess>false</showSuccess>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <xmlOutput>true</xmlOutput>
-                    <effort>Max</effort>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <targetJdk>${project.source.compile}</targetJdk>
-                    <sourceEncoding>${project.source.encoding}</sourceEncoding>
-                    <excludes>
-                        <exclude>**/*Advice.java</exclude>
-                        <exclude>**/generated/*.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.2</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>dependencies</report>
-                            <report>issue-tracking</report>
-                            <report>license</report>
-                            <report>scm</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jdepend-maven-plugin</artifactId>
-                <version>2.0-beta-2</version>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>taglist-maven-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>javancss-maven-plugin</artifactId>
-                <version>2.0</version>
-            </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <source>${project.source.compile}</source>
-                    <doclet>
-                        gr.spinellis.umlgraph.doclet.UmlGraphDoc
-                    </doclet>
+                    <encoding>${project.source.encoding}</encoding>
+                    <linksource>true</linksource>
+                    <excludePackageNames>*.it,*.test</excludePackageNames>
+
+                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                    <aggregate>true</aggregate>
+                    <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
                     <docletArtifact>
                         <groupId>gr.spinellis</groupId>
                         <artifactId>UmlGraph</artifactId>
-                        <version>4.4</version>
+                        <version>4.6</version>
                     </docletArtifact>
                     <additionalparam>
                         -inferrel -inferdep -quiet -hide java.*
                         -collpackages java.util.* -qualify
                         -postfixpackage -nodefontsize 9
-                        -nodefontpackagesize 7 -attributes -operations
+                        -nodefontpackagesize 7
                         -enumerations -enumconstants -visibility
-                        -link "http://java.sun.com/j2se/1.5/docs/api/"
-                        -link "http://static.springframework.org/spring/docs/2.0.x/api/"
-                        -link "http://www.hibernate.org/hib_docs/v3/api/"
+                        -link "http://java.sun.com/javase/7/docs/api/"
                     </additionalparam>
+                    <links>
+                        <link>http://java.sun.com/javase/7/docs/api/</link>
+                        <link>http://wicket.apache.org/apidocs/1.5/</link>
+                        <link>http://google-guice.googlecode.com/git/javadoc/</link>
+                        <link>http://www.slf4j.org/api/</link>
+                        <link>http://commons.apache.org/logging/commons-logging-1.0.3/docs/api/</link>
+                    </links>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jdepend-maven-plugin</artifactId>
+                <version>2.0-beta-2</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+
+            <!--            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>javancss-maven-plugin</artifactId>
+                <version>2.0</version>
+            </plugin>-->
+
 
         </plugins>
     </reporting>
