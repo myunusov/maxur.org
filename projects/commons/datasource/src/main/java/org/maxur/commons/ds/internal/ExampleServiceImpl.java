@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Internal implementation of our example OSGi service
  */
-public final class ExampleServiceImpl
+public final class ExampleServiceImpl    // TODO Stub
         implements ExampleService {
     // implementation methods go here...
 
