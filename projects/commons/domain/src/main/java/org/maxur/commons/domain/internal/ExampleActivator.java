@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Extension of the default OSGi bundle activator
  */
-public final class ExampleActivator
+public final class ExampleActivator      // TODO Stub
         implements BundleActivator {
     /**
      * Called whenever the OSGi framework starts our bundle
