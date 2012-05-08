@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <wicket.version>6.0.0-beta1</wicket.version>
+        <wicket.version>6.0-SNAPSHOT</wicket.version>
         <guice.version>3.0</guice.version>
         <pax-web.version>1.1.1</pax-web.version>
         <project.root>${project.basedir}/../../</project.root>
