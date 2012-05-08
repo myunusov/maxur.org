@@ -1,45 +1,48 @@
 package org.maxur.commons.view.pages;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.util.tester.WicketTester;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.maxur.commons.view.AbstractWicketTest;
 import org.maxur.commons.view.components.menu.MenuPanel;
 
 /**
  * @author Maxim Yunusov
  * @version 1.0 15.10.11
  */
-public class BasePageTest {
 
-    protected static WicketTester tester;
+public class BasePageTest extends AbstractWicketTest {
+
+    @Inject
+    public BasePageTest(Injector injector) {
+        super(injector);
+    }
 
     /**
      * Basic Setup of our test.
      */
-    @BeforeClass
-    public static void testSetup() {
-        tester = new WicketTester();
-        tester.startPage(BasePage.class);
+    @Before
+    public void testSetup() {
+        getTester().startPage(BasePage.class);
     }
-
 
     /**
      * Basic None error Test.
      */
     @Test
     public void shouldBeNoneError() {
-        tester.assertNoErrorMessage();
-        tester.assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+        getTester().assertNoInfoMessage();
     }
-
 
     /**
      * Basic Base Page Test case for our application.
      */
     @Test
     public void shouldBeRendered() {
-        tester.assertRenderedPage(BasePage.class);
+        getTester().assertRenderedPage(BasePage.class);
     }
 
 
@@ -48,7 +51,7 @@ public class BasePageTest {
      */
     @Test
     public void shouldBeHasHeader() {
-        tester.assertComponent("header", HeaderPanel.class);
+        getTester().assertComponent("header", HeaderPanel.class);
     }
 
     /**
@@ -56,7 +59,7 @@ public class BasePageTest {
      */
     @Test
     public void shouldBeHasFooter() {
-        tester.assertComponent("footer", FooterPanel.class);
+        getTester().assertComponent("footer", FooterPanel.class);
     }
 
     /**
@@ -64,12 +67,12 @@ public class BasePageTest {
      */
     @Test
     public void shouldBeHasMenu() {
-        tester.assertComponent("menu", MenuPanel.class);
+        getTester().assertComponent("menu", MenuPanel.class);
     }
 
     @Test
     public void shouldBeHasApplicationTitle() {
-        tester.assertComponent("application.title", Label.class);
+        getTester().assertComponent("application.title", Label.class);
     }
 
 
