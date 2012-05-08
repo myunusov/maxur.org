@@ -118,11 +118,28 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <locales>en</locales>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-descriptor</id>
+                        <goals>
+                            <goal>attach-descriptor</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
-                    <linkxref>true</linkxref>
-                    <xreflocation>${project.reporting.outputDirectory}/xref</xreflocation>
+                    <linkXRef>true</linkXRef>
+                    <xrefLocation>${project.reporting.outputDirectory}/xref</xrefLocation>
                     <targetJdk>${project.source.compile}</targetJdk>
                     <sourceEncoding>${project.source.encoding}</sourceEncoding>
                     <excludes>
@@ -153,8 +170,8 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.8</version>
                 <configuration>
-                    <linkxref>true</linkxref>
-                    <xreflocation>${project.reporting.outputDirectory}/xref</xreflocation>
+                    <linkXRef>true</linkXRef>
+                    <xrefLocation>${project.reporting.outputDirectory}/xref</xrefLocation>
                     <configLocation>${project.root}/check-style-conf.xml</configLocation>
                 </configuration>
                 <executions>
@@ -204,10 +221,15 @@
                 <reportSets>
                     <reportSet>
                         <reports>
+                            <report>index</report>
                             <report>dependencies</report>
-                            <report>issue-tracking</report>
+                            <report>dependency-convergence</report>
+                            <report>plugin-management</report>
                             <report>license</report>
                             <report>scm</report>
+                            <report>cim</report>
+                            <report>issue-tracking</report>
+                            <report>summary</report>
                         </reports>
                     </reportSet>
                 </reportSets>
@@ -227,8 +249,8 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
-                    <linkxref>true</linkxref>
-                    <xreflocation>${project.reporting.outputDirectory}/xref</xreflocation>
+                    <linkXRef>true</linkXRef>
+                    <xrefLocation>${project.reporting.outputDirectory}/xref</xrefLocation>
                     <targetJdk>${project.source.compile}</targetJdk>
                     <sourceEncoding>${project.source.encoding}</sourceEncoding>
                     <excludes>
@@ -243,8 +265,8 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.8</version>
                 <configuration>
-                    <linkxref>true</linkxref>
-                    <xreflocation>${project.reporting.outputDirectory}/xref</xreflocation>
+                    <linkXRef>true</linkXRef>
+                    <xrefLocation>${project.reporting.outputDirectory}/xref</xrefLocation>
                     <configLocation>${project.root}/check-style-conf.xml</configLocation>
                 </configuration>
             </plugin>
@@ -254,7 +276,7 @@
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>2.4.0</version>
                 <configuration>
-                    <xmloutput>true</xmloutput>
+                    <xmlOutput>true</xmlOutput>
                     <effort>Max</effort>
                 </configuration>
             </plugin>
@@ -274,6 +296,7 @@
                     <excludePackageNames>*.it,*.test</excludePackageNames>
                     <useStandardDocletOptions>true</useStandardDocletOptions>
                     <aggregate>true</aggregate>
+
                     <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
                     <docletArtifact>
                         <groupId>gr.spinellis</groupId>
@@ -281,12 +304,17 @@
                         <version>4.6</version>
                     </docletArtifact>
                     <additionalparam>
-                        -views
                         -inferrel -inferdep -quiet -hide java.*
                         -collpackages java.util.* -qualify
                         -postfixpackage -nodefontsize 9
                         -nodefontpackagesize 7
-                        -enumerations -enumconstants -visibility
+                        -edgefontname "Trebuchet MS"
+                        -nodefontabstractname "Trebuchet MS"
+                        -nodefontclassabstractname "Trebuchet MS"
+                        -nodefontclassname "Trebuchet MS"
+                        -nodefontname "Trebuchet MS"
+                        -nodefontpackagename "Trebuchet MS"
+                        -nodefonttagname "Trebuchet MS"
                         -link "http://java.sun.com/javase/7/docs/api/"
                     </additionalparam>
 
