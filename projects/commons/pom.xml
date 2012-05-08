@@ -5,8 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>maxur-commons</artifactId>
-    <version>1.0</version>
     <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.maxur</groupId>
+        <artifactId>projects</artifactId>
+        <version>1.0</version>
+    </parent>
 
     <profiles>
         <profile>
@@ -21,12 +26,6 @@
         <project.root>${project.basedir}/../../</project.root>
         <bundles.configuration.location>${project.basedir}/config/${env}</bundles.configuration.location>
     </properties>
-
-    <parent>
-        <groupId>org.maxur</groupId>
-        <artifactId>projects</artifactId>
-        <version>1.0</version>
-    </parent>
 
     <modules>
         <module>domain</module>
