@@ -1,4 +1,4 @@
-package org.maxur.commons.view.model.webClient;
+package org.maxur.commons.component.model.webclient;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;

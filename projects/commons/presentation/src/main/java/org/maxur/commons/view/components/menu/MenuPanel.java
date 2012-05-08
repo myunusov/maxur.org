@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.maxur.commons.view.components.model.Command;
+import org.maxur.commons.component.command.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

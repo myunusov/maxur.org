@@ -7,8 +7,8 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.resource.CssResourceReference;
 import org.maxur.commons.view.components.StyleBehavior;
-import org.maxur.commons.view.model.webClient.WebBrowser;
-import org.maxur.commons.view.model.webClient.WebBrowserType;
+import org.maxur.commons.component.model.webclient.WebBrowser;
+import org.maxur.commons.component.model.webclient.WebBrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

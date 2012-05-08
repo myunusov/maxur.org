@@ -28,6 +28,7 @@
     </properties>
 
     <modules>
+        <module>component</module>
         <module>domain</module>
         <module>datasource</module>
         <module>presentation</module>

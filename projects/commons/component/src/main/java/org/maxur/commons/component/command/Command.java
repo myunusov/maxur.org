@@ -1,12 +1,15 @@
-package org.maxur.commons.view.components.model;
+package org.maxur.commons.component.command;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.WebComponent;
+import org.apache.wicket.request.component.IRequestableComponent;
 
 import java.io.Serializable;
 
 /**
  * <p>Abstract Command class.</p>
+ *
+ * This interface is used to define commands for Wicket components.
+ *
+ * see Gof pattern 'Command'
  *
  * @author Maxim Yunusov
  * @version 1.0 15.04.12
@@ -15,40 +18,32 @@ public abstract class Command implements Serializable {
 
     private static final long serialVersionUID = -8326046821326458236L;
 
-    private boolean ajax;
-
     private String titleKey;
 
-    private WebComponent component;
-
-    /**
-     * <p>execute</p>
-     */
-    public abstract void execute();
-
-    /**
-     * <p>execute</p>
-     *
-     * @param target a {@link org.apache.wicket.ajax.AjaxRequestTarget} object.
-     */
-    public abstract void execute(final AjaxRequestTarget target);
+    private IRequestableComponent component;
 
     /**
      * <p>Constructor for Command.</p>
      *
-     * @param ajax a boolean.
      */
-    public Command(boolean ajax) {
-        this.ajax = ajax;
+    public Command() {
     }
 
     /**
-     * <p>isAjax</p>
+     * <p>execute</p>
      *
-     * @return a boolean.
+     * Executes the command.
      */
-    public boolean isAjax() {
-        return ajax;
+    public abstract void execute();
+
+    /**
+     * <p>bind</p>
+     * Bind command with Wicket Component.
+     *
+     * @param component a {@link org.apache.wicket.markup.html.WebComponent} object.
+     */
+    public void bind(final IRequestableComponent component) {
+        this.component = component;
     }
 
     /**
@@ -72,19 +67,10 @@ public abstract class Command implements Serializable {
     /**
      * <p>isActive</p>
      *
-     * @return a boolean.
+     * @return true if command is Active (is running for example).
      */
     public boolean isActive() {
         return false;
-    }
-
-    /**
-     * <p>bind</p>
-     *
-     * @param component a {@link org.apache.wicket.markup.html.WebComponent} object.
-     */
-    public void bind(final WebComponent component) {
-        this.component = component;
     }
 
     /**
@@ -92,7 +78,7 @@ public abstract class Command implements Serializable {
      *
      * @return a {@link org.apache.wicket.markup.html.WebComponent} object.
      */
-    public WebComponent getComponent() {
+    public IRequestableComponent getComponent() {
         return component;
     }
 }

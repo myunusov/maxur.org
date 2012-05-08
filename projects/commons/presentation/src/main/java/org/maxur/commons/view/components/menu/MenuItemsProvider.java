@@ -1,6 +1,6 @@
 package org.maxur.commons.view.components.menu;
 
-import org.maxur.commons.view.components.model.Command;
+import org.maxur.commons.component.command.Command;
 
 import java.util.List;
 

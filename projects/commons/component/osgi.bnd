@@ -1,0 +1,3 @@
+Import-Package: *,com.google.inject,org.apache.wicket.protocol.http,org.apache.wicket.markup.html.form.upload,org.apache.wicket.markup.html.panel,org.slf4j,org.aopalliance.intercept
+Export-Package: org.maxur.commons.component.command,org.maxur.commons.component.model.*
+

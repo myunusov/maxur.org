@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.maxur.commons.view.commands.MaxurMenuItemsProvider;
 import org.maxur.commons.view.components.menu.MenuItemsProvider;
-import org.maxur.commons.view.model.webClient.WebBrowser;
+import org.maxur.commons.component.model.webclient.WebBrowser;
 
 /**
  * @author Maxim Yunusov

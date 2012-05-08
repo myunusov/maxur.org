@@ -1,9 +1,9 @@
-package org.maxur.commons.view.model;
+package org.maxur.commons.component.model.webclient.wicket;
 
 import com.google.inject.Provider;
 import org.apache.wicket.request.cycle.RequestCycle;
-import org.maxur.commons.view.model.webClient.AbstractWebBrowserDetector;
-import org.maxur.commons.view.model.webClient.WebBrowser;
+import org.maxur.commons.component.model.webclient.AbstractWebBrowserDetector;
+import org.maxur.commons.component.model.webclient.WebBrowser;
 
 import javax.servlet.http.HttpServletRequest;
 
