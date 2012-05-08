@@ -7,14 +7,37 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <title>Your Page Title</title>
     <wicket:remove>
-        <link href="../../../../../../../webapp/css/my_layout.css" rel="stylesheet" type="text/css"/>
+        <link href="../../components/yaml/css/my_layout.css" rel="stylesheet" type="text/css"/>
         <!--[if lte IE 7]>
-        <link href="../../../../../../../webapp/css/patches/patch_my_layout.css" rel="stylesheet" type="text/css"/>
+        <link href="../../components/yaml/css/patches/patch_my_layout.css" rel="stylesheet" type="text/css"/>
         <![endif]-->
     </wicket:remove>
 </wicket:head>
 <body>
 <wicket:extend>
+    <wicket:remove>
+        <div id="teaser">
+        </div>
+        <div id="main">
+            <div id="col1">
+                <div id="col1_content" class="clearfix">
+                    <!-- add your content here -->
+                </div>
+            </div>
+            <div id="col2">
+                <div id="col2_content" class="clearfix">
+                    <!-- add your content here -->
+                </div>
+            </div>
+            <div id="col3">
+                <div id="col3_content" class="clearfix">
+                    <!-- add your content here -->
+                </div>
+                <!-- IE Column Clearing -->
+                <div id="ie_clearing"> &#160; </div>
+            </div>
+        </div>
+    </wicket:remove>
 </wicket:extend>
 </body>
 </html>

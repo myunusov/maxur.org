@@ -1,27 +1,31 @@
 package org.maxur.commons.view.pages.home;
 
-import org.apache.wicket.util.tester.WicketTester;
-import org.junit.BeforeClass;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import org.junit.Before;
 import org.junit.Test;
+import org.maxur.commons.view.AbstractWicketTest;
+import org.maxur.commons.view.components.menu.MenuPanel;
 import org.maxur.commons.view.pages.FooterPanel;
 import org.maxur.commons.view.pages.HeaderPanel;
-import org.maxur.commons.view.components.menu.MenuPanel;
 
 /**
  * @author Maxim Yunusov
  * @version 1.0 15.10.11
  */
-public class HomePageTest {
+public class HomePageTest extends AbstractWicketTest {
 
-    protected static WicketTester tester;
+    @Inject
+    public HomePageTest(Injector injector) {
+        super(injector);
+    }
 
     /**
      * Basic Setup of our test.
      */
-    @BeforeClass
-    public static void testSetup() {
-        tester = new WicketTester();
-        tester.startPage(HomePage.class);
+    @Before
+    public void testSetup() {
+        getTester().startPage(HomePage.class);
     }
 
 
@@ -30,8 +34,8 @@ public class HomePageTest {
      */
     @Test
     public void shouldBeNoneError() {
-        tester.assertNoErrorMessage();
-        tester.assertNoInfoMessage();
+        getTester().assertNoErrorMessage();
+        getTester().assertNoInfoMessage();
     }
 
 
@@ -40,7 +44,7 @@ public class HomePageTest {
      */
     @Test
     public void shouldBeRendered() {
-        tester.assertRenderedPage(HomePage.class);
+        getTester().assertRenderedPage(HomePage.class);
     }
 
 
@@ -49,7 +53,7 @@ public class HomePageTest {
      */
     @Test
     public void shouldBeHasHeader() {
-        tester.assertComponent("header", HeaderPanel.class);
+        getTester().assertComponent("header", HeaderPanel.class);
     }
 
     /**
@@ -57,7 +61,7 @@ public class HomePageTest {
      */
     @Test
     public void shouldBeHasFooter() {
-        tester.assertComponent("footer", FooterPanel.class);
+        getTester().assertComponent("footer", FooterPanel.class);
     }
 
     /**
@@ -65,7 +69,7 @@ public class HomePageTest {
      */
     @Test
     public void shouldBeHasMenu() {
-        tester.assertComponent("menu", MenuPanel.class);
+        getTester().assertComponent("menu", MenuPanel.class);
     }
 
 

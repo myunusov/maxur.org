@@ -2,8 +2,8 @@ package org.maxur.commons.view.pages;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
+import org.maxur.commons.view.components.yaml.YamlBehavior;
 import org.maxur.commons.view.components.menu.MenuPanel;
 
 /**
@@ -23,10 +23,12 @@ public class BasePage extends WebPage {
      * It's Base Page constructor.
      */
     public BasePage() {
+        add(new YamlBehavior());
+
+        add(new Label("application.title", new ResourceModel("application.title").wrapOnAssignment(this)));
         add(new HeaderPanel("header"));
-        add(new FooterPanel("footer"));
         add(new MenuPanel("menu"));
-        IModel<String> model = new ResourceModel("application.title").wrapOnAssignment(this);
-        add(new Label("application.title", model));
+        add(new FooterPanel("footer"));
     }
+
 }
