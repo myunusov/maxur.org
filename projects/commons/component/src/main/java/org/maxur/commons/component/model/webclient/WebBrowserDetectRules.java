@@ -1,6 +1,9 @@
 package org.maxur.commons.component.model.webclient;
 
+import org.maxur.commons.component.utils.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,81 +11,139 @@ import java.util.List;
 * @author Maxim Yunusov
 * @version 1.0 07.05.12
 */
-final class WebBrowserDetectRules {
+final class WebBrowserDetectRules implements Serializable {
 
-    private static final String USER_AGENT = "user-agent";
+    private static final long serialVersionUID = -3814789251341221261L;
 
-    final List<WebBrowserDetectRule> rules = new ArrayList<>();
+    /** Constant <code>USER_AGENT="user-agent"</code> */
+    public static final String USER_AGENT = "user-agent";
 
-    private WebBrowserDetectRule currentRule;
+    private final List<WebBrowserDetectRule> rules = new ArrayList<>();
 
-    public WebBrowserDetectRules add() {
-        this.currentRule = new WebBrowserDetectRule();
-        rules.add(this.currentRule);
+    /**
+     * <p>Private Constructor for WebBrowserDetectRules.</p>
+     *
+     * A instance must be constructed with get method only.
+     *
+     */
+    private WebBrowserDetectRules() {
+    }
+
+    /**
+     * Returns instance of WebBrowserDetectRules class.
+     * see 'Creators Method' pattern
+     *
+     * @return instance of WebBrowserDetectRules class.
+     */
+    public static WebBrowserDetectRules get() {
+        return new WebBrowserDetectRules();
+    }
+
+    /**
+     * <p>addRuleFor.</p>
+     *
+     * @param type a {@link org.maxur.commons.component.model.webclient.WebBrowserType} object.
+     * @return a {@link org.maxur.commons.component.model.webclient.WebBrowserDetectRules} object.
+     */
+    public WebBrowserDetectRules addRuleFor(final WebBrowserType type) {
+        rules.add(new WebBrowserDetectRule(type));
         return this;
     }
 
-    public WebBrowserDetectRules on(final String id) {
-        this.currentRule.setKey(id);
+    /**
+     * <p>keyString.</p>
+     *
+     * @param id a {@link java.lang.String} object.
+     * @return a {@link org.maxur.commons.component.model.webclient.WebBrowserDetectRules} object.
+     */
+    public WebBrowserDetectRules keyString(final String id) {
+        this.getCurrentRule().setKey(id);
         return this;
     }
 
-    public WebBrowserDetectRules set(final WebBrowserType agent) {
-        this.currentRule.setAgent(agent);
-        return this;
-    }
-
+    /**
+     * <p>withVersion.</p>
+     *
+     * @return a {@link org.maxur.commons.component.model.webclient.WebBrowserDetectRules} object.
+     */
     public WebBrowserDetectRules withVersion() {
-        currentRule.addVersion();
+        getCurrentRule().addVersion();
         return this;
     }
 
+    /**
+     * <p>after.</p>
+     *
+     * @param versionKey a {@link java.lang.String} object.
+     * @return a {@link org.maxur.commons.component.model.webclient.WebBrowserDetectRules} object.
+     */
     public WebBrowserDetectRules after(final String versionKey) {
-        currentRule.versionAfterKey(versionKey);
+        getCurrentRule().versionAfterKey(versionKey);
         return this;
     }
 
+    /**
+     * <p>until.</p>
+     *
+     * @param separator a {@link java.lang.String} object.
+     * @return a {@link org.maxur.commons.component.model.webclient.WebBrowserDetectRules} object.
+     */
     public WebBrowserDetectRules until(final String separator) {
-        currentRule.versionSeparator(separator);
+        getCurrentRule().versionSeparator(separator);
         return this;
     }
 
+    /**
+     * <p>detect.</p>
+     *
+     * @param request a {@link javax.servlet.http.HttpServletRequest} object.
+     * @return a {@link org.maxur.commons.component.model.webclient.WebBrowser} object.
+     */
     public WebBrowser detect(final HttpServletRequest request) {
         final String userAgentString = request.getHeader(USER_AGENT);
-        if (isNotBlank(userAgentString)) {
+        if (StringUtils.isNotBlank(userAgentString)) {
             for (WebBrowserDetectRule rule : rules) {
                 if (rule.isApplicable(userAgentString)) {
-                    return new WebBrowserBase(rule.getAgent(), rule.getVersionBy(userAgentString));
+                    return new BaseWebBrowser(rule.getType(), rule.getVersionBy(userAgentString));
                 }
             }
         }
-        return (new WebBrowserBase(WebBrowserType.UNKNOWN, ""));
+        return (new BaseWebBrowser(WebBrowserType.UNKNOWN, ""));
     }
 
-    private static boolean isNotBlank(final String userAgentString) {
-        return userAgentString != null && userAgentString.length() > 0;
+    /**
+     * <p>getCurrentRule.</p>
+     *
+     * @return a {@link org.maxur.commons.component.model.webclient.WebBrowserDetectRules.WebBrowserDetectRule} object.
+     */
+    public WebBrowserDetectRule getCurrentRule() {
+        return rules.get(rules.size() - 1);
     }
 
-    private static final class WebBrowserDetectRule {
+    private static final class WebBrowserDetectRule implements Serializable {
+
+        private static final long serialVersionUID = 8267608665280048187L;
+
+        private static final String DEFAULT_VERSION_SEPARATOR = " ";
 
         private String key;
 
         private String versionKey;
 
-        private WebBrowserType agent;
+        private final WebBrowserType type;
 
-        private String versionSeparator;
+        private String versionSeparator = DEFAULT_VERSION_SEPARATOR;
+
+        public WebBrowserDetectRule(final WebBrowserType type) {
+            this.type = type;
+        }
 
         void setKey(final String key) {
             this.key = key;
         }
 
-        public void setAgent(final WebBrowserType agent) {
-            this.agent = agent;
-        }
-
-        public WebBrowserType getAgent() {
-            return agent;
+        public WebBrowserType getType() {
+            return type;
         }
 
         public boolean isApplicable(final String userAgentString) {
@@ -101,8 +162,15 @@ final class WebBrowserDetectRules {
             versionSeparator = separator;
         }
 
+        private boolean isVersionAvailable() {
+            return StringUtils.isNotBlank(this.versionKey);
+        }
+
         public String getVersionBy(String userAgentString) {
-            String ver = userAgentString.substring(userAgentString.indexOf(versionKey) + versionKey.length());
+            if (!isVersionAvailable()) {
+                return "0";
+            }
+            final String ver = userAgentString.substring(userAgentString.indexOf(versionKey) + versionKey.length());
             return  (ver.indexOf(versionSeparator) > 0 ? ver.substring(0, ver.indexOf(versionSeparator)) : ver).trim();
         }
     }
