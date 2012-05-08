@@ -24,7 +24,6 @@ public abstract class Command implements Serializable {
 
     /**
      * <p>Constructor for Command.</p>
-     *
      */
     public Command() {
     }
