@@ -1,9 +1,9 @@
 package org.maxur.commons.view.commands;
 
 import com.google.inject.Singleton;
-import org.maxur.commons.view.components.menu.GoToCommand;
+import org.maxur.commons.component.command.GoToCommand;
 import org.maxur.commons.view.components.menu.MenuItemsProvider;
-import org.maxur.commons.view.components.model.Command;
+import org.maxur.commons.component.command.Command;
 import org.maxur.commons.view.pages.about.AboutPage;
 import org.maxur.commons.view.pages.home.HomePage;
 
@@ -27,15 +27,17 @@ public class MaxurMenuItemsProvider implements MenuItemsProvider {
     public MaxurMenuItemsProvider() {
         // TODO Stub
         commands = new ArrayList<>();
-        commands.add(GoToCommand.Builder.instance()
-                .setAsTarget(HomePage.class)
-                .withTitleKey("welcome.page.title")
-                .build()
+        commands.add(
+                GoToCommand.builder()
+                    .setAsTarget(HomePage.class)
+                    .withTitleKey("welcome.page.title")
+                    .build()
         );
-        commands.add(GoToCommand.Builder.instance()
-                .setAsTarget(AboutPage.class)
-                .withTitleKey("about.page.title")
-                .build()
+        commands.add(
+                GoToCommand.builder()
+                    .setAsTarget(AboutPage.class)
+                    .withTitleKey("about.page.title")
+                    .build()
         );
     }
 

@@ -38,6 +38,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>maxur-commons-component</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
 <!--
         <dependency>
             <groupId>com.googlecode.lambdaj</groupId>

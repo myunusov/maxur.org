@@ -1,7 +1,7 @@
 package org.maxur.commons.view;
 
-import org.maxur.commons.view.model.webClient.WebBrowser;
-import org.maxur.commons.view.model.webClient.WebBrowserType;
+import org.maxur.commons.component.model.webclient.WebBrowser;
+import org.maxur.commons.component.model.webclient.WebBrowserType;
 
 /**
 * @author Maxim Yunusov

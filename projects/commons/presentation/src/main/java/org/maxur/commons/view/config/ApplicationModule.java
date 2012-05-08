@@ -3,8 +3,8 @@ package org.maxur.commons.view.config;
 import com.google.inject.AbstractModule;
 import org.maxur.commons.view.commands.MaxurMenuItemsProvider;
 import org.maxur.commons.view.components.menu.MenuItemsProvider;
-import org.maxur.commons.view.model.WicketWebBrowserDetector;
-import org.maxur.commons.view.model.webClient.WebBrowser;
+import org.maxur.commons.component.model.webclient.wicket.WicketWebBrowserDetector;
+import org.maxur.commons.component.model.webclient.WebBrowser;
 
 /**
  * <p>ApplicationModule class.</p>
