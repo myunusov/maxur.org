@@ -5,7 +5,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>maxur-taskun</artifactId>
-    <version>1.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -18,5 +17,8 @@
         <version>1.0</version>
     </parent>
 
-    
+    <modules>
+        <module>provision</module>
+    </modules>
+
 </project>
