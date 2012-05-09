@@ -1,21 +1,27 @@
 package org.maxur.commons.view;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.name.Named;
 import org.apache.wicket.Session;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.guice.GuiceInjectorHolder;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebRequest;
+import org.maxur.commons.component.model.webclient.WebBrowser;
+import org.maxur.commons.component.model.webclient.WebBrowserDetector;
+import org.maxur.commons.view.api.OSGiWebApplication;
+import org.maxur.commons.view.api.StyleBehavior;
 import org.maxur.commons.view.pages.about.AboutPage;
 import org.maxur.commons.view.pages.home.HomePage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,11 +30,25 @@ import javax.servlet.http.HttpServletRequest;
  * @author Maxim Yunusov
  * @version 1.0 27.09.11
  */
-public class MaxurApplication extends WebApplication {
+public class MaxurApplication extends WebApplication implements OSGiWebApplication {
 
     private static final String CURRENT_ENCODING = "UTF-8";
 
     private static Injector injector;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Inject
+    @Named("version")
+    private String version;
+
+    @Inject
+    private WebBrowserDetector detector;
+
+    @Inject
+    private StyleBehavior styleBehavior;
+
+    private OsgiClassResolver classResolver;
 
     /**
      * <p>Setter for the field <code>injector</code>.</p>
@@ -40,16 +60,13 @@ public class MaxurApplication extends WebApplication {
         MaxurApplication.injector = injector;
     }
 
-    private String version;
-
-
     /**
      * <p>Setter for the field <code>version</code>.</p>
      *
      * @param version a {@link java.lang.String} object.
      */
-    @Inject
-    public void setVersion(@Named("version") String version) {
+    @SuppressWarnings("UnusedDeclaration")
+    public void setVersion(String version) {
         this.version = version;
     }
 
@@ -62,20 +79,29 @@ public class MaxurApplication extends WebApplication {
     /** {@inheritDoc} */
     @Override
     protected final void init() {
-        Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.debug("Version : " + version);
-
         getMarkupSettings().setDefaultMarkupEncoding(CURRENT_ENCODING);
         getRequestCycleSettings().setResponseRequestEncoding(CURRENT_ENCODING);
+        if (injector != null) {
+            injector.injectMembers(this);
+        }
+        logger.debug(String.format("Star Web Application Maxur (Version : %s)", version));
         getComponentInstantiationListeners().add(createInjector());
         mountPage("/home", HomePage.class);
         mountPage("/about", AboutPage.class);
+
+        this.classResolver = new OsgiClassResolver();
+        this.classResolver.addClassLoader(this.getClass().getClassLoader());
+        getApplicationSettings().setClassResolver(classResolver);
     }
 
     private GuiceComponentInjector createInjector() {
         return injector != null ? new GuiceComponentInjector(this, injector) : new GuiceComponentInjector(this);
     }
 
+    @Override
+    public void registersResource(final Object object) {
+        this.classResolver.addClassLoader(object.getClass().getClassLoader());
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -87,6 +113,21 @@ public class MaxurApplication extends WebApplication {
     /** {@inheritDoc} */
     @Override
     public final Session newSession(final Request request, final Response response) {
+        if (detector != null) {
+            final WebBrowser browser = detector.detect(getHttpServletRequest());
+            logger.debug(String.format(
+                    "New Session with Web Client on %s (%s)",
+                    browser.getBrowserType(), browser.getVersion())
+            );
+        }
         return new MaxurSession(request);
+    }
+
+    private HttpServletRequest getHttpServletRequest() {
+        return ((HttpServletRequest) RequestCycle.get().getRequest().getContainerRequest());
+    }
+
+    public Behavior getStyleBehavior() {
+        return styleBehavior.asBehavior();
     }
 }

@@ -1,16 +1,20 @@
-package org.maxur.commons.view.components.yaml;
+package org.maxur.yaml;
 
 import com.google.inject.Inject;
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.CssResourceReference;
-import org.maxur.commons.view.components.StyleBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowser;
+import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.component.model.webclient.WebBrowserType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.maxur.commons.view.api.OSGiWebApplication;
+import org.maxur.commons.view.api.StyleBehavior;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Maxim Yunusov
@@ -22,31 +26,42 @@ public class YamlBehavior extends Behavior implements StyleBehavior {
 
     private static final int IE_7_VERSION = 7;
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Inject
-    private WebBrowser browser;
+    private WebBrowserDetector detector;
 
     @Override
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
-        logger.debug(String.format("Request from %s (%s)", browser.getBrowserType(), browser.getVersion()));
         response.render(CssHeaderItem.forReference(
                 new CssResourceReference(this.getClass(), "/css/my_layout.css")
         ));
-        if (isOldIE(browser)) {
+        if (isOldIE()) {
             response.render(CssHeaderItem.forReference(
                     new CssResourceReference(this.getClass(), "/css/patches/patch_my_layout.css")
             ));
         }
     }
 
-    private boolean isOldIE(WebBrowser browser) {
+    @Override
+    public void bind(final Component component) {
+        final Application application = Application.get();
+        if (application instanceof OSGiWebApplication) {
+            ((OSGiWebApplication) application).registersResource(this);
+        }
+        super.bind(component);
+    }
+
+    @Override
+    public Behavior asBehavior() {
+        return this;
+    }
+
+    private boolean isOldIE() {
+        final WebBrowser browser = detector.detect(getHttpServletRequest());
         return WebBrowserType.IE.equals(browser.getBrowserType())  &&  browser.getMajorVersion() <= IE_7_VERSION;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setWebBrowser(final WebBrowser browser) {
-        this.browser = browser;
+    private HttpServletRequest getHttpServletRequest() {
+        return ((HttpServletRequest) RequestCycle.get().getRequest().getContainerRequest());
     }
 }
