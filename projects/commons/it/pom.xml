@@ -6,7 +6,7 @@
 
     <artifactId>maxur-commons-it</artifactId>
     <version>1.0</version>
-    <name>${bundle.symbolicName}</name>
+    <name>Maxur Commons Integration Tests</name>
     <packaging>jar</packaging>
 
     <parent>
@@ -18,7 +18,7 @@
 
     <properties>
         <project.root>${project.basedir}/../../../</project.root>
-        <bundle.symbolicName>Maxur Commons Integration Tests</bundle.symbolicName>
+        <bundle.symbolicName>org.maxur.commons.it</bundle.symbolicName>
         <bundle.namespace>org.maxur.commons.it</bundle.namespace>
         <maven.clover.check.target>0</maven.clover.check.target>
     </properties>
@@ -58,7 +58,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.maxur</groupId>
             <artifactId>unit-tests-jars</artifactId>
             <version>1.0</version>
             <type>pom</type>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.maxur</groupId>
+    <artifactId>maxur-view-api</artifactId>
+    <version>1.0</version>
+    <name>Maxur Commons View API Bundle</name>
+    <packaging>jar</packaging>
+
+    <parent>
+        <relativePath>../../../poms/jar</relativePath>
+        <groupId>org.maxur</groupId>
+        <artifactId>abstract-jar-bundle</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <properties>
+        <project.root>${project.basedir}/../../../</project.root>
+        <bundle.symbolicName>org.maxur.view.api</bundle.symbolicName>
+        <bundle.namespace>org.maxur.commons.view.api</bundle.namespace>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>clover</id>
+            <properties>
+                <maven.clover.context.block.names>assert</maven.clover.context.block.names>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.atlassian.maven.plugins</groupId>
+                        <artifactId>maven-clover2-plugin</artifactId>
+                        <configuration>
+                            <licenseLocation>${project.root}/clover.license</licenseLocation>
+                            <jdk>${project.source.compile}</jdk>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>unit-tests-jars</artifactId>
+            <version>1.0</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>wicket-jars</artifactId>
+            <version>1.0</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+
+</project>

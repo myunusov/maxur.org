@@ -1,30 +1,27 @@
-package org.maxur.commons.view.config;
+package org.maxur.yaml.config;
 
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
-import org.maxur.commons.view.MaxurApplication;
 import org.maxur.commons.view.api.StyleBehavior;
+import org.maxur.yaml.YamlBehavior;
 import org.ops4j.peaberry.activation.util.PeaberryActivationModule;
+
+import static org.ops4j.peaberry.Peaberry.service;
+import static org.ops4j.peaberry.util.TypeLiterals.export;
 
 /**
  * <p>OSGiModule class.</p>
  *
  * @author Maxim Yunusov
- * @version 1.0 26.04.12
+ * @version 1.0 08.05.12
  */
 @SuppressWarnings("UnusedDeclaration")
 public class OSGiModule extends PeaberryActivationModule {
 
-    /** Constant <code>VERSION_KEY="version"</code> */
-    public static final String VERSION_KEY = "version";
-
     /** {@inheritDoc} */
     @Override
     protected void configure() {
-        bindConfigurable(String.class).from("org.maxur.commons").named(VERSION_KEY);
-        requestStaticInjection(MaxurApplication.class);
-        bindService(StyleBehavior.class).single();
         bindService(WebBrowserDetector.class).single();
-        install(new ApplicationModule());
+        bind(export(StyleBehavior.class)).toProvider(service(YamlBehavior.class).export());
     }
 
 }

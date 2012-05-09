@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>maxur-commons-core</artifactId>
-    <name>${bundle.symbolicName}</name>
+    <name>Maxur Commons Core Bundle</name>
     <description>Maxur Commons Core Bundle</description>
     <packaging>jar</packaging>
 
@@ -18,7 +18,7 @@
 
     <properties>
         <project.root>${project.basedir}/../../../</project.root>
-        <bundle.symbolicName>Maxur Commons Core Bundle</bundle.symbolicName>
+        <bundle.symbolicName>org.maxur.commons.domain</bundle.symbolicName>
         <bundle.namespace>org.maxur.commons.domain</bundle.namespace>
     </properties>
 

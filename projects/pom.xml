@@ -33,7 +33,7 @@
             <id>DEV</id>
             <properties>
                 <maven-pax-plugin-log.param>debug</maven-pax-plugin-log.param>
-                <debug.opt></debug.opt>
+                <debug.opt> </debug.opt>
             </properties>
             <dependencies>
                 <dependency>
@@ -71,13 +71,13 @@
         <profile>
             <id>QA</id>
             <properties>
-                <debug.opt></debug.opt>
+                <debug.opt> </debug.opt>
             </properties>
         </profile>
         <profile>
             <id>PROD</id>
             <properties>
-                <debug.opt></debug.opt>
+                <debug.opt> </debug.opt>
             </properties>
         </profile>
         <profile>
