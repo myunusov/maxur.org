@@ -13,6 +13,9 @@ import java.util.List;
 */
 final class WebBrowserDetectRules implements Serializable {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = -3814789251341221261L;
 
     /** Constant <code>USER_AGENT="user-agent"</code> */
@@ -122,6 +125,9 @@ final class WebBrowserDetectRules implements Serializable {
 
     private static final class WebBrowserDetectRule implements Serializable {
 
+        /**
+         * The Serial Version UID.
+         */
         private static final long serialVersionUID = 8267608665280048187L;
 
         private static final String DEFAULT_VERSION_SEPARATOR = " ";

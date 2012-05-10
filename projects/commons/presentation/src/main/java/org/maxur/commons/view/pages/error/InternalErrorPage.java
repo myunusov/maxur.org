@@ -7,6 +7,9 @@ package org.maxur.commons.view.pages.error;
  */
 public class InternalErrorPage extends AbstractErrorPage {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = -3433673723823658935L;
 
     public InternalErrorPage() {

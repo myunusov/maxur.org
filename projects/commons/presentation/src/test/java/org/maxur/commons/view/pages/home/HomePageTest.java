@@ -5,7 +5,7 @@ import com.google.inject.Injector;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxur.commons.view.AbstractWicketTest;
-import org.maxur.commons.view.components.menu.MenuPanel;
+import org.maxur.commons.component.mainmenu.MenuPanel;
 import org.maxur.commons.view.pages.FooterPanel;
 import org.maxur.commons.view.pages.HeaderPanel;
 

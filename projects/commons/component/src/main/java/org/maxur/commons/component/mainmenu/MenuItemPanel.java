@@ -1,4 +1,4 @@
-package org.maxur.commons.view.components.menu;
+package org.maxur.commons.component.mainmenu;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;

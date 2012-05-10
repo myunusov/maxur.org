@@ -12,6 +12,9 @@ import java.io.Serializable;
  */
 public class Bookmark implements Serializable {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = 8210845160078911968L;
 
     private final String mountPath;
