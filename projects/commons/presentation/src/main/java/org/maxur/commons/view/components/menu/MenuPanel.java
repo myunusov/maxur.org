@@ -1,16 +1,14 @@
 package org.maxur.commons.view.components.menu;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.maxur.commons.component.command.Command;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.maxur.commons.view.api.Command;
+import org.maxur.commons.view.api.MenuItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +27,8 @@ public class MenuPanel extends Panel {
     private static final long serialVersionUID = -3793059102648719177L;
 
     @Inject
-    private transient MenuItemsProvider menuItemsProvider;
+    private transient MenuItems menuItems;
 
-    @Inject
-    @Named("version")
-    private String version;
 
     /**
      * It's menu panel constructor.
@@ -43,27 +38,23 @@ public class MenuPanel extends Panel {
      */
     public MenuPanel(final String id) {
         super(id);
-        Logger logger = LoggerFactory.getLogger(this.getClass());
-        logger.debug("-----" + version + "-----");
         final ListView<Command> listView = new MenuItemsView("menu_items", getMenuItems());
         add(listView);
     }
 
-    private Model<? extends List<Command>> getMenuItems() {
-        return new Model<>(
-                menuItemsProvider == null ?
-                        new ArrayList<Command>() : (ArrayList<Command>) menuItemsProvider.getMenuItems()
-        );
+    @SuppressWarnings("unchecked")
+    private Model<MenuItems> getMenuItems() {
+        return new Model<>(menuItems == null ? new NullMenuItems() : menuItems);
     }
 
     /**
      * <p>Setter for the field <code>menuItemsProvider</code>.</p>
      *
-     * @param menuItemsProvider a {@link org.maxur.commons.view.components.menu.MenuItemsProvider} object.
+     * @param menuItems a {@link org.maxur.commons.view.api.MenuItems} object.
      */
     @SuppressWarnings("UnusedDeclaration")
-    public void setMenuItemsProvider(MenuItemsProvider menuItemsProvider) {
-        this.menuItemsProvider = menuItemsProvider;
+    public void setMenuItems(final MenuItems menuItems) {
+        this.menuItems = menuItems;
     }
 
     /**
@@ -117,4 +108,9 @@ public class MenuPanel extends Panel {
             }
         }
     }
+
+    private static class NullMenuItems extends ArrayList<Command> implements MenuItems {
+        private static final long serialVersionUID = 1452204000486091110L;
+    }
+
 }

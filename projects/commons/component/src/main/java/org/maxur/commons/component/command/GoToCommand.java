@@ -9,7 +9,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
  * @author Maxim Yunusov
  * @version 1.0 15.04.12
  */
-public final class GoToCommand extends Command {
+public final class GoToCommand extends AbstractCommand {
 
     private static final long serialVersionUID = 9012489431437576131L;
 
@@ -35,7 +35,7 @@ public final class GoToCommand extends Command {
 
     /**
      * {@inheritDoc}
-     * @see Command#execute()
+     * @see AbstractCommand#execute()
      */
     @Override
     public void execute() {
@@ -44,7 +44,7 @@ public final class GoToCommand extends Command {
 
     /**
      * {@inheritDoc}
-     * @see Command#isActive()
+     * @see AbstractCommand#isActive()
      */
     @Override
     public boolean isActive() {

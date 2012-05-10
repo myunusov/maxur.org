@@ -3,12 +3,16 @@ package org.maxur.commons.view.config;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.name.Named;
 import org.junit.Before;
 import org.junit.Test;
-import org.maxur.commons.view.commands.MaxurMenuItemsProvider;
-import org.maxur.commons.view.components.menu.MenuItemsProvider;
+import org.maxur.commons.component.model.bookmark.Bookmarks;
+import org.maxur.commons.view.api.MenuItems;
+import org.maxur.commons.view.api.PageProvider;
+import org.maxur.commons.view.pages.home.HomePage;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author Maxim Yunusov
@@ -17,7 +21,14 @@ import static org.junit.Assert.assertTrue;
 public class ApplicationModuleTest {
 
     @Inject
-    private MenuItemsProvider menuItemsProvider;
+    private MenuItems menuItems;
+
+    @Inject
+    private Bookmarks bookmarks;
+
+    @Inject @Named("HomePage")
+    private PageProvider homePageProvider;
+
 
     @Before
     public void setUp() throws Exception {
@@ -26,8 +37,18 @@ public class ApplicationModuleTest {
     }
 
     @Test
-    public void shouldBeInjectedMaxurMenuItemsProvider() throws Exception {
-        assertTrue(menuItemsProvider instanceof MaxurMenuItemsProvider);
+    public void shouldBeInjectedByMenuItems() throws Exception {
+        assertNotNull(menuItems);
+    }
+
+    @Test
+    public void shouldBeInjectedByBookmarks() throws Exception {
+        assertNotNull(bookmarks);
+    }
+
+    @Test
+    public void shouldBeInjectedByHomePage() throws Exception {
+        assertEquals(HomePage.class, homePageProvider.get());
     }
 
 }
