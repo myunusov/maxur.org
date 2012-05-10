@@ -1,12 +1,12 @@
-package org.maxur.commons.view;
+package org.maxur.commons.component.application.classresolver;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.application.IClassResolver;
-import org.maxur.commons.view.classresolver.ClassLoaderResolver;
-import org.maxur.commons.view.classresolver.ClassResolver;
-import org.maxur.commons.view.classresolver.ClassesCache;
-import org.maxur.commons.view.classresolver.PrimitivesTypeMap;
+import org.maxur.commons.component.application.classresolver.ClassLoaderResolver;
+import org.maxur.commons.component.application.classresolver.ClassResolver;
+import org.maxur.commons.component.application.classresolver.ClassesCache;
+import org.maxur.commons.component.application.classresolver.PrimitivesTypeMap;
 
 import java.io.IOException;
 import java.net.URL;
