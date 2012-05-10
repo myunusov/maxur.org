@@ -5,8 +5,8 @@ import com.google.inject.Injector;
 import org.apache.wicket.markup.html.basic.Label;
 import org.junit.Before;
 import org.junit.Test;
+import org.maxur.commons.component.mainmenu.MenuPanel;
 import org.maxur.commons.view.AbstractWicketTest;
-import org.maxur.commons.view.components.menu.MenuPanel;
 
 /**
  * @author Maxim Yunusov

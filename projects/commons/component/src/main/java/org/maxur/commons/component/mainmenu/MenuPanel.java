@@ -1,4 +1,4 @@
-package org.maxur.commons.view.components.menu;
+package org.maxur.commons.component.mainmenu;
 
 import com.google.inject.Inject;
 import org.apache.wicket.behavior.Behavior;
@@ -93,6 +93,9 @@ public class MenuPanel extends Panel {
 
         private static class SetActiveBehavior extends Behavior {
 
+            /**
+             * The Serial Version UID.
+             */
             private static final long serialVersionUID = -8913795606334638293L;
 
             private final Command command;
@@ -110,6 +113,9 @@ public class MenuPanel extends Panel {
     }
 
     private static class NullMenuItems extends ArrayList<Command> implements MenuItems {
+        /**
+         * The Serial Version UID.
+         */
         private static final long serialVersionUID = 1452204000486091110L;
     }
 

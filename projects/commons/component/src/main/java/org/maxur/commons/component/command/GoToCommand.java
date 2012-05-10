@@ -11,6 +11,9 @@ import org.apache.wicket.request.cycle.RequestCycle;
  */
 public final class GoToCommand extends AbstractCommand {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = 9012489431437576131L;
 
     private Class<? extends IRequestablePage> targetPage;

@@ -5,8 +5,8 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
+import org.maxur.commons.component.mainmenu.MenuPanel;
 import org.maxur.commons.view.MaxurApplication;
-import org.maxur.commons.view.components.menu.MenuPanel;
 
 /**
  * It's Base Page controller class.
@@ -40,6 +40,9 @@ public class BasePage extends WebPage {
     }
 
     private static class NullBehavior extends Behavior {
+        /**
+         * The Serial Version UID.
+         */
         private static final long serialVersionUID = 3134098750502637787L;
     }
 

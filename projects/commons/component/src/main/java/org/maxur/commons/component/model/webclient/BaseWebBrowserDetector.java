@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BaseWebBrowserDetector implements WebBrowserDetector {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = 599180030633091321L;
 
     private final WebBrowserDetectRules rules;

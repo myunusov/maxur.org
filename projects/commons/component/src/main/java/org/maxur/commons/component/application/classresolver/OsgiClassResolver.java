@@ -3,10 +3,6 @@ package org.maxur.commons.component.application.classresolver;
 import org.apache.wicket.Application;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.application.IClassResolver;
-import org.maxur.commons.component.application.classresolver.ClassLoaderResolver;
-import org.maxur.commons.component.application.classresolver.ClassResolver;
-import org.maxur.commons.component.application.classresolver.ClassesCache;
-import org.maxur.commons.component.application.classresolver.PrimitivesTypeMap;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,7 +45,8 @@ public class OsgiClassResolver implements IClassResolver {
      * @see org.apache.wicket.application.IClassResolver#getResources(java.lang.String)
      */
     public Iterator<URL> getResources(String name) {
-        HashSet<URL> loadedFiles = new HashSet<URL>();
+        // TODO Set must be replaced to List see http://michaelscharf.blogspot.com/2006/11/javaneturlequals-and-hashcode-make.html
+        HashSet<URL> loadedFiles = new HashSet<>();
         try {
             // Try the classloader for the wicket jar/bundle
             Enumeration<URL> resources = Application.class.getClassLoader().getResources(name);

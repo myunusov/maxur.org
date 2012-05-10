@@ -47,6 +47,9 @@ public class MenuItemsProvider implements Provider<MenuItems> {
         return commands;
     }
 
+    /**
+     * The Serial Version UID.
+     */
     private static class MaxurMenuItems extends ArrayList<Command> implements MenuItems  {
         private static final long serialVersionUID = 8909772836824357933L;
     }

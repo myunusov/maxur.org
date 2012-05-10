@@ -9,6 +9,9 @@ import org.maxur.commons.view.pages.BasePage;
  */
 public class ExpiredPage extends BasePage {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = -9186504691176505597L;
 
     public ExpiredPage() {

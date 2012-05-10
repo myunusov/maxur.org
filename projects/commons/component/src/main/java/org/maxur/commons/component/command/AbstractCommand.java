@@ -15,6 +15,9 @@ import org.maxur.commons.view.api.Command;
  */
 public abstract class AbstractCommand implements Command {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = -8326046821326458236L;
 
     private String titleKey;

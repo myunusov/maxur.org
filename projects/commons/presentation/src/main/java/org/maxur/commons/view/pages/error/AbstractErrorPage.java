@@ -10,6 +10,9 @@ import org.maxur.commons.view.pages.BasePage;
  */
 public class AbstractErrorPage extends BasePage {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = 1140533080422731198L;
 
     protected void getHomePageLink(String id) {

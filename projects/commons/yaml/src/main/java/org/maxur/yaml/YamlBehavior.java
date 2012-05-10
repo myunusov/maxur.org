@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class YamlBehavior extends Behavior implements StyleBehavior {
 
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = -1362412483333201738L;
 
     private static final int IE_7_VERSION = 7;
