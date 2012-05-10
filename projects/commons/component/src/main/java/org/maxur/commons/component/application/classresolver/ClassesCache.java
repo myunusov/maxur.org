@@ -1,4 +1,4 @@
-package org.maxur.commons.view.classresolver;
+package org.maxur.commons.component.application.classresolver;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ConcurrentHashMap;
