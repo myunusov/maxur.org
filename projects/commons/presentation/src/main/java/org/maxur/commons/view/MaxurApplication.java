@@ -2,20 +2,22 @@ package org.maxur.commons.view;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.settings.IExceptionSettings;
 import org.maxur.commons.component.application.AbstractOSGiWebApplication;
 import org.maxur.commons.component.model.bookmark.Bookmark;
 import org.maxur.commons.component.model.bookmark.Bookmarks;
 import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.view.api.MenuItems;
-import org.maxur.commons.view.api.StyleBehavior;
 import org.maxur.commons.view.api.PageProvider;
+import org.maxur.commons.view.api.StyleBehavior;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MaxurApplication extends AbstractOSGiWebApplication {
 
-    private static final String CURRENT_ENCODING = "UTF-8";
+    private static final String DEFAULT_ENCODING = "UTF-8";
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -43,8 +45,21 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     @Inject
     private Bookmarks bookmarks;
 
-    @Inject @Named("HomePage")
+    @Inject
+    @Named("HomePage")
     private PageProvider homePageProvider;
+
+    @Inject
+    @Named("InternalErrorPage")
+    private PageProvider internalErrorProvider;
+
+    @Inject
+    @Named("ExpiredPage")
+    private PageProvider expiredPageProvider;
+
+    @Inject
+    @Named("AccessDeniedPage")
+    private PageProvider accessDeniedPageProvider;
 
     @Inject
     private WebBrowserDetector detector;
@@ -62,7 +77,9 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
         this.version = version;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final Class<? extends WebPage> getHomePage() {
         return homePageProvider.get();
@@ -70,15 +87,51 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
 
     @Override
     protected void doInit() {
-        getMarkupSettings().setDefaultMarkupEncoding(CURRENT_ENCODING);
-        getRequestCycleSettings().setResponseRequestEncoding(CURRENT_ENCODING);
-        for (Bookmark bookmark : bookmarks) {
-            mountPage(bookmark.getShortLink(), bookmark.getTargetClass());
-        }
         logger.debug(String.format("Star Web Application Maxur (Version : %s)", version));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Internal initialization. This method is not part of Wicket API.
+     * It's workaround for directly call init in guice context.
+     */
+    @Override
+    protected void internalInit() {
+        super.internalInit();
+        setEncoding();
+        setMode();
+        setBookmarks();
+        setErrorPages();
+    }
+
+    private void setErrorPages() {
+        getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
+        getApplicationSettings().setInternalErrorPage(internalErrorProvider.get());
+        getApplicationSettings().setPageExpiredErrorPage(expiredPageProvider.get());
+        getApplicationSettings().setAccessDeniedPage(accessDeniedPageProvider.get());
+    }
+
+    private void setBookmarks() {
+        for (Bookmark bookmark : bookmarks) {
+            mount(bookmark.getMapper());
+        }
+    }
+
+    private void setMode() {
+        if (getConfigurationType().equals(RuntimeConfigurationType.DEPLOYMENT)) {
+            getMarkupSettings().setStripWicketTags(true);
+            getMarkupSettings().setStripComments(true);
+            getMarkupSettings().setCompressWhitespace(true);
+        }
+    }
+
+    private void setEncoding() {
+        getMarkupSettings().setDefaultMarkupEncoding(DEFAULT_ENCODING);
+        getRequestCycleSettings().setResponseRequestEncoding(DEFAULT_ENCODING);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final Session newSession(final Request request, final Response response) {
         if (detector != null) {
@@ -97,7 +150,7 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
 
     /**
      * Returns Style behavior gets it from bundle context.
-     *
+     * <p/>
      * Prevents exception on serialization Peaberry Proxy with inject directly to Page.
      *
      * @return The Style Behavior.

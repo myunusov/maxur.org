@@ -1,5 +1,6 @@
 package org.maxur.commons.component.model.bookmark;
 
+import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.markup.html.WebPage;
 
 import java.io.Serializable;
@@ -13,21 +14,28 @@ public class Bookmark implements Serializable {
 
     private static final long serialVersionUID = 8210845160078911968L;
 
-    private String shortLink;
+    private final String mountPath;
 
-    private Class<? extends WebPage> targetClass;
+    private final Class<? extends WebPage> pageClass;
 
-    public Bookmark(final String shortLink, final Class<? extends WebPage> targetClass) {
-        this.shortLink = shortLink;
-        this.targetClass = targetClass;
+    private final MountedMapper mapper;
+
+    public Bookmark(final String mountPath, final Class<? extends WebPage> pageClass) {
+        assert (null != mountPath && null != pageClass) : "Short links map is invalid";
+        this.mountPath = mountPath;
+        this.pageClass = pageClass;
+        this.mapper = new MountedMapper(mountPath, pageClass);
     }
 
-    public String getShortLink() {
-        return shortLink;
+    public String getMountPath() {
+        return mountPath;
     }
 
-    public Class<? extends WebPage> getTargetClass() {
-        return targetClass;
+    public Class<? extends WebPage> getPageClass() {
+        return pageClass;
     }
 
+    public MountedMapper getMapper() {
+        return mapper;
+    }
 }
