@@ -4,9 +4,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.apache.wicket.behavior.Behavior;
 import org.maxur.commons.component.model.webclient.WebBrowser;
+import org.maxur.commons.view.api.MenuItems;
 import org.maxur.commons.view.api.StyleBehavior;
-import org.maxur.commons.view.commands.MaxurMenuItemsProvider;
-import org.maxur.commons.view.components.menu.MenuItemsProvider;
+import org.maxur.commons.view.config.MenuItemsProvider;
 
 /**
  * @author Maxim Yunusov
@@ -16,7 +16,7 @@ public class TestModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(MenuItemsProvider.class).to(MaxurMenuItemsProvider.class);
+        bind(MenuItems.class).toProvider(MenuItemsProvider.class);
         bind(WebBrowser.class).to(IE6Browser.class);
         bind(StyleBehavior.class).to(FakeStyleBehavior.class);
         bindConstant().annotatedWith(Names.named("version")).to("test version");

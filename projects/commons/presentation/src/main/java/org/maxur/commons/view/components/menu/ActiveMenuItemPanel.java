@@ -2,7 +2,7 @@ package org.maxur.commons.view.components.menu;
 
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.maxur.commons.component.command.Command;
+import org.maxur.commons.view.api.Command;
 
 /**
  * <p>ActiveMenuItemPanel class.</p>

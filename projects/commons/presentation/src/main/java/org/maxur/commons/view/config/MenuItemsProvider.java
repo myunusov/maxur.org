@@ -1,32 +1,32 @@
-package org.maxur.commons.view.commands;
+package org.maxur.commons.view.config;
 
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import org.maxur.commons.component.command.GoToCommand;
-import org.maxur.commons.view.components.menu.MenuItemsProvider;
-import org.maxur.commons.component.command.Command;
+import org.maxur.commons.view.api.Command;
+import org.maxur.commons.view.api.MenuItems;
 import org.maxur.commons.view.pages.about.AboutPage;
 import org.maxur.commons.view.pages.home.HomePage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * <p>MaxurMenuItemsProvider class.</p>
+ * <p>MenuItemsProvider class.</p>
  *
  * @author Maxim Yunusov
  * @version 1.0 03.05.12
  */
 @Singleton
-public class MaxurMenuItemsProvider implements MenuItemsProvider {
+public class MenuItemsProvider implements Provider<MenuItems> {
 
-    private final List<Command> commands;
+    private final MenuItems commands;
 
     /**
-     * <p>Constructor for MaxurMenuItemsProvider.</p>
+     * <p>Constructor for MenuItemsProvider.</p>
      */
-    public MaxurMenuItemsProvider() {
+    public MenuItemsProvider() {
         // TODO Stub
-        commands = new ArrayList<>();
+        commands = new MaxurMenuItems();
         commands.add(
                 GoToCommand.builder()
                     .setAsTarget(HomePage.class)
@@ -43,8 +43,12 @@ public class MaxurMenuItemsProvider implements MenuItemsProvider {
 
     /** {@inheritDoc} */
     @Override
-    public List<Command> getMenuItems() {
+    public MenuItems get() {
         return commands;
+    }
+
+    private static class MaxurMenuItems extends ArrayList<Command> implements MenuItems  {
+        private static final long serialVersionUID = 8909772836824357933L;
     }
 
 }
