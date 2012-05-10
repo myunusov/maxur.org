@@ -87,20 +87,11 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
 
     @Override
     protected void doInit() {
-        logger.debug(String.format("Star Web Application Maxur (Version : %s)", version));
-    }
-
-    /**
-     * Internal initialization. This method is not part of Wicket API.
-     * It's workaround for directly call init in guice context.
-     */
-    @Override
-    protected void internalInit() {
-        super.internalInit();
         setEncoding();
         setMode();
         setBookmarks();
         setErrorPages();
+        logger.debug(String.format("Star Web Application Maxur (Version : %s)", version));
     }
 
     private void setErrorPages() {
