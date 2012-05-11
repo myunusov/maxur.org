@@ -54,7 +54,34 @@
     </modules>
 
     <profiles>
-        <!--SONAR PROFILE -->
+        <!--SONARJ PROFILE -->
+        <profile>
+            <id>sonarj</id>
+            <properties>
+               <sonargraph.prepareForSonar>true</sonargraph.prepareForSonar>
+                <sonargraph.activationCode>583F-5255-C9A5-9AE1</sonargraph.activationCode>
+                <sonargraph.license>${project.root}/Sonargraph.license</sonargraph.license>
+          </properties>
+          <activation>
+              <activeByDefault>true</activeByDefault>
+          </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.hello2morrow.sonargraph</groupId>
+                        <artifactId>maven-sonargraph-plugin</artifactId>
+                        <version>7.1.5</version>
+                    </plugin>
+                </plugins>
+            </build>
+          <pluginRepositories>
+              <pluginRepository>
+                  <id>hello2morrow.maven.repository</id>
+                  <url>http://maven.hello2morrow.com/repository</url>
+              </pluginRepository>
+          </pluginRepositories>
+      </profile>
+      <!--SONAR PROFILE -->
         <profile>
             <id>sonar</id>
             <properties>

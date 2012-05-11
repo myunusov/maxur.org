@@ -1,11 +1,11 @@
 package org.maxur.commons.component.model.webclient;
 
+import org.maxur.commons.component.utils.SerializableArrayList;
+import org.maxur.commons.component.utils.SerializableList;
 import org.maxur.commons.component.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
 * @author Maxim Yunusov
@@ -21,7 +21,7 @@ final class WebBrowserDetectRules implements Serializable {
     /** Constant <code>USER_AGENT="user-agent"</code> */
     public static final String USER_AGENT = "user-agent";
 
-    private final List<WebBrowserDetectRule> rules = new ArrayList<>();
+    private final SerializableList<WebBrowserDetectRule> rules = new SerializableArrayList<>();
 
     /**
      * <p>Private Constructor for WebBrowserDetectRules.</p>
