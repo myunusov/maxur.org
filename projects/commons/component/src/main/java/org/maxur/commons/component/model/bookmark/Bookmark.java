@@ -21,24 +21,13 @@ public class Bookmark implements Serializable {
 
     private final Class<? extends WebPage> pageClass;
 
-    private final MountedMapper mapper;
-
     public Bookmark(final String mountPath, final Class<? extends WebPage> pageClass) {
         assert (null != mountPath && null != pageClass) : "Short links map is invalid";
         this.mountPath = mountPath;
         this.pageClass = pageClass;
-        this.mapper = new MountedMapper(mountPath, pageClass);
-    }
-
-    public String getMountPath() {
-        return mountPath;
-    }
-
-    public Class<? extends WebPage> getPageClass() {
-        return pageClass;
     }
 
     public MountedMapper getMapper() {
-        return mapper;
+        return new MountedMapper(mountPath, pageClass);
     }
 }

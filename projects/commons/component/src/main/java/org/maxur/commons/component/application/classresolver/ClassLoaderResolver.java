@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 public class ClassLoaderResolver extends ClassResolver {
 
-    final Collection<ClassLoader> classLoaders = new HashSet<>();
+    private final Collection<ClassLoader> classLoaders = new HashSet<>();
 
     public void addClassLoader(final ClassLoader classLoader) {
         classLoaders.add(classLoader);
