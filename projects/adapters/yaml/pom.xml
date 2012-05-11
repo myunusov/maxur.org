@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.maxur</groupId>
     <artifactId>maxur-yaml</artifactId>
     <version>1.0</version>
     <name>Maxur 3d Party YAML Adapter Bundle</name>
