@@ -16,6 +16,7 @@
     </parent>
 
     <modules>
+        <module>adapters</module>
         <module>commons</module>
         <module>taskun</module>
         <module>pompur</module>

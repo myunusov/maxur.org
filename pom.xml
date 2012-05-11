@@ -48,8 +48,8 @@
     </properties>
 
     <modules>
-        <module>projects</module>
         <module>poms</module>
+        <module>projects</module>
         <module>dependencies</module>
     </modules>
 
