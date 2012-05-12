@@ -11,6 +11,7 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.maxur.commons.component.application.AbstractOSGiWebApplication;
+import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.bookmark.Bookmark;
 import org.maxur.commons.component.model.bookmark.Bookmarks;
 import org.maxur.commons.component.model.webclient.WebBrowser;
@@ -63,6 +64,9 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
 
     @Inject
     private WebBrowserDetector detector;
+
+    @Inject
+    private ThemeBehavior themeBehavior;
 
     @Inject
     private StyleBehavior styleBehavior;
@@ -148,5 +152,17 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
      */
     public Behavior getStyleBehavior() {
         return styleBehavior.asBehavior();
+    }
+
+
+    /**
+     * Returns Theme behavior gets it from bundle context.
+     * <p/>
+     * Prevents exception on serialization Peaberry Proxy with inject directly to Page.
+     *
+     * @return The Theme Behavior.
+     */
+    public Behavior getThemeBehavior() {
+        return themeBehavior.asBehavior();
     }
 }

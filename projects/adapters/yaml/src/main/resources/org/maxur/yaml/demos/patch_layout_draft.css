@@ -15,7 +15,7 @@
  */
 
 /* Layout independent adjustments | Layout-unabhängige Anpassungen ----------------------------------- */
-@import url(../core/iehacks.css);
+@import url(../yaml/core/iehacks.css);
 
 /* Box model adjustments for vlist navigation | Box-Modell-Anpassungen für vlist-Navigation */
 /* @import url(/yaml/patches/patch_nav_vlist.css); */

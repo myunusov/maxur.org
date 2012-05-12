@@ -26,6 +26,7 @@ public class BasePage extends WebPage {
      */
     public BasePage() {
         add(getStyleBehavior());
+        add(getThemeBehavior());
         add(new Label("application.title", new ResourceModel("application.title").wrapOnAssignment(this)));
         add(new HeaderPanel("header"));
         add(new MenuPanel("menu"));
@@ -36,6 +37,13 @@ public class BasePage extends WebPage {
         final Application application = getApplication();
         return (application instanceof MaxurApplication) ?
                 ((MaxurApplication) application).getStyleBehavior() : new NullBehavior();
+
+    }
+
+    private Behavior getThemeBehavior() {
+        final Application application = getApplication();
+        return (application instanceof MaxurApplication) ?
+                ((MaxurApplication) application).getThemeBehavior() : new NullBehavior();
 
     }
 
