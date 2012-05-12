@@ -3,6 +3,7 @@ package org.maxur.yaml;
 import com.google.inject.Inject;
 import org.apache.wicket.Application;
 import org.apache.wicket.Component;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -35,24 +36,34 @@ public class YamlBehavior extends Behavior implements StyleBehavior {
     @Override
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
-        /* import core styles | Basis-Stylesheets einbinden */
-        response.render(CssHeaderItem.forReference(
-                new CssResourceReference(this.getClass(), "/yaml/core/base.css")
-        ));
-        /* import screen layout | Screen-Layout einbinden */
-        response.render(CssHeaderItem.forReference(
-                new CssResourceReference(this.getClass(), "/yaml/navigation/nav_shinybuttons.css")
-        ));
-        /* import print layout | Druck-Layout einbinden */
-        response.render(CssHeaderItem.forReference(
-                new CssResourceReference(this.getClass(), "/yaml/print/print_draft.css")
-        ));
-
+        response.render(CssHeaderItem.forReference(new CssResourceReference(this.getClass(), getBasisStylesheets())));
+        response.render(CssHeaderItem.forReference(new CssResourceReference(this.getClass(), getScreenLayout())));
+        response.render(CssHeaderItem.forReference(new CssResourceReference(this.getClass(), getDruckLayout())));
         if (isOldIE()) {
-            response.render(CssHeaderItem.forReference(
-                    new CssResourceReference(this.getClass(), "/yaml/core/iehacks.css")
-            ));
+            response.render(CssHeaderItem.forReference(new CssResourceReference(this.getClass(), getIEHacks())));
         }
+    }
+
+    private String getBasisStylesheets() {
+        return isDeploymentMode() ? "/yaml/core/slim_base.css" : "/yaml/core/base.css";
+    }
+
+    private String getIEHacks() {
+        return isDeploymentMode() ?  "/yaml/core/slim_iehacks.css" : "/yaml/core/iehacks.css";
+    }
+
+    private String getDruckLayout() {
+        return "/yaml/print/print_draft.css";
+    }
+
+    private String getScreenLayout() {
+        return "/yaml/navigation/nav_shinybuttons.css";
+    }
+
+
+    private boolean isDeploymentMode() {
+        final Application application = Application.get();
+        return RuntimeConfigurationType.DEPLOYMENT.equals(application.getConfigurationType());
     }
 
     @Override
@@ -71,7 +82,7 @@ public class YamlBehavior extends Behavior implements StyleBehavior {
 
     private boolean isOldIE() {
         final WebBrowser browser = detector.detect(getHttpServletRequest());
-        return WebBrowserType.IE.equals(browser.getBrowserType())  &&  browser.getMajorVersion() <= IE_7_VERSION;
+        return WebBrowserType.IE.equals(browser.getBrowserType()) && browser.getMajorVersion() <= IE_7_VERSION;
     }
 
     private HttpServletRequest getHttpServletRequest() {

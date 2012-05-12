@@ -4,29 +4,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>taskun-base</artifactId>
-    <version>0.1</version>
+    <groupId>org.maxur</groupId>
+    <artifactId>maxur-theme</artifactId>
     <packaging>pom</packaging>
-    <name>Maxur Taskun Base Configuration Container</name>
+    <name>Maxur CSS Themes Container</name>
 
     <parent>
         <groupId>org.maxur</groupId>
-        <artifactId>maxur-assembly</artifactId>
+        <artifactId>projects</artifactId>
         <version>1.0</version>
     </parent>
 
-    <modules>
-        <module>provision</module>
-        <module>presentation</module>
-    </modules>
-
     <properties>
         <project.root>${project.basedir}/../../</project.root>
-        <bundles.configuration.location>../config/${env}</bundles.configuration.location>
     </properties>
 
-    <build>
-        <finalName>taskun</finalName>
-    </build>
-    
+    <modules>
+        <module>maxur-blue</module>
+    </modules>
+
+
 </project>

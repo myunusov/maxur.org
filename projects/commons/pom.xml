@@ -30,11 +30,8 @@
     <modules>
         <module>view-api</module>
         <module>component</module>
-        <module>theme</module>
         <module>domain</module>
         <module>datasource</module>
-        <module>presentation</module>
-        <module>provision</module>
     </modules>
 
 
