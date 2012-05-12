@@ -1,5 +1,6 @@
 package org.maxur.commons.view.config;
 
+import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.view.MaxurApplication;
 import org.maxur.commons.view.api.StyleBehavior;
@@ -23,6 +24,7 @@ public class OSGiModule extends PeaberryActivationModule {
         bindConfigurable(String.class).from("org.maxur.commons").named(VERSION_KEY);
         requestStaticInjection(MaxurApplication.class);
         bindService(StyleBehavior.class).single();
+        bindService(ThemeBehavior.class).single();
         bindService(WebBrowserDetector.class).single();
         install(new ApplicationModule());
     }

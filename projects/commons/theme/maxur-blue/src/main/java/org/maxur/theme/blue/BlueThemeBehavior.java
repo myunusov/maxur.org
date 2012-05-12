@@ -1,4 +1,4 @@
-package org.maxur.yaml;
+package org.maxur.theme.blue;
 
 import com.google.inject.Inject;
 import org.apache.wicket.Application;
@@ -12,7 +12,6 @@ import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.component.model.webclient.WebBrowserType;
 import org.maxur.commons.view.api.OSGiWebApplication;
-import org.maxur.commons.view.api.StyleBehavior;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,12 +19,12 @@ import javax.servlet.http.HttpServletRequest;
  * @author Maxim Yunusov
  * @version 1.0 07.05.12
  */
-public class YamlBehavior extends Behavior implements StyleBehavior {
+public class BlueThemeBehavior extends Behavior {
 
     /**
      * The Serial Version UID.
      */
-    private static final long serialVersionUID = -1362412483333201738L;
+    private static final long serialVersionUID = 5450247904080075496L;
 
     private static final int IE_7_VERSION = 7;
 
@@ -35,24 +34,14 @@ public class YamlBehavior extends Behavior implements StyleBehavior {
     @Override
     public void renderHead(Component component, IHeaderResponse response) {
         super.renderHead(component, response);
-        /* import core styles | Basis-Stylesheets einbinden */
         response.render(CssHeaderItem.forReference(
-                new CssResourceReference(this.getClass(), "/yaml/core/base.css")
+                new CssResourceReference(this.getClass(), "/css/layout.css")
         ));
-        /* import screen layout | Screen-Layout einbinden */
-        response.render(CssHeaderItem.forReference(
-                new CssResourceReference(this.getClass(), "/yaml/navigation/nav_shinybuttons.css")
-        ));
-        /* import print layout | Druck-Layout einbinden */
-        response.render(CssHeaderItem.forReference(
-                new CssResourceReference(this.getClass(), "/yaml/print/print_draft.css")
-        ));
-
-        if (isOldIE()) {
+/*        if (isOldIE()) {   //TODO ERROR detector is unavailable
             response.render(CssHeaderItem.forReference(
-                    new CssResourceReference(this.getClass(), "/yaml/core/iehacks.css")
+                    new CssResourceReference(this.getClass(), "/css/patches/patch_layout.css")
             ));
-        }
+        }*/
     }
 
     @Override
@@ -62,11 +51,6 @@ public class YamlBehavior extends Behavior implements StyleBehavior {
             ((OSGiWebApplication) application).registersResource(this);
         }
         super.bind(component);
-    }
-
-    @Override
-    public Behavior asBehavior() {
-        return this;
     }
 
     private boolean isOldIE() {
