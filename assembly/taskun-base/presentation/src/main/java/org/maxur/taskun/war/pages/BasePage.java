@@ -5,6 +5,7 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
+import org.maxur.commons.component.behavior.NullBehavior;
 import org.maxur.commons.component.mainmenu.MenuPanel;
 import org.maxur.taskun.war.MaxurApplication;
 
@@ -36,22 +37,15 @@ public class BasePage extends WebPage {
     private Behavior getStyleBehavior() {
         final Application application = getApplication();
         return (application instanceof MaxurApplication) ?
-                ((MaxurApplication) application).getStyleBehavior() : new NullBehavior();
+                ((MaxurApplication) application).getStyleBehavior() : NullBehavior.get();
 
     }
 
     private Behavior getThemeBehavior() {
         final Application application = getApplication();
         return (application instanceof MaxurApplication) ?
-                ((MaxurApplication) application).getThemeBehavior() : new NullBehavior();
+                ((MaxurApplication) application).getThemeBehavior() : NullBehavior.get();
 
-    }
-
-    private static class NullBehavior extends Behavior {
-        /**
-         * The Serial Version UID.
-         */
-        private static final long serialVersionUID = 3134098750502637787L;
     }
 
 }
