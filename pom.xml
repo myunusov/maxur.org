@@ -49,6 +49,7 @@
 
     <modules>
         <module>poms</module>
+        <module>assembly</module>
         <module>projects</module>
         <module>dependencies</module>
     </modules>

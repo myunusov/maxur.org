@@ -7,17 +7,17 @@
     <artifactId>taskun.provision</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
-    <name>Maxur Taskun imported bundles</name>
+    <name>Maxur Taskun Base Configuration Provision</name>
 
     <parent>
         <groupId>org.maxur</groupId>
-        <artifactId>maxur-taskun</artifactId>
+        <artifactId>maxur-assembly</artifactId>
         <version>1.0</version>
     </parent>
 
     <properties>
         <project.root>${project.basedir}/../../../</project.root>
-        <bundles.configuration.location>${project.basedir}/../config/${env}</bundles.configuration.location>
+        <bundles.configuration.location>../../config/${env}</bundles.configuration.location>
     </properties>
 
     <dependencies>
