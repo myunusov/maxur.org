@@ -17,7 +17,6 @@
 
     <properties>
         <project.root>${project.basedir}/../</project.root>
-        <bundles.configuration.location>/config/${env}</bundles.configuration.location>
         <debug.opt>-Xmx1024M</debug.opt>
         <shell.tui.checkinput>false</shell.tui.checkinput>
         <guice.version>3.0</guice.version>
@@ -25,6 +24,7 @@
 
     <modules>
         <module>taskun-base</module>
+        <module>theme</module>
     </modules>
 
     <profiles>
@@ -33,6 +33,38 @@
             <properties>
                 <maven-pax-plugin-log.param>debug</maven-pax-plugin-log.param>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.shell</artifactId>
+                    <version>1.4.3</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.osgi</groupId>
+                            <artifactId>org.osgi.compendium</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.osgi</groupId>
+                            <artifactId>org.osgi.core</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.shell.tui</artifactId>
+                    <version>1.4.1</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.osgi</groupId>
+                            <artifactId>org.osgi.compendium</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.osgi</groupId>
+                            <artifactId>org.osgi.core</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>DEBUG</id>

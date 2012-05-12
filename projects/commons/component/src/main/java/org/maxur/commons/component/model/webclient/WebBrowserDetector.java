@@ -6,6 +6,8 @@ import java.io.Serializable;
 /**
  * Web Browser description Detector Interface
  *
+ * see list of user agents  (http://techpatterns.com/forums/about304.html)
+ *
  * @author Maxim Yunusov
  * @version 1.0 07.05.12
  */
