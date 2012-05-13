@@ -1,4 +1,4 @@
-package org.maxur.taskun.war;
+package org.maxur.commons.component.application;
 
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
@@ -18,7 +18,7 @@ public class MaxurSession extends WebSession {
      *
      * @param request The current request
      */
-    public MaxurSession(Request request) {
+    public MaxurSession(final Request request) {
         super(request);
     }
 

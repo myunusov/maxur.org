@@ -5,9 +5,9 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
+import org.maxur.commons.component.application.MaxurApplication;
 import org.maxur.commons.component.behavior.NullBehavior;
 import org.maxur.commons.component.mainmenu.MenuPanel;
-import org.maxur.taskun.war.MaxurApplication;
 
 /**
  * It's Base Page controller class.

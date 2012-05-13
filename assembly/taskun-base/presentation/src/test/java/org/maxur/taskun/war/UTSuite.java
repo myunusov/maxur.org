@@ -12,7 +12,6 @@ import org.maxur.taskun.war.pages.UTPageSuite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         UTPageSuite.class,
-        MaxurApplicationTest.class,
         ApplicationModuleTest.class
 })
 public class UTSuite {

@@ -16,18 +16,18 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700|Droid+Sans:700);
 
 /* import core styles | Basis-Stylesheets einbinden */
-@import url(../../yaml/core/base.css);
-@import url(../../yaml/add-ons/rtl-support/core/base-rtl.css);
+@import url(../../../resources/org/maxur/adapter/yaml/core/base.css);
+@import url(../../../resources/org/maxur/adapter/yaml/add-ons/rtl-support/core/base-rtl.css);
 
 /* import screen layout | Screen-Layout einbinden */
-@import url(../../yaml/navigation/hlist.css);
-@import url(../../yaml/add-ons/rtl-support/navigation/hlist-rtl.css);
-@import url(../../yaml/forms/gray-theme.css);
+@import url(../../../resources/org/maxur/adapter/yaml/navigation/hlist.css);
+@import url(../../../resources/org/maxur/adapter/yaml/add-ons/rtl-support/navigation/hlist-rtl.css);
+@import url(../../../resources/org/maxur/adapter/yaml/forms/gray-theme.css);
 
-@import url(../../yaml/screen/typography.css);
-@import url(../../yaml/add-ons/rtl-support/screen/typography-rtl.css);
+@import url(../../../resources/org/maxur/adapter/yaml/screen/typography.css);
+@import url(../../../resources/org/maxur/adapter/yaml/add-ons/rtl-support/screen/typography-rtl.css);
 
 @import url(screen/screen-rtl-support.css);
 
 /* import print layout | Druck-Layout einbinden */
-@import url(../../yaml/print/print.css);
+@import url(../../../resources/org/maxur/adapter/yaml/print/print.css);
