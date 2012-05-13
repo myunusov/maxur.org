@@ -19,7 +19,6 @@ import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.view.api.MenuItems;
 import org.maxur.commons.view.api.PageProvider;
-import org.maxur.commons.view.api.StyleBehavior;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,9 +71,6 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
 
     @Inject
     private ThemeBehavior themeBehavior;
-
-    @Inject
-    private StyleBehavior styleBehavior;
 
     /**
      * <p>Setter for the field <code>version</code>.</p>
@@ -165,17 +161,6 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
 
     private HttpServletRequest getHttpServletRequest() {
         return ((HttpServletRequest) RequestCycle.get().getRequest().getContainerRequest());
-    }
-
-    /**
-     * Returns Style behavior gets it from bundle context.
-     * <p/>
-     * Prevents exception on serialization Peaberry Proxy with inject directly to Page.
-     *
-     * @return The Style Behavior.
-     */
-    public Behavior getStyleBehavior() {
-        return styleBehavior.asBehavior();
     }
 
 

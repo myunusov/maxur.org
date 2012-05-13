@@ -3,7 +3,6 @@ package org.maxur.taskun.war.config;
 import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.taskun.war.MaxurApplication;
-import org.maxur.commons.view.api.StyleBehavior;
 import org.ops4j.peaberry.activation.util.PeaberryActivationModule;
 
 /**
@@ -25,7 +24,6 @@ public class OSGiModule extends PeaberryActivationModule {
         bindConfigurable(String.class).from("org.maxur.commons").named(VERSION_KEY);
         bindConfigurable(String.class).from("org.maxur.commons").named(APPLICATION_KEY);
 
-        bindService(StyleBehavior.class).single();
         bindService(ThemeBehavior.class).single();
         bindService(WebBrowserDetector.class).single();
         install(new ApplicationModule());
