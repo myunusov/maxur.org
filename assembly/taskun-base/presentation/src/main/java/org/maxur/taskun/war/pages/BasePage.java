@@ -26,19 +26,11 @@ public class BasePage extends WebPage {
      * It's Base Page constructor.
      */
     public BasePage() {
-        add(getStyleBehavior());
         add(getThemeBehavior());
         add(new Label("application.title", new ResourceModel("application.title").wrapOnAssignment(this)));
         add(new HeaderPanel("header"));
         add(new MenuPanel("menu"));
         add(new FooterPanel("footer"));
-    }
-
-    private Behavior getStyleBehavior() {
-        final Application application = getApplication();
-        return (application instanceof MaxurApplication) ?
-                ((MaxurApplication) application).getStyleBehavior() : NullBehavior.get();
-
     }
 
     private Behavior getThemeBehavior() {

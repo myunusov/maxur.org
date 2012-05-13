@@ -29,7 +29,7 @@ public class BlueThemeBehavior extends Behavior {
     private static final int IE_7_VERSION = 7;
 
     @Inject
-    private WebBrowserDetector detector;
+    private static WebBrowserDetector detector;
 
     @Override
     public void renderHead(Component component, IHeaderResponse response) {
@@ -37,11 +37,11 @@ public class BlueThemeBehavior extends Behavior {
         response.render(CssHeaderItem.forReference(
                 new CssResourceReference(this.getClass(), "/css/layout.css")
         ));
-/*        if (isOldIE()) {   //TODO ERROR detector is unavailable
+       if (isOldIE()) {
             response.render(CssHeaderItem.forReference(
                     new CssResourceReference(this.getClass(), "/css/patches/patch_layout.css")
             ));
-        }*/
+        }
     }
 
     @Override
