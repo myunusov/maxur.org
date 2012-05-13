@@ -1,12 +1,12 @@
 package org.maxur.commons.component.application;
 
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.guice.GuiceInjectorHolder;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
+import org.maxur.commons.component.osgi.BundleContext;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,18 +17,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractOSGiWebApplication extends WebApplication implements OSGiWebApplication {
 
-    private static Injector injector;
-
     private OsgiClassResolver classResolver;
 
-    /**
-     * <p>Setter for the field <code>injector</code>.</p>
-     *
-     * @param injector a {@link com.google.inject.Injector} object.
-     */
-    @Inject
-    public static void setInjector(Injector injector) {
-        AbstractOSGiWebApplication.injector = injector;
+    private Injector injector;
+
+    public AbstractOSGiWebApplication() {
+        injector = BundleContext.getInjector();
+        if (injector != null) {
+            injector.injectMembers(this);
+        }
     }
 
     @Override
@@ -39,8 +36,19 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
     /** {@inheritDoc} */
     @Override
     public WebRequest newWebRequest(HttpServletRequest servletRequest, String filterPath) {
-        setMetaData(GuiceInjectorHolder.INJECTOR_KEY, new GuiceInjectorHolder(injector));
+        final Injector newInjector = getInjector();
+        if (injector != newInjector) {
+            injector = newInjector;
+            if (injector != null) {
+                injector.injectMembers(this);
+            }
+            setMetaData(GuiceInjectorHolder.INJECTOR_KEY, new GuiceInjectorHolder(injector));
+        }
         return super.newWebRequest(servletRequest, filterPath);
+    }
+
+    private Injector getInjector() {
+        return BundleContext.getInjector();
     }
 
     /**
@@ -52,20 +60,17 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
      */
     @Override
     protected final void init() {
-        if (injector != null) {
-            injector.injectMembers(this);
-        }
         getComponentInstantiationListeners().add(createInjector());
-
         this.classResolver = new OsgiClassResolver();
         this.classResolver.addClassLoader(this.getClass().getClassLoader());
         getApplicationSettings().setClassResolver(classResolver);
-
         doInit();
     }
 
     private GuiceComponentInjector createInjector() {
-        return injector != null ? new GuiceComponentInjector(this, injector) : new GuiceComponentInjector(this);
+        return getInjector() != null ?
+                new GuiceComponentInjector(this, getInjector()) :
+                new GuiceComponentInjector(this);
     }
 
     protected abstract void doInit();

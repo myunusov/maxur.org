@@ -9,4 +9,5 @@ package org.maxur.commons.view.api;
 public interface OSGiWebApplication {
 
     void registersResource(Object object);
+
 }

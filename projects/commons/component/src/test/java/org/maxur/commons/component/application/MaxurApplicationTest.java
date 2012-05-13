@@ -1,4 +1,4 @@
-package org.maxur.taskun.war;
+package org.maxur.commons.component.application;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -8,8 +8,6 @@ import org.apache.wicket.settings.IRequestCycleSettings;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.maxur.taskun.war.MaxurApplication;
-import org.maxur.taskun.war.MaxurSession;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 

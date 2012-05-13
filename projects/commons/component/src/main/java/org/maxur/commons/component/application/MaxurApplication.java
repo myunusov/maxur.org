@@ -1,4 +1,4 @@
-package org.maxur.taskun.war;
+package org.maxur.commons.component.application;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -11,7 +11,6 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.util.time.Duration;
-import org.maxur.commons.component.application.AbstractOSGiWebApplication;
 import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.bookmark.Bookmark;
 import org.maxur.commons.component.model.bookmark.Bookmarks;

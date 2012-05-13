@@ -16,15 +16,15 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700|Droid+Sans:700);
 
 /* import core styles | Basis-Stylesheets einbinden */
-@import url(../../yaml/core/base.css);
+@import url(../../../resources/org/maxur/adapter/yaml/core/base.css);
 
 /* import screen layout | Screen-Layout einbinden */
-@import url(../../yaml/navigation/hlist.css);
-@import url(../../yaml/forms/gray-theme.css);
+@import url(../../../resources/org/maxur/adapter/yaml/navigation/hlist.css);
+@import url(../../../resources/org/maxur/adapter/yaml/forms/gray-theme.css);
 
-@import url(../../yaml/screen/typography.css);
-@import url(../../yaml/screen/grid-960-12.css);
+@import url(../../../resources/org/maxur/adapter/yaml/screen/typography.css);
+@import url(../../../resources/org/maxur/adapter/yaml/screen/grid-960-12.css);
 @import url(screen/screen-custom-grids.css);
 
 /* import print layout | Druck-Layout einbinden */
-@import url(../../yaml/print/print.css);
+@import url(../../../resources/org/maxur/adapter/yaml/print/print.css);
