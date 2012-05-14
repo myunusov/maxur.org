@@ -6,6 +6,7 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.settings.IMarkupSettings;
 import org.apache.wicket.settings.IRequestCycleSettings;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -42,6 +43,7 @@ public class MaxurApplicationTest {
     }
 
     @Test
+    @Ignore
     public void shouldBeUsedMaxurSession() throws Exception {
         when(request.getLocale()).thenReturn(Locale.US);
         final Session session = application.newSession(request, null);

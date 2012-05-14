@@ -3,6 +3,7 @@ package org.maxur.taskun.war.config;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.maxur.commons.component.model.bookmark.Bookmarks;
 import org.maxur.commons.view.api.MenuItems;
 import org.maxur.commons.view.api.PageProvider;
@@ -31,6 +32,7 @@ public class ApplicationModule extends AbstractModule {
         bind(PageProvider.class).annotatedWith(Names.named("ExpiredPage")).to(ExpiredPageProvider.class);
         bind(PageProvider.class).annotatedWith(Names.named("AccessDeniedPage")).to(AccessDeniedPageProvider.class);
 
+        bind(WebApplication.class).toProvider(WicketGuiceAppProvider.class);
     }
 
 

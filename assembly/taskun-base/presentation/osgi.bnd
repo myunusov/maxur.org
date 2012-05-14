@@ -1,4 +1,4 @@
-Bundle-Module: ${bundle.namespace}.config.OSGiModule
+Bundle-Activator: ${bundle.namespace}.config.Activator
 Bundle-ClassPath: .,WEB-INF/classes
 Embed-Directory: WEB-INF/lib
 Embed-Dependency: *;scope=compile|runtime
@@ -6,4 +6,3 @@ Embed-Transitive: true
 Import-Package: *,com.google.inject,org.apache.wicket.protocol.http,org.apache.wicket.markup.html.form.upload,org.apache.wicket.markup.html.panel,org.slf4j,org.aopalliance.intercept,org.maxur.commons.component.protocol.http
 Web-ContextPath: maxur
 Webapp-Context:  maxur
-
