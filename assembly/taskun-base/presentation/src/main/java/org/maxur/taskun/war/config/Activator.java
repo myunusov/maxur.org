@@ -1,5 +1,10 @@
 package org.maxur.taskun.war.config;
 
+import com.google.inject.Inject;
+import org.maxur.commons.component.behavior.ThemeBehavior;
+import org.maxur.commons.component.model.webclient.WebBrowserDetector;
+import org.maxur.commons.component.osgi.OSGiServiceProvider;
+import org.maxur.commons.component.osgi.WebBundleContext;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -30,18 +35,26 @@ public final class Activator implements BundleActivator {
      */
     public void start(final BundleContext bc) throws Exception {
 
-        logger.info("STARTING org.maxur.commons.config");
+        logger.debug("STARTING org.maxur.taskun.war");
 
         bc.registerService(ManagedService.class.getName(),
                 manager.getManagedService(),
                 getManagedServiceProperties());
+
+        WebBundleContext.setBundleContext(bc);
+
+        WebBundleContext.setProviders(
+                new WebBrowserDetectorProvider(bc),
+                new ThemeBehaviorProvider(bc)
+        );
     }
+
 
     /**
      * Called whenever the OSGi framework stops our bundle
      */
     public void stop(final BundleContext bc) throws Exception {
-        logger.info("STOPPING org.maxur.commons.config");
+        logger.debug("STOPPING org.maxur.taskun.war");
     }
 
     protected Dictionary<String, String> getManagedServiceProperties() {
@@ -50,4 +63,17 @@ public final class Activator implements BundleActivator {
         return result;
     }
 
+    public static class WebBrowserDetectorProvider extends OSGiServiceProvider<WebBrowserDetector> {
+        @Inject
+        public WebBrowserDetectorProvider(BundleContext bc) {
+            super(bc);
+        }
+    }
+
+    public static class ThemeBehaviorProvider extends OSGiServiceProvider<ThemeBehavior> {
+        @Inject
+        public ThemeBehaviorProvider(BundleContext bc) {
+            super(bc);
+        }
+    }
 }

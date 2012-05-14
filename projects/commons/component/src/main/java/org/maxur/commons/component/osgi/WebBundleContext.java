@@ -4,11 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import org.apache.wicket.behavior.Behavior;
-import org.maxur.commons.component.behavior.NullBehavior;
-import org.maxur.commons.component.behavior.ThemeBehavior;
-import org.maxur.commons.component.model.webclient.BaseWebBrowserDetector;
-import org.maxur.commons.component.model.webclient.WebBrowserDetector;
+import org.osgi.framework.BundleContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,13 +27,23 @@ public final class WebBundleContext {
 
     private static Dictionary currentProperties = new Hashtable();
 
-    private final Dictionary properties;
+    private static OSGiServiceProvider<?>[] currentServiceProviders;
+
+    private static BundleContext currentBundleContext;
 
     private static Injector webInjector;
+
+    private final OSGiServiceProvider<?>[] serviceProviders;
+
+    private final Dictionary properties;
+
+    private final BundleContext bundleContext;
 
 
     private WebBundleContext() {
         this.properties = currentProperties;
+        this.serviceProviders = currentServiceProviders;
+        this.bundleContext = currentBundleContext;
     }
 
     public static Injector getWebInjector() {
@@ -49,27 +55,33 @@ public final class WebBundleContext {
     }
 
     public static Injector getInjector() {
-        final Injector injector = webInjector == null ?
+        return webInjector == null ?
                 Guice.createInjector(WebBundleContext.getBundleModule()) :
                 webInjector.createChildInjector(WebBundleContext.getBundleModule());
-        return injector;
     }
 
     public static Iterable<? extends Module> getBundleModule() {
         Collection<Module> result = new ArrayList<>();
-        result.add(getOSGiModule());
         result.add(getPropertiesModule());
+        result.add(getProvidersModule());
         return result;
     }
 
-    public static Module getOSGiModule() {
-        return new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(WebBrowserDetector.class).to(BaseWebBrowserDetector.class); // TODO STUB
-                bind(ThemeBehavior.class).to(MyThemeBehavior.class); // TODO STUB
-            }
-        };
+
+    public static void setBundleContext(final BundleContext bc) {
+        WebBundleContext.currentBundleContext = bc;
+    }
+
+    /**
+     * @return {@link Dictionary} bound to current thread
+     */
+    public static BundleContext getBundleContext() {
+        return get() != null ? get().bundleContext : currentBundleContext;
+    }
+
+
+    public static void setProviders(OSGiServiceProvider<?>... serviceProviders) {
+        WebBundleContext.currentServiceProviders = serviceProviders;
     }
 
     private static Module getPropertiesModule() {
@@ -83,8 +95,13 @@ public final class WebBundleContext {
                     final String value = properties.get(key).toString();
                     bindConstant().annotatedWith(named(key)).to(value);
                 }
+
             }
         };
+    }
+
+    public static void setProperties(final Dictionary properties) {
+        WebBundleContext.currentProperties = properties;
     }
 
     /**
@@ -94,8 +111,24 @@ public final class WebBundleContext {
         return get() != null ? get().properties : currentProperties;
     }
 
-    public static void setProperties(final Dictionary properties) {
-        WebBundleContext.currentProperties = properties;
+    public static Module getProvidersModule() {
+        return new AbstractModule() {
+            @Override
+            protected void configure() {
+                bind(BundleContext.class).toInstance(getBundleContext());
+                for (OSGiServiceProvider<?> provider : getProviders()) {
+                    //noinspection unchecked
+                    bind(provider.getProvidedClass()).toProvider(provider.getClass());
+                }
+            }
+        };
+    }
+
+    /**
+     * @return {@link OSGiServiceProvider[]} bound to current thread
+     */
+    public static OSGiServiceProvider<?>[] getProviders() {
+        return get() != null ? get().serviceProviders : currentServiceProviders;
     }
 
 
@@ -108,15 +141,4 @@ public final class WebBundleContext {
         return threadLocal.get();
     }
 
-
-    private static class MyThemeBehavior implements ThemeBehavior { // TODO FAKE
-        private static final long serialVersionUID = -731747328777429822L;
-
-        @Override
-        public Behavior asBehavior() {
-            return NullBehavior.get();
-        }
-
-
-    }
 }
