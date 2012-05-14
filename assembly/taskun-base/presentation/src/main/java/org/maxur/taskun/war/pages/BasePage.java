@@ -1,12 +1,12 @@
 package org.maxur.taskun.war.pages;
 
-import org.apache.wicket.Application;
+import com.google.inject.Inject;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
-import org.maxur.commons.component.application.MaxurApplication;
 import org.maxur.commons.component.behavior.NullBehavior;
+import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.mainmenu.MenuPanel;
 
 /**
@@ -22,6 +22,9 @@ public class BasePage extends WebPage {
      */
     private static final long serialVersionUID = -4715929870257591604L;
 
+    @Inject
+    private ThemeBehavior themeBehavior;
+
     /**
      * It's Base Page constructor.
      */
@@ -34,10 +37,7 @@ public class BasePage extends WebPage {
     }
 
     private Behavior getThemeBehavior() {
-        final Application application = getApplication();
-        return (application instanceof MaxurApplication) ?
-                ((MaxurApplication) application).getThemeBehavior() : NullBehavior.get();
-
+        return themeBehavior != null ? themeBehavior.asBehavior(): NullBehavior.get();
     }
 
 }
