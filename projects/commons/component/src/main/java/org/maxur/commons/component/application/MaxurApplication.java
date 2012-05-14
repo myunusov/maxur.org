@@ -4,14 +4,13 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
-import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.util.time.Duration;
-import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.bookmark.Bookmark;
 import org.maxur.commons.component.model.bookmark.Bookmarks;
 import org.maxur.commons.component.model.webclient.WebBrowser;
@@ -47,6 +46,9 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     private MenuItems menuItems;
 
     @Inject
+    private WebBrowserDetector detector;
+
+    @Inject
     private Bookmarks bookmarks;
 
     @Inject
@@ -65,11 +67,6 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     @Named("AccessDeniedPage")
     private PageProvider accessDeniedPageProvider;
 
-    @Inject
-    private WebBrowserDetector detector;
-
-    @Inject
-    private ThemeBehavior themeBehavior;
 
     /**
      * <p>Setter for the field <code>version</code>.</p>
@@ -109,10 +106,10 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     }
 
     private void setErrorPages() {
-
         getApplicationSettings().setInternalErrorPage(internalErrorProvider.get());
         getApplicationSettings().setPageExpiredErrorPage(expiredPageProvider.get());
         getApplicationSettings().setAccessDeniedPage(accessDeniedPageProvider.get());
+        mount(new MountedMapper("/404", internalErrorProvider.get()));
     }
 
     private void setBookmarks() {
@@ -162,15 +159,4 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
         return ((HttpServletRequest) RequestCycle.get().getRequest().getContainerRequest());
     }
 
-
-    /**
-     * Returns Theme behavior gets it from bundle context.
-     * <p/>
-     * Prevents exception on serialization Peaberry Proxy with inject directly to Page.
-     *
-     * @return The Theme Behavior.
-     */
-    public Behavior getThemeBehavior() {
-        return themeBehavior.asBehavior();
-    }
 }

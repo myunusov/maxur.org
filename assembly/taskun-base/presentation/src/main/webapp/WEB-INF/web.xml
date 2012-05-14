@@ -29,6 +29,11 @@
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404</location>
+    </error-page>
+
     <session-config>
         <session-timeout>15</session-timeout>
     </session-config>

@@ -31,7 +31,7 @@ public class AboutPage extends BasePage {
      * It's About Page constructor.
      */
     public AboutPage() {
-        final Label applicationName = new Label("application", String.format("Start %s (Version : %s)", title, version));
+        final Label applicationName = new Label("application", String.format("%s (Version : %s)", title, version));
         applicationName.setRenderBodyOnly(true);
         add(applicationName);
         final Label version = new Label("version", getApplication().getFrameworkSettings().getVersion());
