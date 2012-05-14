@@ -1,5 +1,7 @@
 package org.maxur.taskun.war.pages.about;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.apache.wicket.markup.html.basic.Label;
 import org.maxur.taskun.war.pages.BasePage;
 
@@ -12,6 +14,13 @@ import org.maxur.taskun.war.pages.BasePage;
  */
 public class AboutPage extends BasePage {
 
+    @Inject
+    @Named("application.title")
+    private String title;
+
+    @Inject
+    @Named("application.version")
+    private String version;
 
     /**
      * The Serial Version UID.
@@ -22,6 +31,9 @@ public class AboutPage extends BasePage {
      * It's About Page constructor.
      */
     public AboutPage() {
+        final Label applicationName = new Label("application", String.format("Start %s (Version : %s)", title, version));
+        applicationName.setRenderBodyOnly(true);
+        add(applicationName);
         final Label version = new Label("version", getApplication().getFrameworkSettings().getVersion());
         version.setRenderBodyOnly(true);
         add(version);

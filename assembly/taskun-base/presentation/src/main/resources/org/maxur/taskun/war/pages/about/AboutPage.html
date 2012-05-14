@@ -7,9 +7,9 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <title>Your Page Title</title>
     <wicket:remove>
-        <link href="../../../../../../../../../../../adapters/yaml/src/main/resources/org/maxur/yaml/css/my_layout.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../../../../../../../../../theme/maxur-blue/src/main/resources/org/maxur/theme/blue/css/layout.css" rel="stylesheet" type="text/css"/>
         <!--[if lte IE 7]>
-        <link href="../../../../../../../../../../../adapters/yaml/src/main/resources/org/maxur/yaml/css/patches/patch_my_layout.css"
+        <link href="../../../../../../../../../../../theme/maxur-blue/src/main/resources/org/maxur/theme/blue/css/patches/patch_layout.css"
               rel="stylesheet" type="text/css"/>
         <![endif]-->
     </wicket:remove>
@@ -17,6 +17,7 @@
 <body>
 <wicket:extend>
     <p>
+        <span wicket:id="application">[Taskun]</span>
         Please mention the correct Wicket version:
         <span wicket:id="version">[1.5-SNAPSHOT]</span>
     </p>
