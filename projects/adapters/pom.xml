@@ -22,6 +22,8 @@
     <modules>
         <module>yaml</module>
         <module>yaml4</module>
+        <module>jquery</module>
+        <module>html5</module>
     </modules>
 
 </project>

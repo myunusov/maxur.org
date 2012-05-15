@@ -7,7 +7,9 @@ import org.apache.wicket.behavior.Behavior;
  * @version 1.0 11.05.12
  */
 public class BaseThemeBehavior extends CompositeBehavior implements ThemeBehavior {
-
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = -6567719420886502433L;
 
     public BaseThemeBehavior(Behavior... behaviors) {

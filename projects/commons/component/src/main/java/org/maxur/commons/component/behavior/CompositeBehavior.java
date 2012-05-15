@@ -20,7 +20,9 @@ import java.util.List;
  * @version 1.0 11.05.12
  */
 public class CompositeBehavior extends Behavior {
-
+    /**
+     * The Serial Version UID.
+     */
     private static final long serialVersionUID = 2172668659738903804L;
 
     private final List<Behavior> behaviors;
