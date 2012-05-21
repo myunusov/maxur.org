@@ -21,7 +21,7 @@ public class PrimitivesTypeMap extends ClassResolver {
             case "char":
                 return char.class;
             default:
-                return next(className);
+                return super.resolve(className);
         }
     }
 }

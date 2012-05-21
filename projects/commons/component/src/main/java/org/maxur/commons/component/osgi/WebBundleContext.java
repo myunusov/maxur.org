@@ -4,7 +4,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import org.osgi.framework.BundleContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,21 +28,15 @@ public final class WebBundleContext {
 
     private static OSGiServiceProvider<?>[] currentServiceProviders;
 
-    private static BundleContext currentBundleContext;
-
     private static Injector webInjector;
 
     private final OSGiServiceProvider<?>[] serviceProviders;
 
     private final Dictionary properties;
 
-    private final BundleContext bundleContext;
-
-
     private WebBundleContext() {
         this.properties = currentProperties;
         this.serviceProviders = currentServiceProviders;
-        this.bundleContext = currentBundleContext;
     }
 
     public static Injector getWebInjector() {
@@ -60,28 +53,33 @@ public final class WebBundleContext {
                 webInjector.createChildInjector(WebBundleContext.getBundleModule());
     }
 
-    public static Iterable<? extends Module> getBundleModule() {
-        Collection<Module> result = new ArrayList<>();
-        result.add(getPropertiesModule());
-        result.add(getProvidersModule());
-        return result;
-    }
-
-
-    public static void setBundleContext(final BundleContext bc) {
-        WebBundleContext.currentBundleContext = bc;
+    public static void setProperties(final Dictionary properties) {
+        WebBundleContext.currentProperties = properties;
     }
 
     /**
      * @return {@link Dictionary} bound to current thread
      */
-    public static BundleContext getBundleContext() {
-        return get() != null ? get().bundleContext : currentBundleContext;
+    private static Dictionary getProperties() {
+        return get() != null ? get().properties : currentProperties;
     }
-
 
     public static void setProviders(OSGiServiceProvider<?>... serviceProviders) {
         WebBundleContext.currentServiceProviders = serviceProviders;
+    }
+
+    /**
+     * @return {@link OSGiServiceProvider[]} bound to current thread
+     */
+    private static OSGiServiceProvider<?>[] getProviders() {
+        return get() != null ? get().serviceProviders : currentServiceProviders;
+    }
+
+    public static Iterable<? extends Module> getBundleModule() {
+        Collection<Module> result = new ArrayList<>();
+        result.add(getPropertiesModule());
+        result.add(getProvidersModule());
+        return result;
     }
 
     private static Module getPropertiesModule() {
@@ -100,37 +98,17 @@ public final class WebBundleContext {
         };
     }
 
-    public static void setProperties(final Dictionary properties) {
-        WebBundleContext.currentProperties = properties;
-    }
-
-    /**
-     * @return {@link Dictionary} bound to current thread
-     */
-    public static Dictionary getProperties() {
-        return get() != null ? get().properties : currentProperties;
-    }
-
     public static Module getProvidersModule() {
         return new AbstractModule() {
             @Override
             protected void configure() {
-                bind(BundleContext.class).toInstance(getBundleContext());
                 for (OSGiServiceProvider<?> provider : getProviders()) {
                     //noinspection unchecked
-                    bind(provider.getProvidedClass()).toProvider(provider.getClass());
+                    bind(provider.getProvidedClass()).toProvider(provider);
                 }
             }
         };
     }
-
-    /**
-     * @return {@link OSGiServiceProvider[]} bound to current thread
-     */
-    public static OSGiServiceProvider<?>[] getProviders() {
-        return get() != null ? get().serviceProviders : currentServiceProviders;
-    }
-
 
     public static void persist() {
         WebBundleContext context = new WebBundleContext();

@@ -8,7 +8,6 @@ import org.maxur.commons.component.osgi.WebBundleContext;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.service.cm.ManagedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +27,7 @@ public final class Activator implements BundleActivator {
 
     private static final String PID = "org.maxur.taskun";
 
-    private ControlManager manager = new ControlManager();
+    private OSGiServiceProvider<?>[] providers;
 
     /**
      * Called whenever the OSGi framework starts our bundle
@@ -37,23 +36,21 @@ public final class Activator implements BundleActivator {
 
         logger.debug("STARTING org.maxur.taskun.war");
 
-        bc.registerService(ManagedService.class.getName(),
-                manager.getManagedService(),
-                getManagedServiceProperties());
+        ControlManager.start(bc, getManagedServiceProperties());
 
-        WebBundleContext.setBundleContext(bc);
-
-        WebBundleContext.setProviders(
+        WebBundleContext.setProviders(providers = new OSGiServiceProvider<?>[]{
                 new WebBrowserDetectorProvider(bc),
                 new ThemeBehaviorProvider(bc)
-        );
+        });
     }
-
 
     /**
      * Called whenever the OSGi framework stops our bundle
      */
     public void stop(final BundleContext bc) throws Exception {
+        for (OSGiServiceProvider<?> provider : providers) {
+            provider.stop();
+        }
         logger.debug("STOPPING org.maxur.taskun.war");
     }
 

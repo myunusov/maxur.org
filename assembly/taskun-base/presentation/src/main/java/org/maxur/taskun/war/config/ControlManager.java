@@ -1,6 +1,7 @@
 package org.maxur.taskun.war.config;
 
 import org.maxur.commons.component.osgi.WebBundleContext;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 import org.slf4j.Logger;
@@ -20,7 +21,17 @@ public class ControlManager {
 
     private Dictionary properties;
 
-    private final ControlConfigurator configurator = new ControlConfigurator();
+    public static void start(final BundleContext bc, final Dictionary<String, String> dictionary) {
+        new ControlManager(bc, dictionary);
+    }
+
+    private ControlManager(final BundleContext bc, final Dictionary<String, String> dictionary) {
+        bc.registerService(
+                ManagedService.class.getName(),
+                new ControlConfigurator(),
+                dictionary
+        );
+    }
 
     public void setProperties(final Dictionary properties) {
         this.properties = properties;
@@ -48,10 +59,6 @@ public class ControlManager {
             Object value = properties.get(key);
             logger.debug(String.format("New configuration record: %s = %s", key, value));
         }
-    }
-
-    public Object getManagedService() {
-        return configurator;
     }
 
 }

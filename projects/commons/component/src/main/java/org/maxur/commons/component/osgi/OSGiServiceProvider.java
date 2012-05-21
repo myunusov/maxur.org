@@ -6,7 +6,7 @@ import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.util.tracker.ServiceTracker;
 
-import static org.maxur.commons.component.utils.ReflectionUtils.getGenericParameterClass;
+import static org.maxur.commons.component.utils.GenericParameters.getParameter;
 
 /**
  * @author Maxim Yunusov
@@ -14,10 +14,15 @@ import static org.maxur.commons.component.utils.ReflectionUtils.getGenericParame
  */
 public class OSGiServiceProvider<T> implements Provider<T> {
 
-    private final BundleContext bc;
+    private ServiceTracker tracker;
 
     public OSGiServiceProvider(final BundleContext bc) {
-        this.bc = bc;
+        try {
+            tracker = new ServiceTracker(bc, createFilter(bc), null);
+            tracker.open();
+        } catch (InvalidSyntaxException e) {
+            tracker = null;
+        }
     }
 
     private Filter createFilter(final BundleContext bc) throws InvalidSyntaxException {
@@ -25,19 +30,16 @@ public class OSGiServiceProvider<T> implements Provider<T> {
     }
 
     public final Class getProvidedClass() {
-        return getGenericParameterClass(this.getClass(), OSGiServiceProvider.class, 0);
+        return getParameter(this.getClass(), OSGiServiceProvider.class, 0);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public T get() {
-        final ServiceTracker tracker;
-        try {
-            tracker = new ServiceTracker(bc, createFilter(bc), null);
-            tracker.open();
-            return (T) tracker.getService();
-        } catch (InvalidSyntaxException ignore) {
-            return null;
-        }
+        return (T) tracker.getService();
+    }
+
+    public void stop() {
+        tracker.close();
     }
 }
