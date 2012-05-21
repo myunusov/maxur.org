@@ -22,7 +22,7 @@ public class ClassesCache extends ClassResolver {
         final WeakReference<Class<?>> reference = classes.get(className);
         return isNotGarbageCollected(reference) ?
             reference.get():
-            addToCacheAndReturn(className, next(className));
+            addToCacheAndReturn(className, super.resolve(className));
     }
 
     private Class<?> addToCacheAndReturn(final String className, final Class<?> result) {
