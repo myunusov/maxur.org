@@ -31,7 +31,7 @@
 
     <error-page>
         <error-code>404</error-code>
-        <location>/404</location>
+        <location>/maxur/404</location>
     </error-page>
 
     <session-config>

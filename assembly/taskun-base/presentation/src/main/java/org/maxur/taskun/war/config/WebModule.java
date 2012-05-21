@@ -18,8 +18,7 @@ public class WebModule extends ServletModule {
     @Override
     protected void configureServlets() {
         Map<String, String> params = new HashMap<>();
-        params.put(WicketFilter.FILTER_MAPPING_PARAM, "/main/*"); /// TODO It must be property value.
-
+        params.put(WicketFilter.FILTER_MAPPING_PARAM, "/*");
         filter("/*").through(OSGiWicketFilter.class, params);
 
         //If you use WARP, use a pattern to exclude the resources from the PersistenceFilter : //TODO

@@ -68,6 +68,11 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     private PageProvider accessDeniedPageProvider;
 
 
+    @Inject
+    @Named("NotFoundPage")
+    private PageProvider notFoundPageProvider;
+
+
     /**
      * <p>Setter for the field <code>version</code>.</p>
      *
@@ -109,7 +114,7 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
         getApplicationSettings().setInternalErrorPage(internalErrorProvider.get());
         getApplicationSettings().setPageExpiredErrorPage(expiredPageProvider.get());
         getApplicationSettings().setAccessDeniedPage(accessDeniedPageProvider.get());
-        mount(new MountedMapper("/404", internalErrorProvider.get()));
+        mount(new MountedMapper("/404", notFoundPageProvider.get()));
     }
 
     private void setBookmarks() {

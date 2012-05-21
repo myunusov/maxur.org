@@ -28,7 +28,6 @@ public class GenericParametersTest {
     static class E extends D<Integer, Double> {
     }
 
-
     @Test
     public void testMethodInnerClass() throws Exception {
         final Class clazz = GenericParameters.getParameter(new D<String, Double>(){}.getClass(), D.class, 0);
