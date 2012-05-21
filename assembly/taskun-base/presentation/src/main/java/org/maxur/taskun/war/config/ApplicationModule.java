@@ -10,6 +10,7 @@ import org.maxur.commons.view.api.PageProvider;
 import org.maxur.taskun.war.pages.error.AccessDeniedPage;
 import org.maxur.taskun.war.pages.error.ExpiredPage;
 import org.maxur.taskun.war.pages.error.InternalErrorPage;
+import org.maxur.taskun.war.pages.error.NotFoundPage;
 import org.maxur.taskun.war.pages.home.HomePage;
 
 /**
@@ -31,15 +32,23 @@ public class ApplicationModule extends AbstractModule {
         bind(PageProvider.class).annotatedWith(Names.named("InternalErrorPage")).to(InternalErrorPageProvider.class);
         bind(PageProvider.class).annotatedWith(Names.named("ExpiredPage")).to(ExpiredPageProvider.class);
         bind(PageProvider.class).annotatedWith(Names.named("AccessDeniedPage")).to(AccessDeniedPageProvider.class);
+        bind(PageProvider.class).annotatedWith(Names.named("NotFoundPage")).to(NotFoundPageProvider.class);
+
 
         bind(WebApplication.class).toProvider(WicketGuiceAppProvider.class);
     }
-
 
     public static class HomePageProvider implements PageProvider {
         @Override
         public Class<? extends WebPage> get() {
             return HomePage.class;
+        }
+    }
+
+    public static class NotFoundPageProvider implements PageProvider {
+        @Override
+        public Class<? extends WebPage> get() {
+            return NotFoundPage.class;
         }
     }
 

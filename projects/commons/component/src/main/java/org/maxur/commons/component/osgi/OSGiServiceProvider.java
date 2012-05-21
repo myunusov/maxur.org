@@ -1,6 +1,5 @@
 package org.maxur.commons.component.osgi;
 
-import com.google.inject.Provider;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
@@ -12,11 +11,14 @@ import static org.maxur.commons.component.utils.GenericParameters.getParameter;
  * @author Maxim Yunusov
  * @version 1.0 14.05.12
  */
-public class OSGiServiceProvider<T> implements Provider<T> {
+public class OSGiServiceProvider<T> extends BaseServiceProvider<T> {
 
     private ServiceTracker tracker;
 
+    private Class providedClass;
+
     public OSGiServiceProvider(final BundleContext bc) {
+        providedClass = getParameter(this.getClass(), BaseServiceProvider.class, 0);
         try {
             tracker = new ServiceTracker(bc, createFilter(bc), null);
             tracker.open();
@@ -30,7 +32,7 @@ public class OSGiServiceProvider<T> implements Provider<T> {
     }
 
     public final Class getProvidedClass() {
-        return getParameter(this.getClass(), OSGiServiceProvider.class, 0);
+        return providedClass;
     }
 
     @SuppressWarnings("unchecked")

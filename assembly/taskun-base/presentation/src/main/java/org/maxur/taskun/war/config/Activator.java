@@ -1,6 +1,5 @@
 package org.maxur.taskun.war.config;
 
-import com.google.inject.Inject;
 import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.component.osgi.OSGiServiceProvider;
@@ -39,8 +38,8 @@ public final class Activator implements BundleActivator {
         ControlManager.start(bc, getManagedServiceProperties());
 
         WebBundleContext.setProviders(providers = new OSGiServiceProvider<?>[]{
-                new WebBrowserDetectorProvider(bc),
-                new ThemeBehaviorProvider(bc)
+                new OSGiServiceProvider<WebBrowserDetector>(bc){},
+                new OSGiServiceProvider<ThemeBehavior>(bc){}
         });
     }
 
@@ -60,17 +59,4 @@ public final class Activator implements BundleActivator {
         return result;
     }
 
-    public static class WebBrowserDetectorProvider extends OSGiServiceProvider<WebBrowserDetector> {
-        @Inject
-        public WebBrowserDetectorProvider(BundleContext bc) {
-            super(bc);
-        }
-    }
-
-    public static class ThemeBehaviorProvider extends OSGiServiceProvider<ThemeBehavior> {
-        @Inject
-        public ThemeBehaviorProvider(BundleContext bc) {
-            super(bc);
-        }
-    }
 }
