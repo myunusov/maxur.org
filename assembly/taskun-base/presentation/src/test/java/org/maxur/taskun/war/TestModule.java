@@ -6,7 +6,12 @@ import org.apache.wicket.behavior.Behavior;
 import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.view.api.MenuItems;
+import org.maxur.taskun.domain.Issue;
+import org.maxur.taskun.domain.IssueLister;
 import org.maxur.taskun.war.config.MenuItemsProvider;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Maxim Yunusov
@@ -16,6 +21,7 @@ public class TestModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(IssueLister.class).to(FakeIssueLister.class);
         bind(MenuItems.class).toProvider(MenuItemsProvider.class);
         bind(WebBrowser.class).to(IE6Browser.class);
         bind(ThemeBehavior.class).to(FakeThemeBehavior.class);
@@ -32,4 +38,11 @@ public class TestModule extends AbstractModule {
         }
     }
 
+    private static class FakeIssueLister implements IssueLister {
+        private static final long serialVersionUID = 2872305646663272755L;
+        @Override
+        public List<Issue> listActive() {
+            return Collections.emptyList();
+        }
+    }
 }

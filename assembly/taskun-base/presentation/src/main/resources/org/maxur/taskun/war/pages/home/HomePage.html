@@ -16,8 +16,10 @@
 </wicket:head>
 <body>
 <wicket:extend>
-    <wicket:remove>
         <div id="teaser">
+            <span wicket:id="list_view">
+                issue: <span wicket:id="label">[issue]</span><br/>
+            </span>
         </div>
         <div id="main">
             <div id="col1">
@@ -38,6 +40,7 @@
                 <div id="ie_clearing"> &#160; </div>
             </div>
         </div>
+    <wicket:remove>
     </wicket:remove>
 </wicket:extend>
 </body>

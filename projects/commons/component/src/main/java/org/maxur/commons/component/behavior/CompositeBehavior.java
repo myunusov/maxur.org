@@ -6,11 +6,11 @@ import org.apache.wicket.behavior.IBehaviorListener;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.maxur.commons.component.utils.SerializableArrayList;
+import org.maxur.commons.component.utils.SerializableList;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Represents a composite behavior allowing the user to attach multiple behaviors to a
@@ -25,10 +25,10 @@ public class CompositeBehavior extends Behavior {
      */
     private static final long serialVersionUID = 2172668659738903804L;
 
-    private final List<Behavior> behaviors;
+    private final SerializableList<Behavior> behaviors;
 
     public CompositeBehavior(final Behavior... behaviors) {
-        this.behaviors = new ArrayList<>(Arrays.asList(behaviors));
+        this.behaviors = new SerializableArrayList<>(Arrays.asList(behaviors));
     }
 
     /**

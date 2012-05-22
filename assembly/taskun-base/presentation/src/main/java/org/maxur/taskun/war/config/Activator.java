@@ -4,6 +4,7 @@ import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.component.osgi.OSGiServiceProvider;
 import org.maxur.commons.component.osgi.WebBundleContext;
+import org.maxur.taskun.domain.IssueLister;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -31,22 +32,25 @@ public final class Activator implements BundleActivator {
     /**
      * Called whenever the OSGi framework starts our bundle
      */
-    public void start(final BundleContext bc) throws Exception {
+    public void start(final BundleContext bc) {
 
         logger.debug("STARTING org.maxur.taskun.war");
 
         ControlManager.start(bc, getManagedServiceProperties());
 
-        WebBundleContext.setProviders(providers = new OSGiServiceProvider<?>[]{
-                new OSGiServiceProvider<WebBrowserDetector>(bc){},
-                new OSGiServiceProvider<ThemeBehavior>(bc){}
-        });
+        providers = new OSGiServiceProvider<?>[]{
+                new WebBrowserDetectorProvider(bc),
+                new ThemeBehaviorProvider(bc),
+                new IssueListerProvider(bc)
+        };
+
+        WebBundleContext.setProviders(providers);
     }
 
     /**
      * Called whenever the OSGi framework stops our bundle
      */
-    public void stop(final BundleContext bc) throws Exception {
+    public void stop(final BundleContext bc) {
         for (OSGiServiceProvider<?> provider : providers) {
             provider.stop();
         }
@@ -59,4 +63,21 @@ public final class Activator implements BundleActivator {
         return result;
     }
 
+    private static class ThemeBehaviorProvider extends OSGiServiceProvider<ThemeBehavior> {
+        public ThemeBehaviorProvider(final BundleContext bc) {
+            super(bc);
+        }
+    }
+
+    private static class IssueListerProvider extends OSGiServiceProvider<IssueLister> {
+        public IssueListerProvider(final BundleContext bc) {
+            super(bc);
+        }
+    }
+
+    private static class WebBrowserDetectorProvider extends OSGiServiceProvider<WebBrowserDetector> {
+        public WebBrowserDetectorProvider(final BundleContext bc) {
+            super(bc);
+        }
+    }
 }

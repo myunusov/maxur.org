@@ -31,11 +31,13 @@ public class IssueProviderTracker extends ServiceTracker {
 
         synchronized(this) {
             providerCount++;
-            if (registering)
+            if (registering) {
                 return provider;
+            }
             registering = (providerCount == 1);
-            if (!registering)
+            if (!registering) {
                 return provider;
+            }
         }
 
         final ServiceRegistration reg = context.registerService(IssueLister.class.getName(), lister, null);

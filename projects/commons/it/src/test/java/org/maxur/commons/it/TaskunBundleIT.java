@@ -3,7 +3,6 @@ package org.maxur.commons.it;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.maxur.commons.domain.ExampleService;
 import org.ops4j.pax.exam.CoreOptions;
 import org.ops4j.pax.exam.Inject;
 import org.ops4j.pax.exam.Option;

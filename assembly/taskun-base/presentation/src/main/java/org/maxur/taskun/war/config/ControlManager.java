@@ -15,7 +15,7 @@ import java.util.Hashtable;
  * @author Maxim Yunusov
  * @version 1.0 13.05.12
  */
-public class ControlManager {
+public final class ControlManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ControlManager.class);
 

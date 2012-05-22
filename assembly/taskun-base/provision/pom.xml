@@ -47,6 +47,21 @@
             <groupId>org.maxur</groupId>
             <artifactId>maxur-blue-theme</artifactId>
             <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>taskun-core</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>taskun-simple</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
