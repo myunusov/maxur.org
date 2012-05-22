@@ -86,11 +86,11 @@ public final class WebBundleContext {
         return new AbstractModule() {
             @Override
             protected void configure() {
-                final Dictionary properties = getProperties();
-                final Enumeration keys = properties.keys();
+                final Dictionary dictionary = getProperties();
+                final Enumeration keys = dictionary.keys();
                 while (keys.hasMoreElements()) {
                     final String key = keys.nextElement().toString();
-                    final String value = properties.get(key).toString();
+                    final String value = dictionary.get(key).toString();
                     bindConstant().annotatedWith(named(key)).to(value);
                 }
 

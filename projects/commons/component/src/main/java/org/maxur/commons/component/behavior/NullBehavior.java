@@ -9,7 +9,7 @@ import org.apache.wicket.behavior.Behavior;
  * @author Maxim Yunusov
  * @version 1.0 13.05.12
  */
-public class NullBehavior extends Behavior {
+public final class NullBehavior extends Behavior {
     /**
      * The Serial Version UID.
      */

@@ -19,6 +19,7 @@
 
     <modules>
         <module>taskun-core</module>
+        <module>taskun-simple</module>
     </modules>
 
 </project>

@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class IssueListerImpl implements IssueLister {
 
+    private static final long serialVersionUID = -7430403084100489598L;
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private Collection<IssueProvider> providers =
@@ -34,7 +36,7 @@ public class IssueListerImpl implements IssueLister {
     }
 
     @Override
-    public List listActive(final String director) {
+    public List<Issue> listActive() {
         final IssueProvider[] providerArray = providers.toArray(new IssueProvider[providers.size()]);
         final List<Issue> result = new LinkedList<>();
         for (IssueProvider provider : providerArray) {

@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>taskun-core</artifactId>
-    <name>Maxur Taskun Core Bundle</name>
-    <description>Maxur Taskun Core Bundle</description>
+    <artifactId>taskun-simple</artifactId>
+    <name>Maxur Taskun Simple Bundle</name>
+    <description>Maxur Taskun Simple Bundle</description>
     <packaging>jar</packaging>
 
     <parent>
@@ -18,8 +18,8 @@
 
     <properties>
         <project.root>${project.basedir}/../../../</project.root>
-        <bundle.symbolicName>org.maxur.taskun.domain</bundle.symbolicName>
-        <bundle.namespace>org.maxur.taskun.domain</bundle.namespace>
+        <bundle.symbolicName>org.maxur.taskun.simple</bundle.symbolicName>
+        <bundle.namespace>org.maxur.taskun.simple</bundle.namespace>
     </properties>
 
     <dependencies>
@@ -30,6 +30,14 @@
             <type>pom</type>
             <scope>test</scope>
         </dependency>
+
+         <dependency>
+             <groupId>org.maxur</groupId>
+             <artifactId>taskun-core</artifactId>
+             <version>1.0</version>
+             <scope>provided</scope>
+         </dependency>
+
     </dependencies>
 
     

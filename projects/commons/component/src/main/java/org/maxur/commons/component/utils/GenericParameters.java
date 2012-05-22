@@ -16,7 +16,7 @@ import java.util.Stack;
  */
 public class GenericParameters {
 
-    final Stack<ParameterizedType> genericClasses = new Stack<>();
+    private final Stack<ParameterizedType> genericClasses = new Stack<>();
 
     private final Class actualClass;
 

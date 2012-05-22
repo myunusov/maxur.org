@@ -34,8 +34,8 @@ public class AboutPage extends BasePage {
         final Label applicationName = new Label("application", String.format("%s (Version : %s)", title, version));
         applicationName.setRenderBodyOnly(true);
         add(applicationName);
-        final Label version = new Label("version", getApplication().getFrameworkSettings().getVersion());
-        version.setRenderBodyOnly(true);
-        add(version);
+        final Label versionLabel = new Label("version", getApplication().getFrameworkSettings().getVersion());
+        versionLabel.setRenderBodyOnly(true);
+        add(versionLabel);
     }
 }
