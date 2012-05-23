@@ -2,10 +2,11 @@ package org.maxur.commons.component.protocol.http;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
-import org.maxur.commons.component.osgi.WebBundleContext;
+import org.maxur.commons.component.osgi.GuiceModuleHolder;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,9 +26,12 @@ public class OSGiWicketFilter extends WicketFilter {
 
     private final WebApplication application;
 
+    private final String pid;
+
     @Inject
-    public OSGiWicketFilter(final WebApplication application) {
+    public OSGiWicketFilter(final WebApplication application, @Named("service.pid") final String pid) {
         this.application = application;
+        this.pid = pid;
     }
 
     protected IWebApplicationFactory getApplicationFactory() {
@@ -53,7 +57,7 @@ public class OSGiWicketFilter extends WicketFilter {
             final ServletResponse response,
             final FilterChain chain)
             throws IOException, ServletException {
-        WebBundleContext.persist();
+        GuiceModuleHolder.persist(pid);
         super.doFilter(request, response, chain);
     }
 

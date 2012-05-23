@@ -1,9 +1,11 @@
 package org.maxur.taskun.war.config;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
+import com.google.inject.name.Names;
 import org.junit.Before;
 import org.junit.Test;
 import org.maxur.commons.component.model.bookmark.Bookmarks;
@@ -32,7 +34,12 @@ public class ApplicationModuleTest {
 
     @Before
     public void setUp() throws Exception {
-        final Injector injector = Guice.createInjector(new ApplicationModule());
+        final Injector injector = Guice.createInjector(new ApplicationModule(), new AbstractModule() {
+            @Override
+            protected void configure() {
+                bindConstant().annotatedWith(Names.named("service.pid")).to("test pid");
+            }
+        });
         injector.injectMembers(this);
     }
 

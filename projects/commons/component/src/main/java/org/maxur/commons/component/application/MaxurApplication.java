@@ -72,6 +72,9 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     @Named("NotFoundPage")
     private PageProvider notFoundPageProvider;
 
+    public MaxurApplication(final String pid) {
+        super(pid);
+    }
 
     /**
      * <p>Setter for the field <code>version</code>.</p>

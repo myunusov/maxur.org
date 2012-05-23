@@ -6,7 +6,7 @@ import org.apache.wicket.guice.GuiceInjectorHolder;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
-import org.maxur.commons.component.osgi.WebBundleContext;
+import org.maxur.commons.component.osgi.GuiceModuleHolder;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +19,13 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
 
     private OsgiClassResolver classResolver;
 
+    private final String pid;
+
     private Injector injector;
 
-    public AbstractOSGiWebApplication() {
-        injector = WebBundleContext.getInjector();
+    public AbstractOSGiWebApplication(final String pid) {
+        this.pid = pid;
+        injector = GuiceModuleHolder.getInjector(pid);
         if (injector != null) {
             injector.injectMembers(this);
         }
@@ -48,7 +51,7 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
     }
 
     private Injector getInjector() {
-        return WebBundleContext.getInjector();
+        return GuiceModuleHolder.getInjector(pid);
     }
 
     /**
