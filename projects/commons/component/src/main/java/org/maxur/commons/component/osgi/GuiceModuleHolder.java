@@ -16,49 +16,63 @@ import java.util.Map;
  */
 public final class GuiceModuleHolder {
 
-    private static ThreadLocal<GuiceModuleHolder> threadLocal = new ThreadLocal<>();
+    private static Map<String, GuiceModuleHolder> holders = new HashMap<>();
 
-    private static Injector webInjector;
+    private Injector injector;
 
-    private static Map<String, AbstractModule> providersModules = new HashMap<>();
+    private Injector webInjector;
 
-    private static Map<String, AbstractModule> propertiesModules = new HashMap<>();
+    private AbstractModule providersModule;
 
-    private final Injector injector;
+    private AbstractModule propertiesModule;
 
-    private GuiceModuleHolder(final String pid) {
-        injector = makeInjector(pid);
+    private static GuiceModuleHolder get(final String pid) {
+        if (null == holders.get(pid)) {
+            holders.put(pid, new GuiceModuleHolder());
+        }
+        return holders.get(pid);
+    }
+
+    private GuiceModuleHolder() {
     }
 
     public static Injector getInjector(final String pid) {
-        return get() != null ? get().injector : makeInjector(pid);
+        if (get(pid).injector == null) {
+            get(pid).injector = makeInjector(pid);
+        }
+        return get(pid).injector;
     }
 
     private static Injector makeInjector(final String pid) {
-        return webInjector == null ?
-                    Guice.createInjector(propertiesModules.get(pid), providersModules.get(pid)) :
-                    webInjector.createChildInjector(propertiesModules.get(pid), providersModules.get(pid));
+        return get(pid).webInjector == null ?
+                Guice.createInjector(get(pid).propertiesModule, get(pid).providersModule) :
+                get(pid).webInjector.createChildInjector(get(pid).propertiesModule, get(pid).providersModule);
     }
 
-    public static void setWebInjector(Injector webInjector) {
-        GuiceModuleHolder.webInjector = webInjector;
+    public static void setWebInjector(final String pid, final Injector webInjector) {
+        get(pid).setWebInjector(webInjector);
     }
 
     public static void setPropertiesModule(final String pid, final AbstractModule module) {
-        GuiceModuleHolder.propertiesModules.put(pid, module);
+        get(pid).setPropertiesModule(module);
     }
 
     public static void setProvidersModule(final String pid, final AbstractModule module) {
-        GuiceModuleHolder.providersModules.put(pid, module);
+        get(pid).setProvidersModule(module);
     }
 
-    public static void persist(final String pid) {
-        GuiceModuleHolder context = new GuiceModuleHolder(pid);
-        threadLocal.set(context);
+    public void setWebInjector(final Injector webInjector) {
+        this.webInjector = webInjector;
+        this.injector = null;
     }
 
-    public static GuiceModuleHolder get() {
-        return threadLocal.get();
+    public void setProvidersModule(final AbstractModule providersModule) {
+        this.providersModule = providersModule;
+        this.injector = null;
     }
 
+    public void setPropertiesModule(final AbstractModule propertiesModule) {
+        this.propertiesModule = propertiesModule;
+        this.injector = null;
+    }
 }
