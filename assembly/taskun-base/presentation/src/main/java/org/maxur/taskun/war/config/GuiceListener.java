@@ -15,7 +15,7 @@ public class GuiceListener extends GuiceServletContextListener {
 
     @Override
     protected Injector getInjector() {
-        GuiceModuleHolder.setWebInjector(createInjector());
+        GuiceModuleHolder.setWebInjector(BaseTaskunActivator.PID, createInjector());
         return GuiceModuleHolder.getInjector(BaseTaskunActivator.PID);
     }
 

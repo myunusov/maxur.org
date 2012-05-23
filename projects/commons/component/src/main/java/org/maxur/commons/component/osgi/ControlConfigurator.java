@@ -76,6 +76,9 @@ public class ControlConfigurator implements ManagedService {
                 final Enumeration keys = properties.keys();
                 while (keys.hasMoreElements()) {
                     final String key = keys.nextElement().toString();
+                    if (Constants.SERVICE_PID.equals(key)) {
+                        continue;
+                    }
                     final String value = properties.get(key).toString();
                     bindConstant().annotatedWith(named(key)).to(value);
                 }

@@ -31,9 +31,9 @@ public class OSGiServiceProvider<T> extends BaseServiceProvider<T> {
         if (provider == null) {
             throw new IllegalStateException(String.format("Not found OSGi Service for class '%s'", providedClass));
         }
-        if (!provider.getClass().equals(providedClass)) {
+        if (!providedClass.isAssignableFrom(provider.getClass())) {
             throw new IllegalStateException(
-                    String.format("OSGi Service for class '%s' return '%s'", providedClass, provider.getClass()));
+                    String.format("Class %s is not a superclass of %s.", providedClass, provider.getClass()));
         }
         return provider;
     }
