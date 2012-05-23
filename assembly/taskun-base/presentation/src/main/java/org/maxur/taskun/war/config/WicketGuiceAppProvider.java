@@ -22,6 +22,6 @@ public class WicketGuiceAppProvider implements Provider<WebApplication> {
      */
     @Override
     public WebApplication get() {
-        return new MaxurApplication();
+        return new MaxurApplication(BaseTaskunActivator.PID);
     }
 }

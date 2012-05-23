@@ -3,7 +3,7 @@ package org.maxur.taskun.war.config;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import org.maxur.commons.component.osgi.WebBundleContext;
+import org.maxur.commons.component.osgi.GuiceModuleHolder;
 
 
 /**
@@ -15,12 +15,8 @@ public class GuiceListener extends GuiceServletContextListener {
 
     @Override
     protected Injector getInjector() {
-        Injector webInjector = WebBundleContext.getWebInjector();
-        if (webInjector == null) {
-            webInjector = createInjector();
-            WebBundleContext.setWebInjector(webInjector);
-        }
-        return WebBundleContext.getInjector();
+        GuiceModuleHolder.setWebInjector(createInjector());
+        return GuiceModuleHolder.getInjector(BaseTaskunActivator.PID);
     }
 
     private Injector createInjector() {

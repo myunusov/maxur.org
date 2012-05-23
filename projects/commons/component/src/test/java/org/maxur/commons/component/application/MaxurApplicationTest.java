@@ -52,7 +52,7 @@ public class MaxurApplicationTest {
 
     private static class TestMaxurApplication extends MaxurApplication {
         public TestMaxurApplication() {
-            super();
+            super("");
         }
     }
 

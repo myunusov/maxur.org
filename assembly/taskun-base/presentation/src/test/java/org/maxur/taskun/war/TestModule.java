@@ -26,6 +26,7 @@ public class TestModule extends AbstractModule {
         bind(WebBrowser.class).to(IE6Browser.class);
         bind(ThemeBehavior.class).to(FakeThemeBehavior.class);
         bindConstant().annotatedWith(Names.named("version")).to("test version");
+        bindConstant().annotatedWith(Names.named("service.pid")).to("test pid");
     }
 
 
