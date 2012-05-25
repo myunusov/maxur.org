@@ -4,9 +4,64 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.maxur</groupId>
-    <artifactId>guice</artifactId>
+    <artifactId>guice-jars</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>Guice Container</name>
 
-    
+    <parent>
+        <groupId>org.maxur</groupId>
+        <artifactId>dependencies-pom</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <properties>
+        <project.root>${project.basedir}/../../</project.root>
+        <guice.version>3.0</guice.version>
+        <javax.inject.version>1.0.0</javax.inject.version>
+    </properties>
+
+    <dependencies>
+        <!-- JavaX -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>com.springsource.javax.inject</artifactId>
+            <version>${javax.inject.version}</version>
+        </dependency>
+
+        <!-- Guice -->
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+        <!-- Guice extensions -->
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-servlet</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-multibindings</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
+
+
+        <!-- Peaberry -->
+        <dependency>
+            <groupId>org.ops4j</groupId>
+            <artifactId>peaberry</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.peaberry.extensions</groupId>
+            <artifactId>peaberry.activation</artifactId>
+            <version>1.2</version>
+        </dependency>
+    </dependencies>
+
+
+
+
 </project>

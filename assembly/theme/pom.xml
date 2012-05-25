@@ -10,6 +10,7 @@
     <name>Maxur CSS Themes Container</name>
 
     <parent>
+        <relativePath>../../projects/</relativePath>
         <groupId>org.maxur</groupId>
         <artifactId>projects</artifactId>
         <version>1.0</version>

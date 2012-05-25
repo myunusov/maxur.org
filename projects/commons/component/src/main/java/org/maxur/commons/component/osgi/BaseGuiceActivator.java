@@ -41,7 +41,6 @@ public abstract class BaseGuiceActivator implements BundleActivator {
 
         controlServices  = ControlServices.init();
         controlProviders = ControlProviders.init(pid);
-        controlProviders.addObserver(controlServices);
         config();
         controlProviders.start(bc, pid);
         controlServices.start(bc, pid);
