@@ -2,7 +2,7 @@ package org.maxur.commons.component.config;
 
 import org.maxur.commons.component.model.webclient.BaseWebBrowserDetector;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
-import org.maxur.commons.component.osgi.BaseGuiceActivator;
+import org.maxur.commons.osgi.BaseGuiceActivator;
 
 /**
  * @author Maxim Yunusov

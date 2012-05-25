@@ -1,4 +1,4 @@
-package org.maxur.commons.component.osgi;
+package org.maxur.commons.osgi;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provider;

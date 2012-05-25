@@ -53,10 +53,18 @@
     <dependencies>
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>maxur-commons-core</artifactId>
+            <artifactId>maxur-commons-component</artifactId>
             <version>1.0</version>
-            <scope>test</scope>
+            <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>wicket-jars</artifactId>
+            <version>1.0</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>unit-tests-jars</artifactId>

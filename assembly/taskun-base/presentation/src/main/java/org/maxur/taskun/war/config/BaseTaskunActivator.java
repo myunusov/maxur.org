@@ -2,7 +2,7 @@ package org.maxur.taskun.war.config;
 
 import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
-import org.maxur.commons.component.osgi.BaseGuiceActivator;
+import org.maxur.commons.osgi.BaseGuiceActivator;
 import org.maxur.taskun.domain.IssueLister;
 
 /**

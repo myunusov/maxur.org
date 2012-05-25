@@ -1,4 +1,4 @@
-package org.maxur.commons.component.osgi;
+package org.maxur.commons.osgi;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -99,16 +99,19 @@ public final class GuiceModuleHolder {
     public void setWebInjector(final Injector webInjector) {
         this.webInjector = webInjector;
         this.injector = null;
+        update();
     }
 
     public void setProvidersModule(final AbstractModule providersModule) {
         this.providersModule = providersModule;
         this.injector = null;
+        update();
     }
 
     public void setPropertiesModule(final AbstractModule propertiesModule) {
         this.propertiesModule = propertiesModule;
         this.injector = null;
+        update();
     }
 
 }

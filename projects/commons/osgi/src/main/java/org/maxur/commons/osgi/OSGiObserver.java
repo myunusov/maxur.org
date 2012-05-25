@@ -1,4 +1,4 @@
-package org.maxur.commons.component.osgi;
+package org.maxur.commons.osgi;
 
 /**
  * @author Maxim Yunusov

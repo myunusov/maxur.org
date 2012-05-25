@@ -3,7 +3,7 @@ package org.maxur.taskun.war.config;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
-import org.maxur.commons.component.osgi.GuiceModuleHolder;
+import org.maxur.commons.osgi.GuiceModuleHolder;
 
 
 /**

@@ -1,6 +1,6 @@
 package org.maxur.taskun.domain.internal;
 
-import org.maxur.commons.component.osgi.BaseGuiceActivator;
+import org.maxur.commons.osgi.BaseGuiceActivator;
 import org.maxur.taskun.domain.IssueLister;
 import org.maxur.taskun.domain.IssueProvider;
 
