@@ -41,18 +41,24 @@ public abstract class BaseGuiceActivator implements BundleActivator {
 
         controlServices  = ControlServices.init();
         controlProviders = ControlProviders.init(pid);
+        controlProviders.addObserver(controlServices);
         config();
-        controlProviders.start(bc);
-        controlServices.start(bc);
+        controlProviders.start(bc, pid);
+        controlServices.start(bc, pid);
     }
 
     protected abstract void config();
 
-    public void bindOne(Class<?> providedClass) {
-        controlProviders.bind(providedClass);
+    public void bindSingle(Class<?> providedClass) {
+        controlProviders.bindSingle(providedClass);
     }
 
-    public void service(final Class<?> servesClass, final Object service) {
+    public void bindMultiple(Class<?> providedClass) {
+        controlProviders.bindMultiple(providedClass);
+    }
+
+
+    public void export(final Class<?> servesClass, final Object service) {
         controlServices.bind(servesClass, service);
     }
 

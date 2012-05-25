@@ -23,9 +23,9 @@ public final class BaseTaskunActivator extends BaseGuiceActivator {
 
     @Override
     protected void config() {
-        bindOne(ThemeBehavior.class);
-        bindOne(IssueLister.class);
-        bindOne(WebBrowserDetector.class);
+        bindSingle(ThemeBehavior.class);
+        bindSingle(IssueLister.class);
+        bindSingle(WebBrowserDetector.class);
     }
 
 }

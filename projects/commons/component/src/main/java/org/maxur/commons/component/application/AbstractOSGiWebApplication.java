@@ -1,5 +1,6 @@
 package org.maxur.commons.component.application;
 
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.guice.GuiceInjectorHolder;
@@ -7,6 +8,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
 import org.maxur.commons.component.osgi.GuiceModuleHolder;
+import org.maxur.commons.component.osgi.OSGiObserver;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,20 +17,22 @@ import javax.servlet.http.HttpServletRequest;
  * @author Maxim Yunusov
  * @version 1.0 10.05.12
  */
-public abstract class AbstractOSGiWebApplication extends WebApplication implements OSGiWebApplication {
+public abstract class AbstractOSGiWebApplication extends WebApplication
+        implements OSGiWebApplication, OSGiObserver {
 
     private OsgiClassResolver classResolver;
 
     private final String pid;
 
+    @Inject
     private Injector injector;
+
+    private boolean isStale;
 
     public AbstractOSGiWebApplication(final String pid) {
         this.pid = pid;
-        injector = GuiceModuleHolder.getInjector(pid);
-        if (injector != null) {
-            injector.injectMembers(this);
-        }
+        GuiceModuleHolder.inject(pid, this);
+        GuiceModuleHolder.addObserver(pid, this);
     }
 
     @Override
@@ -39,19 +43,11 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
     /** {@inheritDoc} */
     @Override
     public WebRequest newWebRequest(HttpServletRequest servletRequest, String filterPath) {
-        final Injector newInjector = getInjector();
-        if (injector != newInjector) {
-            injector = newInjector;
-            if (injector != null) {
-                injector.injectMembers(this);
-            }
+        if (this.isStale) {
+            GuiceModuleHolder.inject(pid, this);
             setMetaData(GuiceInjectorHolder.INJECTOR_KEY, new GuiceInjectorHolder(injector));
         }
         return super.newWebRequest(servletRequest, filterPath);
-    }
-
-    private Injector getInjector() {
-        return GuiceModuleHolder.getInjector(pid);
     }
 
     /**
@@ -71,9 +67,14 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
     }
 
     private GuiceComponentInjector createInjector() {
-        return getInjector() != null ?
-                new GuiceComponentInjector(this, getInjector()) :
+        return injector != null ?
+                new GuiceComponentInjector(this, injector) :
                 new GuiceComponentInjector(this);
+    }
+
+    @Override
+    public void update() {
+        this.isStale = true;
     }
 
     protected abstract void doInit();

@@ -7,5 +7,5 @@ import com.google.inject.Provider;
  * @version 1.0
  * @since <pre>5/21/12</pre>
  */
-public abstract class BaseServiceProvider<T> implements Provider<T> {
+public abstract class AbstractOSGiServiceProvider<T> implements Provider<T> {
 }

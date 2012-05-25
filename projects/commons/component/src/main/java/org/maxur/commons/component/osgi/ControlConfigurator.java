@@ -19,7 +19,7 @@ import static com.google.inject.name.Names.named;
  * @author Maxim Yunusov
  * @version 1.0 22.05.12
  */
-public class ControlConfigurator implements ManagedService {
+public final class ControlConfigurator implements ManagedService {
 
     private static final Dictionary NULL_PROPERTIES = new Hashtable();
 
@@ -70,21 +70,28 @@ public class ControlConfigurator implements ManagedService {
     }
 
     private void updateService(final Dictionary properties) {
-        GuiceModuleHolder.setPropertiesModule(pid, new AbstractModule() {
-            @Override
-            protected void configure() {
-                final Enumeration keys = properties.keys();
-                while (keys.hasMoreElements()) {
-                    final String key = keys.nextElement().toString();
-                    if (Constants.SERVICE_PID.equals(key)) {
-                        continue;
-                    }
-                    final String value = properties.get(key).toString();
-                    bindConstant().annotatedWith(named(key)).to(value);
-                }
-            }
-        });
+        GuiceModuleHolder.setPropertiesModule(pid, new ConfiguratorModule(properties));
     }
 
+    private final static class ConfiguratorModule extends AbstractModule {
 
+        private final Dictionary properties;
+
+        public ConfiguratorModule(final Dictionary properties) {
+            this.properties = properties;
+        }
+
+        @Override
+        protected void configure() {
+            final Enumeration keys = properties.keys();
+            while (keys.hasMoreElements()) {
+                final String key = keys.nextElement().toString();
+                if (Constants.SERVICE_PID.equals(key)) {
+                    continue;
+                }
+                final String value = properties.get(key).toString();
+                bindConstant().annotatedWith(named(key)).to(value);
+            }
+        }
+    }
 }

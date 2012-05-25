@@ -20,6 +20,7 @@
         <project.root>${project.basedir}/../../../</project.root>
         <bundle.symbolicName>org.maxur.taskun.domain</bundle.symbolicName>
         <bundle.namespace>org.maxur.taskun.domain</bundle.namespace>
+        <guice.version>3.0</guice.version>
     </properties>
 
     <dependencies>
@@ -29,6 +30,19 @@
             <version>1.0</version>
             <type>pom</type>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>maxur-commons-component</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>guice-jars</artifactId>
+            <version>1.0</version>
+            <type>pom</type>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

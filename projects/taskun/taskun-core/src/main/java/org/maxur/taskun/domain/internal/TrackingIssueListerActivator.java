@@ -1,9 +1,8 @@
 package org.maxur.taskun.domain.internal;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.maxur.commons.component.osgi.BaseGuiceActivator;
+import org.maxur.taskun.domain.IssueLister;
+import org.maxur.taskun.domain.IssueProvider;
 
 /**
  * Extension of the default OSGi bundle activator.
@@ -12,20 +11,18 @@ import org.slf4j.LoggerFactory;
  * @version 1.0 20.05.12
  */
 @SuppressWarnings("UnusedDeclaration")
-public class TrackingIssueListerActivator implements BundleActivator {
+public class TrackingIssueListerActivator extends BaseGuiceActivator {
 
-    private static final Logger logger = LoggerFactory.getLogger(TrackingIssueListerActivator.class);
+    public static final String PID = "org.maxur.taskun.domain";
 
-    private IssueProviderTracker tracker;
-
-    public void start(final BundleContext context) {
-        logger.debug("STARTING org.maxur.taskun.domain");
-        tracker = new IssueProviderTracker(context);
-        tracker.open();
+    public TrackingIssueListerActivator() {
+        super(PID);
     }
 
-    public void stop(BundleContext context) {
-        tracker.close();
-        logger.debug("STOPPING org.maxur.taskun.domain");
+    @Override
+    protected void config() {
+        bindMultiple(IssueProvider.class);
+        export(IssueLister.class, new IssueListerImpl());
     }
+
 }

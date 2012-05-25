@@ -6,7 +6,7 @@
 
     <artifactId>wicket-jars</artifactId>
     <version>1.0</version>
-    <name>Wicket and Guice Container</name>
+    <name>Wicket Container</name>
 
     <parent>
         <groupId>org.maxur</groupId>
@@ -16,7 +16,6 @@
 
     <properties>
         <wicket.version>6.0-SNAPSHOT</wicket.version>
-        <guice.version>3.0</guice.version>
         <pax-web.version>1.1.1</pax-web.version>
         <project.root>${project.basedir}/../../</project.root>
     </properties>
@@ -29,11 +28,6 @@
             <version>1.0.0</version>
         </dependency>
         <!-- JavaX -->
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>com.springsource.javax.inject</artifactId>
-            <version>1.0.0</version>
-        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>com.springsource.javax.servlet</artifactId>
@@ -70,29 +64,6 @@
             </exclusions>
         </dependency>
 
-        <!-- Guice -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-
-        <!-- Peaberry -->
-        <dependency>
-            <groupId>org.ops4j</groupId>
-            <artifactId>peaberry</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ops4j.peaberry.extensions</groupId>
-            <artifactId>peaberry.activation</artifactId>
-            <version>1.2</version>
-        </dependency>
     </dependencies>
 
 </project>

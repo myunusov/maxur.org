@@ -22,6 +22,10 @@ public abstract class Issue implements Serializable {
         return active;
     }
 
+    public abstract boolean isTask();
+
+    public abstract boolean isDefect();
+
     public String getDescription() {
         return description;
     }

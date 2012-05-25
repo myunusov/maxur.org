@@ -5,7 +5,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Must be present in presentation bundle !
@@ -26,6 +28,8 @@ public final class GuiceModuleHolder {
 
     private AbstractModule propertiesModule;
 
+    private final Set<OSGiObserver> observers = new HashSet<>();
+
     private static GuiceModuleHolder get(final String pid) {
         if (null == holders.get(pid)) {
             holders.put(pid, new GuiceModuleHolder());
@@ -36,17 +40,20 @@ public final class GuiceModuleHolder {
     private GuiceModuleHolder() {
     }
 
-    public static Injector getInjector(final String pid) {
-        if (get(pid).injector == null) {
-            get(pid).injector = makeInjector(pid);
-        }
-        return get(pid).injector;
+    public static void inject(final String pid, final Object subject) {
+        get(pid).inject(subject);
     }
 
-    private static Injector makeInjector(final String pid) {
-        return get(pid).webInjector == null ?
-                Guice.createInjector(get(pid).propertiesModule, get(pid).providersModule) :
-                get(pid).webInjector.createChildInjector(get(pid).propertiesModule, get(pid).providersModule);
+    public static Injector getInjector(final String pid) {
+        return get(pid).getInjector();
+    }
+
+    public static void update(final String pid) {
+        get(pid).update();
+    }
+
+    public static void addObserver(final String pid, final OSGiObserver observer) {
+        get(pid).addObserver(observer);
     }
 
     public static void setWebInjector(final String pid, final Injector webInjector) {
@@ -59,6 +66,34 @@ public final class GuiceModuleHolder {
 
     public static void setProvidersModule(final String pid, final AbstractModule module) {
         get(pid).setProvidersModule(module);
+    }
+
+    private Injector getInjector() {
+        if (this.injector == null) {
+            this.injector = this.makeInjector();
+        }
+        return injector;
+    }
+
+    private void addObserver(final OSGiObserver observer) {
+        this.observers.add(observer);
+    }
+
+    private void update() {
+        this.injector = null;
+        for (OSGiObserver observer : observers) {
+            observer.update();
+        }
+    }
+
+    private void inject(final Object subject) {
+        this.getInjector().injectMembers(subject);
+    }
+
+    private Injector makeInjector() {
+        return this.webInjector == null ?
+                Guice.createInjector(this.propertiesModule, this.providersModule) :
+                this.webInjector.createChildInjector(this.propertiesModule, this.providersModule);
     }
 
     public void setWebInjector(final Injector webInjector) {
@@ -75,4 +110,5 @@ public final class GuiceModuleHolder {
         this.propertiesModule = propertiesModule;
         this.injector = null;
     }
+
 }
