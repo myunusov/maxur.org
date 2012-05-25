@@ -73,7 +73,7 @@ public final class ControlConfigurator implements ManagedService {
         GuiceModuleHolder.setPropertiesModule(pid, new ConfiguratorModule(properties));
     }
 
-    private final static class ConfiguratorModule extends AbstractModule {
+    private static final class ConfiguratorModule extends AbstractModule {
 
         private final Dictionary properties;
 

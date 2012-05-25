@@ -55,7 +55,7 @@ public class HomePage extends BasePage {
         }
 
 
-        private final static class IssueDecorator extends Behavior {
+        private static final class IssueDecorator extends Behavior {
             private static final long serialVersionUID = -4937626073896595122L;
 
             private final IModel<Issue> model;
