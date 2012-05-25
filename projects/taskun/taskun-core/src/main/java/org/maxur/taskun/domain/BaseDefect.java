@@ -16,4 +16,14 @@ public class BaseDefect extends Issue {
     public boolean isActive() {
         return true;
     }
+
+    @Override
+    public boolean isTask() {
+        return false;
+    }
+
+    @Override
+    public boolean isDefect() {
+        return true;
+    }
 }

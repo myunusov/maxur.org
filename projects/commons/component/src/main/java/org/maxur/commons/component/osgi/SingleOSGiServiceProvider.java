@@ -1,7 +1,7 @@
 package org.maxur.commons.component.osgi;
 
+import com.google.inject.Provider;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -10,80 +10,47 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Maxim Yunusov
  * @version 1.0 14.05.12
  */
-public class SingleOSGiServiceProvider<T> extends AbstractOSGiServiceProvider<T> implements OSGiServiceProvider<T,T> {
-
-    private final Class<T> providedClass;
+public class SingleOSGiServiceProvider<T> extends AbstractOSGiServiceProvider<T> implements Provider<T> {
 
     private T provider;
 
-    private ServiceTracker tracker;
-
     public SingleOSGiServiceProvider(final Class<T> providedClass) {
-        this.providedClass = providedClass;
-    }
-
-    @Override
-    public final Class getProvidedClass() {
-        return providedClass;
+        super(providedClass);
     }
 
     @Override
     public T get() {
         if (provider == null) {
-            throw new IllegalStateException(String.format("Not found OSGi Service for class '%s'", providedClass));
+            throw new IllegalStateException(String.format("Not found OSGi Service for class '%s'", getProvidedClass()));
         }
-        if (!providedClass.isAssignableFrom(provider.getClass())) {
+        if (!getProvidedClass().isAssignableFrom(provider.getClass())) {
             throw new IllegalStateException(
-                    String.format("Class %s is not a superclass of %s.", providedClass, provider.getClass()));
+                    String.format("Class %s is not a superclass of %s.", getProvidedClass(), provider.getClass()));
         }
         return provider;
     }
 
     @Override
-    public void start(final BundleContext bc) {
-        try {
-            this.tracker = makeTracker(bc);
-            this.tracker.open();
-            //noinspection unchecked
-        } catch (InvalidSyntaxException e) {
-            this.tracker = null;
-        }
-    }
-
     protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
         return new ServiceTracker(bc, createFilter(bc), null) {
             @Override
             public Object addingService(final ServiceReference reference) {
                 //noinspection unchecked
                 provider = (T) this.context.getService(reference);
+                notifyObserver();
                 return provider;
             }
-
             @Override
             public void modifiedService(ServiceReference reference, Object service) {
                 //noinspection unchecked
                 provider = (T) this.context.getService(reference);
+                notifyObserver();
             }
-
             @Override
             public void removedService(ServiceReference reference, Object service) {
+                notifyObserver();
             }
         };
-    }
-
-    private Filter createFilter(final BundleContext bc) throws InvalidSyntaxException {
-        return bc.createFilter(String.format("(objectClass=%s)", getProvidedClass().getName()));
-    }
-
-    @Override
-    public void stop() {
-        this.tracker.close();
-    }
-
-    @Override
-    public void reset(final BundleContext bc) {
-        stop();
-        start(bc);
     }
 
 }

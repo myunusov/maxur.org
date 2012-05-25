@@ -5,5 +5,7 @@ package org.maxur.commons.component.osgi;
  * @version 1.0 25.05.12
  */
 public interface OSGiObserver {
+
     void update();
+
 }
