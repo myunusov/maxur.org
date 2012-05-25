@@ -19,7 +19,7 @@ public class CommonsComponentActivator extends BaseGuiceActivator {
 
     @Override
     protected void config() {
-        service(WebBrowserDetector.class, new BaseWebBrowserDetector());
+        export(WebBrowserDetector.class, new BaseWebBrowserDetector());
     }
 
 }

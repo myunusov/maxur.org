@@ -1,9 +1,13 @@
 package org.maxur.taskun.war.pages.home;
 
 import com.google.inject.Inject;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.IModel;
 import org.maxur.taskun.domain.Issue;
 import org.maxur.taskun.domain.IssueLister;
 import org.maxur.taskun.war.pages.BasePage;
@@ -47,8 +51,26 @@ public class HomePage extends BasePage {
         protected void populateItem(final ListItem<Issue> item) {
             final Issue issue = item.getModelObject();
             item.add(new Label("label", issue.getDescription()));
+            item.add(new IssueDecorator(item.getModel()));
         }
 
+
+        private final static class IssueDecorator extends Behavior {
+            private static final long serialVersionUID = -4937626073896595122L;
+
+            private final IModel<Issue> model;
+
+            private IssueDecorator(IModel<Issue> model) {
+                super();
+                this.model = model;
+            }
+
+            public void onComponentTag(final Component component, final ComponentTag tag) {
+                if (model.getObject().isDefect()) {
+                    tag.put("style", "background-color:red");
+                }
+            }
+        }
 
     }
 }

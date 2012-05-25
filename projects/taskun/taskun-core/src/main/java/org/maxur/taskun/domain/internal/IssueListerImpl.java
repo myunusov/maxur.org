@@ -1,16 +1,13 @@
 package org.maxur.taskun.domain.internal;
 
+import com.google.inject.Inject;
 import org.maxur.taskun.domain.Issue;
 import org.maxur.taskun.domain.IssueLister;
 import org.maxur.taskun.domain.IssueProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Maxim Yunusov
@@ -20,26 +17,18 @@ public class IssueListerImpl implements IssueLister {
 
     private static final long serialVersionUID = -7430403084100489598L;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Inject
+    private Set<IssueProvider> providers;
 
-    private Collection<IssueProvider> providers =
-            Collections.synchronizedCollection(new ArrayList<IssueProvider>());
-
-    protected void bindProvider(final IssueProvider provider) {
-        providers.add(provider);
-        logger.debug("Added a provider");
-    }
-
-    protected void unbindProvider(final IssueProvider provider) {
-        providers.remove(provider);
-        logger.debug("Removed a provider");
+    @SuppressWarnings("UnusedDeclaration")
+    public void setProviders(Set<IssueProvider> providers) {
+        this.providers = providers;
     }
 
     @Override
     public List<Issue> listActive() {
-        final IssueProvider[] providerArray = providers.toArray(new IssueProvider[providers.size()]);
-        final List<Issue> result = new LinkedList<>();
-        for (IssueProvider provider : providerArray) {
+        final List<Issue> result = new ArrayList<>();
+        for (IssueProvider provider : providers) {
             final Issue[] all = provider.findAll();
             for (Issue issue : all) {
                 if (issue.isActive()) {
