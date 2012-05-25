@@ -7,8 +7,8 @@ import org.apache.wicket.guice.GuiceInjectorHolder;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
-import org.maxur.commons.component.osgi.GuiceModuleHolder;
-import org.maxur.commons.component.osgi.OSGiObserver;
+import org.maxur.commons.osgi.GuiceModuleHolder;
+import org.maxur.commons.osgi.OSGiObserver;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
 import javax.servlet.http.HttpServletRequest;

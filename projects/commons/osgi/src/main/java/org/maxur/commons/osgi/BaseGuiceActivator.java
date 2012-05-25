@@ -1,4 +1,4 @@
-package org.maxur.commons.component.osgi;
+package org.maxur.commons.osgi;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

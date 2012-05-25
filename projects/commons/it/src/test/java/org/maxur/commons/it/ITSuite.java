@@ -11,8 +11,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        CommonsBundleIT.class,
-        TaskunBundleIT.class
+        CommonsBundleIT.class
 })
 public class ITSuite {
 
