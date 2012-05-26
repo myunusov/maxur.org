@@ -30,7 +30,7 @@ public abstract class BaseGuiceActivator implements BundleActivator {
      */
     public void start(final BundleContext bc) {
         logger.debug("STARTING {}", pid);
-
+        MutableInjectorHolder.start(pid);
         controlConfigurator = ControlConfigurator
                 .init(pid)
                 .start(bc);
@@ -46,21 +46,6 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         controlServices.start(bc, pid);
     }
 
-    protected abstract void config();
-
-    public void bindSingle(Class<?> providedClass) {
-        controlProviders.bindSingle(providedClass);
-    }
-
-    public void bindMultiple(Class<?> providedClass) {
-        controlProviders.bindMultiple(providedClass);
-    }
-
-
-    public void export(final Class<?> servesClass, final Object service) {
-        controlServices.bind(servesClass, service);
-    }
-
     /**
      * Called whenever the OSGi framework stops our bundle
      */
@@ -68,7 +53,22 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         controlServices.stop();
         controlConfigurator.stop();
         controlProviders.stop();
+        MutableInjectorHolder.stop(pid);
         logger.debug("STOPPING {}", pid);
+    }
+
+    protected abstract void config();
+
+    public void bindSingle(final Class<?> providedClass) {
+        controlProviders.bindSingle(providedClass);
+    }
+
+    public void bindMultiple(final Class<?> providedClass) {
+        controlProviders.bindMultiple(providedClass);
+    }
+
+    public void export(final Class<?> servesClass, final Object service) {
+        controlServices.bind(servesClass, service);
     }
 
 }

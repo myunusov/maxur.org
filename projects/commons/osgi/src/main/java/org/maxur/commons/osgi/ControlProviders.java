@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public final class ControlProviders {
 
-    private final Map<Class<?>, SingleOSGiServiceProvider<?>> singleProviders = new HashMap<>();
-    private final Map<Class<?>, MultipleOSGiServiceProvider<?>> multipleProviders = new HashMap<>();
+    private final Map<Class<?>, SingleOSGiTrackerHolder<?>> singleProviders = new HashMap<>();
+    private final Map<Class<?>, MultipleOSGiTrackerHolder<?>> multipleProviders = new HashMap<>();
 
     private final String pid;
 
@@ -29,32 +29,32 @@ public final class ControlProviders {
 
     @SuppressWarnings("unchecked")
     public ControlProviders bindSingle(final Class<?> providedClass) {
-        singleProviders.put(providedClass, new SingleOSGiServiceProvider(providedClass));
+        singleProviders.put(providedClass, new SingleOSGiTrackerHolder(providedClass));
         return this;
     }
 
     @SuppressWarnings("unchecked")
     public ControlProviders bindMultiple(Class<?> providedClass) {
-        multipleProviders.put(providedClass, new MultipleOSGiServiceProvider(providedClass));
+        multipleProviders.put(providedClass, new MultipleOSGiTrackerHolder(providedClass));
         return this;
     }
 
 
     public ControlProviders start(final BundleContext bc, final String pid) {
-        for (OSGiServiceProvider<?> provider : singleProviders.values()) {
+        for (OSGiTrackerHolder<?> provider : singleProviders.values()) {
             provider.start(bc, pid);
         }
-        for (OSGiServiceProvider<?> provider : multipleProviders.values()) {
+        for (OSGiTrackerHolder<?> provider : multipleProviders.values()) {
             provider.start(bc, pid);
         }
-        GuiceModuleHolder.setProvidersModule(this.pid, new ProvidersModule());
+        MutableInjectorHolder.get(this.pid).addModule(new ProvidersModule());
 
 
         return this;
     }
 
     public void stop() {
-        for (OSGiServiceProvider<?> provider : singleProviders.values()) {
+        for (OSGiTrackerHolder<?> provider : singleProviders.values()) {
             provider.stop();
         }
     }
@@ -62,7 +62,7 @@ public final class ControlProviders {
     private final class ProvidersModule extends AbstractModule {
         @Override
         protected void configure() {
-            for (SingleOSGiServiceProvider<?> provider : singleProviders.values()) {
+            for (SingleOSGiTrackerHolder<?> provider : singleProviders.values()) {
                 if (provider.isAnnotated()) {
                     bind(provider.getProvidedClass())
                             .annotatedWith(provider.getAnnotation())
@@ -72,7 +72,7 @@ public final class ControlProviders {
                 }
             }
 
-            for (MultipleOSGiServiceProvider<?> provider : multipleProviders.values()) {
+            for (MultipleOSGiTrackerHolder<?> provider : multipleProviders.values()) {
                 final Multibinder binder =
                         provider.isAnnotated() ?
                                 Multibinder.newSetBinder(

@@ -10,11 +10,11 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Maxim Yunusov
  * @version 1.0 14.05.12
  */
-public class SingleOSGiServiceProvider<T> extends AbstractOSGiServiceProvider<T> implements Provider<T> {
+public class SingleOSGiTrackerHolder<T> extends AbstractOSGiTrackerHolder<T> implements Provider<T> {
 
     private T provider;
 
-    public SingleOSGiServiceProvider(final Class<T> providedClass) {
+    public SingleOSGiTrackerHolder(final Class<T> providedClass) {
         super(providedClass);
     }
 

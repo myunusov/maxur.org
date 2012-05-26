@@ -7,8 +7,8 @@ import org.apache.wicket.guice.GuiceInjectorHolder;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
-import org.maxur.commons.osgi.GuiceModuleHolder;
-import org.maxur.commons.osgi.OSGiObserver;
+import org.maxur.commons.osgi.MutableInjectorHolder;
+import org.maxur.commons.domain.Observer;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0 10.05.12
  */
 public abstract class AbstractOSGiWebApplication extends WebApplication
-        implements OSGiWebApplication, OSGiObserver {
+        implements OSGiWebApplication, Observer {
 
     private OsgiClassResolver classResolver;
 
@@ -31,8 +31,8 @@ public abstract class AbstractOSGiWebApplication extends WebApplication
 
     public AbstractOSGiWebApplication(final String pid) {
         this.pid = pid;
-        GuiceModuleHolder.inject(pid, this);
-        GuiceModuleHolder.addObserver(pid, this);
+        MutableInjectorHolder.get(pid).inject(this);
+        MutableInjectorHolder.get(pid).addObserver(this);
     }
 
     @Override
@@ -44,7 +44,7 @@ public abstract class AbstractOSGiWebApplication extends WebApplication
     @Override
     public WebRequest newWebRequest(HttpServletRequest servletRequest, String filterPath) {
         if (this.isStale) {
-            GuiceModuleHolder.inject(pid, this);
+            MutableInjectorHolder.get(pid).inject(this);
             setMetaData(GuiceInjectorHolder.INJECTOR_KEY, new GuiceInjectorHolder(injector));
         }
         return super.newWebRequest(servletRequest, filterPath);

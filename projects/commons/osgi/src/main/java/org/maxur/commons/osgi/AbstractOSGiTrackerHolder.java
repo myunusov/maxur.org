@@ -12,7 +12,7 @@ import java.lang.annotation.Annotation;
  * @version 1.0
  * @since <pre>5/21/12</pre>
  */
-public abstract class AbstractOSGiServiceProvider<T> implements OSGiServiceProvider<T> {
+public abstract class AbstractOSGiTrackerHolder<T> implements OSGiTrackerHolder<T> {
 
     private final Class<T> providedClass;
 
@@ -23,15 +23,14 @@ public abstract class AbstractOSGiServiceProvider<T> implements OSGiServiceProvi
     private String pid;
 
     protected void notifyObserver() {
-        GuiceModuleHolder.update(pid);
+        MutableInjectorHolder.get(pid).update();
     }
 
-    public AbstractOSGiServiceProvider(final Class<T> providedClass) {
-        this.providedClass = providedClass;
-        this.annotation = null;
+    public AbstractOSGiTrackerHolder(final Class<T> providedClass) {
+        this(providedClass, null);
     }
 
-    public AbstractOSGiServiceProvider(final Class<T> providedClass, final Annotation annotation) {
+    public AbstractOSGiTrackerHolder(final Class<T> providedClass, final Annotation annotation) {
         this.providedClass = providedClass;
         this.annotation = annotation;
     }
@@ -50,6 +49,7 @@ public abstract class AbstractOSGiServiceProvider<T> implements OSGiServiceProvi
             //noinspection unchecked
         } catch (InvalidSyntaxException e) {
             this.tracker = null;
+            assert false : e.getMessage();
         }
     }
 
@@ -57,7 +57,9 @@ public abstract class AbstractOSGiServiceProvider<T> implements OSGiServiceProvi
 
     @Override
     public void stop() {
-        this.tracker.close();
+        if (null != this.tracker) {
+            this.tracker.close();
+        }
     }
 
     @Override

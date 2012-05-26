@@ -1,5 +1,6 @@
 package org.maxur.commons.osgi;
 
+import org.maxur.commons.domain.Observer;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  * @author Maxim Yunusov
  * @version 1.0 23.05.12
  */
-public final class ControlServices implements OSGiObserver {
+public final class ControlServices implements Observer {
 
     private final Collection<ServiceRegistration> registrations = new ArrayList<>();
 
@@ -35,13 +36,13 @@ public final class ControlServices implements OSGiObserver {
             registrations.add(bc.registerService(servesClass.getName(), service, null));
         }
         update();
-        GuiceModuleHolder.addObserver(pid, this);
+        MutableInjectorHolder.get(pid).addObserver(this);
     }
 
     @Override
     public void update() {
         for (Object service : services.values()) {
-            GuiceModuleHolder.inject(pid, service);
+            MutableInjectorHolder.get(pid).inject(service);
         }
     }
 
