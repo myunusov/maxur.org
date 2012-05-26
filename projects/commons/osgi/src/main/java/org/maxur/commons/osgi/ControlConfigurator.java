@@ -70,7 +70,7 @@ public final class ControlConfigurator implements ManagedService {
     }
 
     private void updateService(final Dictionary properties) {
-        GuiceModuleHolder.setPropertiesModule(pid, new ConfiguratorModule(properties));
+        MutableInjectorHolder.get(pid).addModule(new ConfiguratorModule(properties));
     }
 
     private static final class ConfiguratorModule extends AbstractModule {

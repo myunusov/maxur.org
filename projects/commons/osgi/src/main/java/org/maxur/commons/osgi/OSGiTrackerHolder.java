@@ -8,7 +8,7 @@ import java.lang.annotation.Annotation;
  * @author Maxim Yunusov
  * @version 1.0 24.05.12
  */
-public interface OSGiServiceProvider<T> {
+public interface OSGiTrackerHolder<T> {
 
     Class<? extends T> getProvidedClass();
 

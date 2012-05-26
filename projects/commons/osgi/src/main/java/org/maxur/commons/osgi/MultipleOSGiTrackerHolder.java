@@ -12,7 +12,7 @@ import java.util.List;
  * @author Maxim Yunusov
  * @version 1.0 24.05.12
  */
-public class MultipleOSGiServiceProvider<T> extends AbstractOSGiServiceProvider<T>  {
+public class MultipleOSGiTrackerHolder<T> extends AbstractOSGiTrackerHolder<T> {
 
     private final List<T> list = new ArrayList<>();
 
@@ -20,7 +20,7 @@ public class MultipleOSGiServiceProvider<T> extends AbstractOSGiServiceProvider<
         return list;
     }
 
-    public MultipleOSGiServiceProvider(final Class<T> providedClass) {
+    public MultipleOSGiTrackerHolder(final Class<T> providedClass) {
         super(providedClass);
     }
 
