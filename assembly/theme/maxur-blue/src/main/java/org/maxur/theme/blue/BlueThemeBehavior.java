@@ -1,6 +1,7 @@
 package org.maxur.theme.blue;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -31,7 +32,7 @@ public class BlueThemeBehavior extends BaseThemeBehavior {
     @Inject
     private WebBrowserDetector detector;
 
-    @Inject
+    @Inject  @Named("yaml")
     private StyleBehavior styleBehavior;
 
     @Override
