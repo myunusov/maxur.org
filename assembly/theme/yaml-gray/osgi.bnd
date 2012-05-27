@@ -1,0 +1,5 @@
+Bundle-Activator: ${bundle.namespace}.config.GrayThemeActivator
+Import-Package: *,com.google.inject,org.apache.wicket.protocol.http,org.apache.wicket.markup.html.form.upload,org.apache.wicket.markup.html.panel,org.slf4j,org.aopalliance.intercept,org.maxur.commons.component.behavior.*
+Export-Package: org.maxur.theme.gray.*
+
+
