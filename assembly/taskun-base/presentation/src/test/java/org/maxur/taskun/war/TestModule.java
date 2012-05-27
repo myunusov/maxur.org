@@ -13,6 +13,8 @@ import org.maxur.taskun.war.config.MenuItemsProvider;
 import java.util.Collections;
 import java.util.List;
 
+import static com.google.inject.name.Names.named;
+
 /**
  * @author Maxim Yunusov
  * @version 1.0 26.04.12
@@ -24,7 +26,7 @@ public class TestModule extends AbstractModule {
         bind(IssueLister.class).to(FakeIssueLister.class);
         bind(MenuItems.class).toProvider(MenuItemsProvider.class);
         bind(WebBrowser.class).to(IE6Browser.class);
-        bind(ThemeBehavior.class).to(FakeThemeBehavior.class);
+        bind(ThemeBehavior.class).annotatedWith(named("blue_theme")).to(FakeThemeBehavior.class);
         bindConstant().annotatedWith(Names.named("version")).to("test version");
         bindConstant().annotatedWith(Names.named("service.pid")).to("test pid");
     }

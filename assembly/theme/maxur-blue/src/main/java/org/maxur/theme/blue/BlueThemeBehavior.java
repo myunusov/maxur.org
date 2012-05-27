@@ -2,14 +2,16 @@ package org.maxur.theme.blue;
 
 import com.google.inject.Inject;
 import org.apache.wicket.Component;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.CssResourceReference;
-import org.maxur.commons.component.behavior.BaseResourcesBehavior;
+import org.maxur.commons.component.behavior.BaseThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.component.model.webclient.WebBrowserType;
+import org.maxur.commons.view.api.StyleBehavior;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Maxim Yunusov
  * @version 1.0 07.05.12
  */
-public class BlueThemeBehavior extends BaseResourcesBehavior {
+public class BlueThemeBehavior extends BaseThemeBehavior {
 
     /**
      * The Serial Version UID.
@@ -27,10 +29,13 @@ public class BlueThemeBehavior extends BaseResourcesBehavior {
     private static final int IE_7_VERSION = 7;
 
     @Inject
-    private static WebBrowserDetector detector;
+    private WebBrowserDetector detector;
+
+    @Inject
+    private StyleBehavior styleBehavior;
 
     @Override
-    public void renderHead(Component component, IHeaderResponse response) {
+    public void renderHead(final Component component, final IHeaderResponse response) {
         super.renderHead(component, response);
         response.render(CssHeaderItem.forReference(
                 new CssResourceReference(this.getClass(), "/css/layout.css")
@@ -50,4 +55,10 @@ public class BlueThemeBehavior extends BaseResourcesBehavior {
     private HttpServletRequest getHttpServletRequest() {
         return ((HttpServletRequest) RequestCycle.get().getRequest().getContainerRequest());
     }
+
+    @Override
+    public Behavior asBehavior() {
+        return new BaseThemeBehavior(styleBehavior.asBehavior(), this);
+    }
+
 }

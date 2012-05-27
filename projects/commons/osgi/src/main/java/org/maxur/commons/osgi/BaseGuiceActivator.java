@@ -5,6 +5,8 @@ import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.annotation.Annotation;
+
 /**
  * @author Maxim Yunusov
  * @version 1.0 23.05.12
@@ -39,11 +41,11 @@ public abstract class BaseGuiceActivator implements BundleActivator {
             controlProviders.stop();
         }
 
-        controlServices  = ControlServices.init();
+        controlServices = ControlServices.init(pid);
         controlProviders = ControlProviders.init(pid);
         config();
-        controlProviders.start(bc, pid);
-        controlServices.start(bc, pid);
+        controlProviders.start(bc);
+        controlServices.start(bc);
     }
 
     /**
@@ -59,16 +61,73 @@ public abstract class BaseGuiceActivator implements BundleActivator {
 
     protected abstract void config();
 
-    public void bindSingle(final Class<?> providedClass) {
-        controlProviders.bindSingle(providedClass);
+    protected Binder bind(final Class<?> providedClass) {
+        return new Binder(providedClass, controlProviders);
     }
 
-    public void bindMultiple(final Class<?> providedClass) {
-        controlProviders.bindMultiple(providedClass);
+    public Exporter export(final Object service) {
+        return new Exporter(service, controlServices);
     }
 
-    public void export(final Class<?> servesClass, final Object service) {
-        controlServices.bind(servesClass, service);
+    public static final class Binder {
+
+        private final Class<?> providedClass;
+
+        private final ControlProviders controlProviders;
+
+        private boolean isMultiple = false;
+
+        private Annotation annotation;
+
+        private Binder(final Class<?> providedClass, final ControlProviders controlProviders) {
+            this.providedClass = providedClass;
+            this.controlProviders = controlProviders;
+        }
+
+        public Binder single() {
+            this.isMultiple = false;
+            return this;
+        }
+
+        public Binder multiple() {
+            this.isMultiple = true;
+            return this;
+        }
+
+        public Binder annotatedWith(final Annotation annotation) {
+            this.annotation = annotation;
+            return this;
+        }
+
+        public void toOSGiService() {
+            controlProviders.addServiceManager(providedClass,
+                    new BaseOSGiServiceManager<>(providedClass, isMultiple, annotation));
+        }
     }
+
+    public static final class Exporter {
+
+        private final Object service;
+
+        private final ControlServices controlServices;
+
+        private Annotation annotation;
+
+        public Exporter(final Object service, final ControlServices controlServices) {
+            //To change body of created methods use File | Settings | File Templates.
+            this.service = service;
+            this.controlServices = controlServices;
+        }
+
+        public Exporter annotatedWith(final Annotation annotation) {
+            this.annotation = annotation;
+            return this;
+        }
+
+        public void asOSGiService(final Class<?> servesClass) {
+            controlServices.bind(servesClass, service, annotation);
+        }
+    }
+
 
 }
