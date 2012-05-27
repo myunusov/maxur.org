@@ -6,8 +6,7 @@ import com.google.inject.multibindings.Multibinder;
 import org.osgi.framework.BundleContext;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 
 /**
  * @author Maxim Yunusov
@@ -15,7 +14,7 @@ import java.util.Map;
  */
 public final class ControlProviders {
 
-    private final Map<Class<?>, OSGiServiceManager<?>> providers = new HashMap<>();
+    private final Collection<OSGiServiceManager<?>> managers = new HashSet<>();
 
     private final String pid;
 
@@ -27,37 +26,37 @@ public final class ControlProviders {
         return new ControlProviders(pid);
     }
 
-    public void addServiceManager(final Class<?> providedClass, final BaseOSGiServiceManager manager) {
-        providers.put(providedClass, manager);
+    public void addServiceManager(final BaseOSGiServiceManager manager) {
+        managers.add(manager);
     }
 
     public ControlProviders start(final BundleContext bc) {
-        for (OSGiServiceManager<?> provider : providers.values()) {
-            provider.start(bc, this.pid);
+        for (OSGiServiceManager<?> manager : managers) {
+            manager.start(bc, this.pid);
         }
         MutableInjectorHolder.get(this.pid).addModule(new ProvidersModule());
         return this;
     }
 
     public void stop() {
-        for (OSGiServiceManager<?> provider : providers.values()) {
-            provider.stop();
+        for (OSGiServiceManager<?> manager : managers) {
+            manager.stop();
         }
     }
 
     private final class ProvidersModule extends AbstractModule {
         @Override
         protected void configure() {
-            for (OSGiServiceManager<?> provider : providers.values()) {
-                final Collection<ServiceDescription> descriptions = provider.getServiceDescriptions();
-                if (provider.isMultiple()) {
+            for (OSGiServiceManager<?> manager : managers) {
+                final Collection<ServiceDescription> descriptions = manager.getServiceDescriptions();
+                if (manager.isMultiple()) {
                     final Multibinder binder;
-                    if (provider.isAnnotated()) {
+                    if (manager.isAnnotated()) {
                         binder = Multibinder.newSetBinder(
-                                binder(), provider.getProvidedClass(), provider.getAnnotation()
+                                binder(), manager.getProvidedClass(), manager.getAnnotation()
                         );
                     } else {
-                        binder = Multibinder.newSetBinder(binder(), provider.getProvidedClass());
+                        binder = Multibinder.newSetBinder(binder(), manager.getProvidedClass());
                     }
                     for (ServiceDescription description : descriptions) {
                         //noinspection unchecked
@@ -67,7 +66,7 @@ public final class ControlProviders {
                     for (ServiceDescription description : descriptions) {
                         @SuppressWarnings("unchecked")
                         final AnnotatedBindingBuilder<Object> bind =
-                                (AnnotatedBindingBuilder<Object>) bind(provider.getProvidedClass());
+                                (AnnotatedBindingBuilder<Object>) bind(manager.getProvidedClass());
                         if (description.isAnnotated()) {
                             bind.annotatedWith(description.getAnnotation()).toProvider(description);
                         } else {

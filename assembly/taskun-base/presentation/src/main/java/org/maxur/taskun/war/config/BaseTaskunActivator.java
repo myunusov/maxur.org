@@ -25,7 +25,7 @@ public final class BaseTaskunActivator extends BaseGuiceActivator {
 
     @Override
     protected void config() {
-        bind(ThemeBehavior.class).annotatedWith(named("blue_theme")).toOSGiService();
+        bind(ThemeBehavior.class).annotatedWith(named("yaml")).toOSGiService();
         bind(IssueLister.class).toOSGiService();
         bind(WebBrowserDetector.class).toOSGiService();
     }

@@ -26,7 +26,7 @@ public class TestModule extends AbstractModule {
         bind(IssueLister.class).to(FakeIssueLister.class);
         bind(MenuItems.class).toProvider(MenuItemsProvider.class);
         bind(WebBrowser.class).to(IE6Browser.class);
-        bind(ThemeBehavior.class).annotatedWith(named("blue_theme")).to(FakeThemeBehavior.class);
+        bind(ThemeBehavior.class).annotatedWith(named("yaml")).to(FakeThemeBehavior.class);
         bindConstant().annotatedWith(Names.named("version")).to("test version");
         bindConstant().annotatedWith(Names.named("service.pid")).to("test pid");
     }

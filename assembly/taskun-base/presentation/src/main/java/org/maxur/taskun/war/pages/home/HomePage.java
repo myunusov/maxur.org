@@ -67,7 +67,7 @@ public class HomePage extends BasePage {
 
             public void onComponentTag(final Component component, final ComponentTag tag) {
                 if (model.getObject().isDefect()) {
-                    tag.put("style", "background-color:red");
+                    tag.put("style", "color:red");
                 }
             }
         }

@@ -1,84 +1,33 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.3-strict.dtd"
-      xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml">
 <wicket:head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8"/>
     <title wicket:id="application.title"></title>
-    <wicket:remove>
-        <head>
-        <link href="../../../../../../../../../../adapters/yaml/src/main/resources/org/maxur/yaml/css/my_layout.css" rel="stylesheet" type="text/css"/>
-        <!--[if lte IE 7]>
-        <link href="../../../../../../../../../../adapters/yaml/src/main/resources/org/maxur/yaml/css/patches/patch_my_layout.css"
-              rel="stylesheet" type="text/css"/>
-        <![endif]-->
-        </head>
-    </wicket:remove>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </wicket:head>
 <body>
-<div class="page_margins">
-    <div class="page">
-        <div id="header" wicket:id="header">
-            <wicket:remove>
-                <div id="topnav">
-                    <!-- start: skip link navigation -->
-                    <a class="skip" title="skip link" href="#navigation">Skip to the navigation</a><span
-                        class="hideme">.</span>
-                    <a class="skip" title="skip link" href="#content">Skip to the content</a><span
-                        class="hideme">.</span>
-                    <!-- end: skip link navigation --><a href="#">Login</a> | <a href="#">Contact</a> | <a
-                        href="#">Imprint</a>
-                </div>
-            </wicket:remove>
-        </div>
-        <div id="nav" wicket:id="menu">
-            <wicket:remove>
-                <!-- skiplink anchor: navigation -->
-                <a id="navigation" name="navigation"></a>
+<div wicket:id="header"></div>
+<ul class="ym-skiplinks">
+    <li><a class="ym-skip" href="#nav">Skip to navigation (Press Enter)</a></li>
+    <li><a class="ym-skip" href="#main">Skip to main content (Press Enter)</a></li>
+</ul>
 
-                <div class="hlist">
-                    <!-- main navigation: horizontal list -->
-                    <ul>
-                        <li class="active"><strong>Button 1</strong></li>
-                        <li><a href="#">Button 2</a></li>
-                        <li><a href="#">Button 3</a></li>
-                        <li><a href="#">Button 4</a></li>
-                        <li><a href="#">Button 5</a></li>
-                    </ul>
-                </div>
-            </wicket:remove>
-        </div>
-        <wicket:child/>
-        <wicket:remove>
-            <div id="teaser">
-            </div>
-            <div id="main">
-                <div id="col1">
-                    <div id="col1_content" class="clearfix">
-                        <!-- add your content here -->
-                    </div>
-                </div>
-                <div id="col2">
-                    <div id="col2_content" class="clearfix">
-                        <!-- add your content here -->
-                    </div>
-                </div>
-                <div id="col3">
-                    <div id="col3_content" class="clearfix">
-                        <!-- add your content here -->
-                    </div>
-                    <!-- IE Column Clearing -->
-                    <div id="ie_clearing"> &#160; </div>
-                </div>
-            </div>
-        </wicket:remove>
-        <!-- begin: #footer -->
-        <div id="footer" wicket:id="footer">
-            <wicket:remove>Layout based on <a href="http://www.yaml.de/">YAML</a></wicket:remove>
+<div wicket:id="menu"></div>
+
+<div id="main">
+    <div class="ym-wrapper">
+        <div class="ym-wbox">
+            <wicket:child />
         </div>
     </div>
 </div>
 
+<div wicket:id="footer"></div>
+
+<!--
+&lt;!&ndash; full skip link functionality in webkit browsers &ndash;&gt;
+<script src="../../resources/org/maxur/adapter/yaml/core/js/yaml-focusfix.js"></script>
+-->
 </body>
 </html>
+

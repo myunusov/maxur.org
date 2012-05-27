@@ -18,8 +18,8 @@
 
     <properties>
         <project.root>${project.basedir}/../../../</project.root>
-        <bundle.symbolicName>org.maxur.yaml</bundle.symbolicName>
-        <bundle.namespace>org.maxur.adapter.yaml</bundle.namespace>
+        <bundle.symbolicName>org.maxur.yaml4</bundle.symbolicName>
+        <bundle.namespace>org.maxur.adapter.yaml4</bundle.namespace>
     </properties>
 
     <dependencies>
@@ -45,7 +45,12 @@
             <scope>provided</scope>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>maxur-commons-osgi</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>maxur-view-api</artifactId>

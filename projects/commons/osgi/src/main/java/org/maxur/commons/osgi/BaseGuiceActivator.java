@@ -100,8 +100,7 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         }
 
         public void toOSGiService() {
-            controlProviders.addServiceManager(providedClass,
-                    new BaseOSGiServiceManager<>(providedClass, isMultiple, annotation));
+            controlProviders.addServiceManager(new BaseOSGiServiceManager<>(providedClass, isMultiple, annotation));
         }
     }
 

@@ -23,7 +23,7 @@ public class BasePage extends WebPage {
      */
     private static final long serialVersionUID = -4715929870257591604L;
 
-    @Inject  @Named("blue_theme")
+    @Inject  @Named("yaml")
     private ThemeBehavior themeBehavior;
 
     /**
