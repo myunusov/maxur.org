@@ -1,10 +1,11 @@
 package org.maxur.commons.osgi;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provider;
+import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 import org.osgi.framework.BundleContext;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,7 @@ import java.util.Map;
  */
 public final class ControlProviders {
 
-    private final Map<Class<?>, SingleOSGiTrackerHolder<?>> singleProviders = new HashMap<>();
-    private final Map<Class<?>, MultipleOSGiTrackerHolder<?>> multipleProviders = new HashMap<>();
+    private final Map<Class<?>, OSGiServiceManager<?>> providers = new HashMap<>();
 
     private final String pid;
 
@@ -27,34 +27,20 @@ public final class ControlProviders {
         return new ControlProviders(pid);
     }
 
-    @SuppressWarnings("unchecked")
-    public ControlProviders bindSingle(final Class<?> providedClass) {
-        singleProviders.put(providedClass, new SingleOSGiTrackerHolder(providedClass));
-        return this;
+    public void addServiceManager(final Class<?> providedClass, final BaseOSGiServiceManager manager) {
+        providers.put(providedClass, manager);
     }
 
-    @SuppressWarnings("unchecked")
-    public ControlProviders bindMultiple(Class<?> providedClass) {
-        multipleProviders.put(providedClass, new MultipleOSGiTrackerHolder(providedClass));
-        return this;
-    }
-
-
-    public ControlProviders start(final BundleContext bc, final String pid) {
-        for (OSGiTrackerHolder<?> provider : singleProviders.values()) {
-            provider.start(bc, pid);
-        }
-        for (OSGiTrackerHolder<?> provider : multipleProviders.values()) {
-            provider.start(bc, pid);
+    public ControlProviders start(final BundleContext bc) {
+        for (OSGiServiceManager<?> provider : providers.values()) {
+            provider.start(bc, this.pid);
         }
         MutableInjectorHolder.get(this.pid).addModule(new ProvidersModule());
-
-
         return this;
     }
 
     public void stop() {
-        for (OSGiTrackerHolder<?> provider : singleProviders.values()) {
+        for (OSGiServiceManager<?> provider : providers.values()) {
             provider.stop();
         }
     }
@@ -62,26 +48,32 @@ public final class ControlProviders {
     private final class ProvidersModule extends AbstractModule {
         @Override
         protected void configure() {
-            for (SingleOSGiTrackerHolder<?> provider : singleProviders.values()) {
-                if (provider.isAnnotated()) {
-                    bind(provider.getProvidedClass())
-                            .annotatedWith(provider.getAnnotation())
-                            .toProvider((Provider) provider);
+            for (OSGiServiceManager<?> provider : providers.values()) {
+                final Collection<ServiceDescription> descriptions = provider.getServiceDescriptions();
+                if (provider.isMultiple()) {
+                    final Multibinder binder;
+                    if (provider.isAnnotated()) {
+                        binder = Multibinder.newSetBinder(
+                                binder(), provider.getProvidedClass(), provider.getAnnotation()
+                        );
+                    } else {
+                        binder = Multibinder.newSetBinder(binder(), provider.getProvidedClass());
+                    }
+                    for (ServiceDescription description : descriptions) {
+                        //noinspection unchecked
+                        binder.addBinding().toProvider(description);
+                    }
                 } else {
-                    bind(provider.getProvidedClass()).toProvider((Provider) provider);
-                }
-            }
-
-            for (MultipleOSGiTrackerHolder<?> provider : multipleProviders.values()) {
-                final Multibinder binder =
-                        provider.isAnnotated() ?
-                                Multibinder.newSetBinder(
-                                        binder(), provider.getProvidedClass(), provider.getAnnotation()
-                                ) :
-                                Multibinder.newSetBinder(binder(), provider.getProvidedClass());
-                for (Object service : provider.getAll()) {
-                    //noinspection unchecked
-                    binder.addBinding().toInstance(service);
+                    for (ServiceDescription description : descriptions) {
+                        @SuppressWarnings("unchecked")
+                        final AnnotatedBindingBuilder<Object> bind =
+                                (AnnotatedBindingBuilder<Object>) bind(provider.getProvidedClass());
+                        if (description.isAnnotated()) {
+                            bind.annotatedWith(description.getAnnotation()).toProvider(description);
+                        } else {
+                            bind.toProvider(description);
+                        }
+                    }
                 }
             }
         }

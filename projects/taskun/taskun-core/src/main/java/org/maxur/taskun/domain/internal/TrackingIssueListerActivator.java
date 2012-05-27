@@ -21,8 +21,8 @@ public class TrackingIssueListerActivator extends BaseGuiceActivator {
 
     @Override
     protected void config() {
-        bindMultiple(IssueProvider.class);
-        export(IssueLister.class, new IssueListerImpl());
+        bind(IssueProvider.class).multiple().toOSGiService();
+        export(new IssueListerImpl()).asOSGiService(IssueLister.class);
     }
 
 }

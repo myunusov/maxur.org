@@ -5,6 +5,8 @@ import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.osgi.BaseGuiceActivator;
 import org.maxur.taskun.domain.IssueLister;
 
+import static com.google.inject.name.Names.named;
+
 /**
  * Extension of the default OSGi bundle activator.
  *
@@ -23,9 +25,9 @@ public final class BaseTaskunActivator extends BaseGuiceActivator {
 
     @Override
     protected void config() {
-        bindSingle(ThemeBehavior.class);
-        bindSingle(IssueLister.class);
-        bindSingle(WebBrowserDetector.class);
+        bind(ThemeBehavior.class).annotatedWith(named("blue_theme")).toOSGiService();
+        bind(IssueLister.class).toOSGiService();
+        bind(WebBrowserDetector.class).toOSGiService();
     }
 
 }

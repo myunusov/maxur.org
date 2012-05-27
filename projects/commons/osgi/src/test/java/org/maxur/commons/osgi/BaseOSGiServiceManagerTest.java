@@ -10,7 +10,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.util.tracker.ServiceTracker;
 
 import static com.google.inject.name.Names.named;
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * @version 1.0 26.05.12
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AbstractOSGiTrackerHolderTest {
+public class BaseOSGiServiceManagerTest {
 
     @Mock
     private ServiceTracker tracker;
@@ -31,26 +31,26 @@ public class AbstractOSGiTrackerHolderTest {
     @Mock
     private BundleContext bc;
 
-    private AbstractOSGiTrackerHolder<Object> annotatedTrackerHolder;
-    private AbstractOSGiTrackerHolder<Object> trackerHolder;
-    private AbstractOSGiTrackerHolder<Object> invalidTrackerHolder;
+    private BaseOSGiServiceManager<Object> serviceManager;
+    private BaseOSGiServiceManager<Object> annotatedServiceManager;
+    private BaseOSGiServiceManager<Object> invalidServiceManager;
 
 
     @Before
     public void setUp() throws Exception {
-        annotatedTrackerHolder = new AbstractOSGiTrackerHolder<Object>(Object.class, named("FakeObject")) {
+        serviceManager = new BaseOSGiServiceManager<Object>(Object.class, false, null) {
             @Override
             protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
                 return tracker;
             }
         };
-        trackerHolder = new AbstractOSGiTrackerHolder<Object>(Object.class) {
+        annotatedServiceManager = new BaseOSGiServiceManager<Object>(Object.class, false, named("FakeObject")) {
             @Override
             protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
                 return tracker;
             }
         };
-        invalidTrackerHolder = new AbstractOSGiTrackerHolder<Object>(Object.class) {
+        invalidServiceManager = new BaseOSGiServiceManager<Object>(Object.class, false, null) {
             @Override
             protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
                 throw new InvalidSyntaxException("Error", "in invalid class");
@@ -61,53 +61,53 @@ public class AbstractOSGiTrackerHolderTest {
 
     @Test
     public void shouldBeReturnProvidedClass() throws Exception {
-        assertSame(Object.class, trackerHolder.getProvidedClass());
+        assertSame(Object.class, serviceManager.getProvidedClass());
     }
 
     @Test
     public void shouldBeAnnotated() throws Exception {
-        assertTrue(annotatedTrackerHolder.isAnnotated());
+        assertTrue(annotatedServiceManager.isAnnotated());
     }
 
     @Test
     public void shouldBeNotAnnotated() throws Exception {
-        assertFalse(trackerHolder.isAnnotated());
+        assertFalse(serviceManager.isAnnotated());
     }
 
 
     @Test
     public void shouldBeReturnAnnotation() throws Exception {
-        assertEquals(named("FakeObject"), annotatedTrackerHolder.getAnnotation());
+        assertEquals(named("FakeObject"), annotatedServiceManager.getAnnotation());
     }
 
     @Test
     public void shouldBeStarted() throws Exception {
-        trackerHolder.start(bc, "id");
+        serviceManager.start(bc, "id");
         verify(tracker).open();
     }
 
     @Test(expected = AssertionError.class)
     public void shouldBeNotStarted() throws Exception {
-        invalidTrackerHolder.start(bc, "id");
+        invalidServiceManager.start(bc, "id");
         verifyNoMoreInteractions(tracker);
     }
 
     @Test
     public void shouldBeStoppedWithoutStart() throws Exception {
-        trackerHolder.stop();
+        serviceManager.stop();
     }
 
     @Test
     public void shouldBeStopped() throws Exception {
-        trackerHolder.start(bc, "id");
-        trackerHolder.stop();
+        serviceManager.start(bc, "id");
+        serviceManager.stop();
         verify(tracker).close();
     }
 
     @Test
     public void shouldBeReset() throws Exception {
-        trackerHolder.start(bc, "id");
-        trackerHolder.reset(bc);
+        serviceManager.start(bc, "id");
+        serviceManager.reset(bc);
         verify(tracker).close();
         verify(tracker, times(2)).open();
     }

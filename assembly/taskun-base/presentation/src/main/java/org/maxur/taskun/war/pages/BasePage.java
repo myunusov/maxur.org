@@ -1,6 +1,7 @@
 package org.maxur.taskun.war.pages;
 
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -22,7 +23,7 @@ public class BasePage extends WebPage {
      */
     private static final long serialVersionUID = -4715929870257591604L;
 
-    @Inject
+    @Inject  @Named("blue_theme")
     private ThemeBehavior themeBehavior;
 
     /**

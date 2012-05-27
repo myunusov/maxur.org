@@ -1,60 +1,88 @@
 package org.maxur.commons.osgi;
 
+import com.google.inject.ConfigurationException;
 import org.maxur.commons.domain.Observer;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 
-import java.util.ArrayList;
+import java.lang.annotation.Annotation;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 
 /**
  * @author Maxim Yunusov
  * @version 1.0 23.05.12
  */
-public final class ControlServices implements Observer {
-
-    private final Collection<ServiceRegistration> registrations = new ArrayList<>();
-
-    private final Map<Class<?>, Object> services = new HashMap<>();
+public final class ControlServices  {
 
     private String pid;
 
-    public static ControlServices init() {
-        return new ControlServices();
+    private final Collection<ServiceDescription> services = new HashSet<>();
+
+    public static ControlServices init(final String pid) {
+        return new ControlServices(pid);
     }
 
-    private ControlServices() {
-    }
-
-    public void start(final BundleContext bc, final String pid) {
+    private ControlServices(final String pid) {
         this.pid = pid;
-        for (Map.Entry<Class<?>, Object> entry : services.entrySet()) {
-            final Class<?> servesClass = entry.getKey();
-            final Object service = entry.getValue();
-            registrations.add(bc.registerService(servesClass.getName(), service, null));
-        }
-        update();
-        MutableInjectorHolder.get(pid).addObserver(this);
     }
 
-    @Override
-    public void update() {
-        for (Object service : services.values()) {
-            MutableInjectorHolder.get(pid).inject(service);
+    public void start(final BundleContext bc) {
+        for (ServiceDescription service : services) {
+            service.register(bc);
         }
     }
 
     public void stop() {
-        for (ServiceRegistration registration : registrations) {
-            registration.unregister();
+        for (ServiceDescription service : services) {
+            service.unregister();
         }
     }
 
-    public void bind(final Class<?> servesClass, final Object service) {
-        assert service.getClass().equals(servesClass);
-        services.put(servesClass, service);
+    public void bind(final Class<?> servesClass, final Object service, final Annotation annotation) {
+        // TODO service must be instance of servesClass
+        services.add(ServiceDescription.builder()
+                .factory(new OSGiServiceFactory(service))
+                .type(servesClass)
+                .annotation(annotation)
+                .build()
+        );
     }
+
+    class OSGiServiceFactory implements ServiceFactory, Observer {
+
+        private final Object service;
+
+        private final MutableInjector injector = MutableInjectorHolder.get(pid);
+
+        public OSGiServiceFactory(final Object service) {
+            this.service = service;
+            if (null != injector) {
+                injector.addObserver(this);
+            }
+        }
+
+        @Override
+        public Object getService(final Bundle bundle, final ServiceRegistration serviceRegistration) {
+            return service;
+        }
+
+        @Override
+        public void ungetService(final Bundle bundle, final ServiceRegistration serviceRegistration, final Object o) {
+        }
+
+        @Override
+        public void update() {
+            if (null != injector) {
+                try {
+                    injector.inject(service);
+                } catch (ConfigurationException ignore) {
+                }
+            }
+        }
+    }
+
 
 }
