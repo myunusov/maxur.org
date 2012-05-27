@@ -26,7 +26,7 @@ public class BlueThemeActivator extends BaseGuiceActivator {
     @Override
     protected void config() {
         bind(WebBrowserDetector.class).single().toOSGiService();
-        bind(StyleBehavior.class).single().toOSGiService();
+        bind(StyleBehavior.class).single().annotatedWith(named("yaml")).toOSGiService();
         export(new BlueThemeBehavior()).annotatedWith(named("blue_theme")).asOSGiService(ThemeBehavior.class);
     }
 }
