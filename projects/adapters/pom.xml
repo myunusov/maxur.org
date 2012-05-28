@@ -24,6 +24,7 @@
         <module>yaml4</module>
         <module>jquery</module>
         <module>html5</module>
+        <module>h5bp</module>
     </modules>
 
 </project>
