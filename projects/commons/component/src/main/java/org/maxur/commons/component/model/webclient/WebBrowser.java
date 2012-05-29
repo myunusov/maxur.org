@@ -30,4 +30,6 @@ public interface WebBrowser extends Serializable {
      * @return a {@link java.lang.Integer} object.
      */
     Integer getMajorVersion();
+
+    boolean lt(WebBrowser browser);
 }
