@@ -1,7 +1,7 @@
 package org.maxur.commons.component.model.webclient;
 
 /**
-/**
+ * /**
  * The Web Browser descriptor.
  *
  * @author Maxim Yunusov
@@ -20,7 +20,7 @@ public class BaseWebBrowser implements WebBrowser {
     /**
      * <p>Constructor for BaseWebBrowser.</p>
      *
-     * @param type a {@link org.maxur.commons.component.model.webclient.WebBrowserType} object.
+     * @param type    a {@link org.maxur.commons.component.model.webclient.WebBrowserType} object.
      * @param version a {@link java.lang.String} object.
      */
     public BaseWebBrowser(final WebBrowserType type, final String version) {
@@ -28,19 +28,36 @@ public class BaseWebBrowser implements WebBrowser {
         this.version = version;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * <p>Constructor for BaseWebBrowser.</p>
+     *
+     * @param type    a {@link org.maxur.commons.component.model.webclient.WebBrowserType} object.
+     * @param version a {@link java.lang.String} object.
+     */
+    public BaseWebBrowser(final WebBrowserType type, final int version) {
+        this.type = type;
+        this.version = "" + version;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public WebBrowserType getBrowserType() {
         return type;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getVersion() {
         return version;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Integer getMajorVersion() {
         try {
@@ -52,4 +69,10 @@ public class BaseWebBrowser implements WebBrowser {
         }
     }
 
+    @Override
+    public boolean lt(final WebBrowser browser) {
+        return null != browser &&
+                this.getBrowserType().equals(browser.getBrowserType()) &&
+                this.getMajorVersion() < browser.getMajorVersion();
+    }
 }

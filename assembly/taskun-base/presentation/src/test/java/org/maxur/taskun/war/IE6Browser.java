@@ -25,4 +25,10 @@ public class IE6Browser implements WebBrowser {
     public Integer getMajorVersion() {
         return 6;
     }
+
+    @Override
+    public boolean lt(final WebBrowser browser) {
+        return false;
+    }
+
 }
