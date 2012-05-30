@@ -1,16 +1,14 @@
 <!doctype html>
-<html wicket:id="html" class="no-js" lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml">
+<html class="no-js" lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml" xmlns:wiket="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
-
-    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
- More info: h5bp.com/i/378 -->
+    <title wicket:id="application.title">[Application Title]</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title></title>
-    <meta name="description" content="">
-    <!-- Mobile viewport optimized: h5bp.com/viewport -->
+    <meta wicket:id="application.description" name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/bootstrap.css">
     <!-- More ideas for your head here: h5bp.com/d/head-Tips -->
 
@@ -27,12 +25,13 @@ Create your own custom Modernizr build: www.modernizr.com/download/ -->
     <script src="extras/h5bp/js/libs/modernizr-2.5.3.min.js"></script>
 
     <wicket:remove>
+        <link rel="icon" href="../../../../../webapp/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="../../../../../webapp/css/bootstrap.css">
     </wicket:remove>
 </head>
 
 <body>
 
-<span wicket:id="message">Message goes here</span>
 
 
 <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
@@ -48,10 +47,8 @@ chromium.org/developers/how-tos/chrome-frame-getting-started -->
         <header>
 
         </header>
+        <wicket:child/>
 
-        <div role="main">
-            <a href="index.html">Sample Page</a>
-        </div>
 
         <!-- JavaScript at the bottom for fast page loading -->
 

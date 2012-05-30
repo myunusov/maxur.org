@@ -17,6 +17,6 @@ public class TestApplication extends WebApplication {
      */
     @Override
     public Class<? extends Page> getHomePage() {
-        return BasePage.class;
+        return TestPage.class;
     }
 }

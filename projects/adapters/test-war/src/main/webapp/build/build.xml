@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
-<project name="Boilerplate Build" default="build" basedir="../"> <!-- one back since we're in build/ -->
+<project name="Boilerplate Build" default="build" basedir="../..//"> <!-- one back since we're in build/ -->
 
 
     <!-- Load in Ant-Contrib to give us access to some very useful tasks! -->
     <!-- the .jar file is located in the tools directory -->
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
-            <pathelement location="${basedir}/build/tools/ant-contrib-1.0b3.jar"/>
+            <pathelement location="/build/tools/ant-contrib-1.0b3.jar"/>
         </classpath>
     </taskdef>
 
@@ -15,8 +15,8 @@
     <property environment="ENV" />
 
     <!-- load property files -->
-    <property file="build/config/project.properties"/>
-    <property file="build/config/default.properties"/>
+    <property file="g/project.properties"/>
+    <property file="g/default.properties"/>
 
     <!-- merge the stylesheet properties -->
     <var name="stylesheet-files" value="${file.default.stylesheets}, ${file.stylesheets}"/>
@@ -177,8 +177,8 @@
 	<!-- LESS target, run separately -->
     <target name="compileless">
       <echo>Compile LESS to CSS</echo>
-      <apply dir="${dir.source}/${dir.less}" executable="java" parallel="false" failonerror="true">
-          <fileset dir="${dir.source}/${dir.less}" includes="style.less"/>
+      <apply dir="../less" executable="java" parallel="false" failonerror="true">
+          <fileset dir="../less" includes="style.less"/>
           <arg value="-jar" />
           <arg path="./${dir.build.tools}/${tool.rhino}" />
           <arg path="./${dir.build.tools}/${tool.lessrhino}" />
@@ -186,8 +186,8 @@
           <arg value="../${dir.source}/${dir.less}/style.less.css" />
       </apply>
       <echo message="Minifying css..."/>
-      <apply dir="${dir.source}/${dir.less}" executable="java" parallel="false">
-          <fileset dir="${dir.source}/${dir.less}" includes="style.less.css"/>
+      <apply dir="../less" executable="java" parallel="false">
+          <fileset dir="../less" includes="style.less.css"/>
           <arg line="-jar"/>
           <arg path="${dir.build.tools}/${tool.yuicompressor}"/>
           <srcfile/>
@@ -195,13 +195,13 @@
           <mapper type="merge" to="../${dir.source}/${dir.less}/style.less.min.css"/>
           <targetfile/>
       </apply>    
-      <delete file="${dir.source}/${dir.less}/style.less.css"/>
+      <delete file="../less/style.less.css"/>
     </target>
 
 
     <!-- JSLint target, run separately -->
     <target name="jslint">
-      <apply dir="${dir.source}/${dir.js}" executable="java" parallel="false" failonerror="true">
+      <apply dir="../js" executable="java" parallel="false" failonerror="true">
             <fileset dir="./${dir.source}/">
         <include name="**/${dir.js}/*.js"/>
         <exclude name="**/*.min.js"/>
@@ -221,7 +221,7 @@
 
     <!-- JSHint target, run separately -->
     <target name="jshint">
-      <apply dir="${dir.source}/${dir.js}" executable="java" parallel="false" failonerror="true">
+      <apply dir="../js" executable="java" parallel="false" failonerror="true">
             <fileset dir="./${dir.source}/">
          <include name="**/${dir.js}/*.js"/>
         <exclude name="**/*.min.js"/>
@@ -240,7 +240,7 @@
 
     <!-- CSSLint target, run separately -->
     <target name="csslint">
-        <apply dir="${dir.source}/${dir.css}" executable="java" parallel="false" failonerror="true">
+        <apply dir="../css" executable="java" parallel="false" failonerror="true">
             <fileset dir="./${dir.source}/">
                 <include name="**/${dir.css}/*.css"/>
                 <exclude name="**/*.min.css"/>
@@ -559,7 +559,7 @@
 
       <checksum file="${dir.intermediate}/${dir.js}/scripts-concat.min.js" algorithm="sha" property="scripts.fullsha" />
       <propertyregex property="scripts.sha" input="${scripts.fullsha}" regexp=".{${hash.length}}" select="\0" />
-      <property name="scripts.js" value="${dir.js}/${scripts.sha}.js" />
+      <property name="scripts.js" value="../js/${scripts.sha}.js" />
       <copy file="${dir.intermediate}/${dir.js}/scripts-concat.min.js" tofile="${dir.publish}/${dir.js}/${scripts.sha}.js" />
   
   <!-- cachebust modules directory name -->
@@ -592,10 +592,10 @@
   <target name="-js.all.minify" depends="-mkdirs" description="(PRIVATE) Minifies the scripts.js files created by js.scripts.concat">
       <echo message="Minifying scripts"/>
       <copy todir="${dir.intermediate}/${dir.js}">
-        <fileset dir="${dir.source}/${dir.js}" includes="${file.js.bypass}, **/*.min.js"/>
+        <fileset dir="../js" includes="${file.js.bypass}, **/*.min.js"/>
       </copy>
       <apply executable="java" parallel="false">
-        <fileset dir="${dir.source}/${dir.js}" excludes="${file.js.bypass}, **/*.min.js, **/less.js" includes="**/*.js">
+        <fileset dir="../js" excludes="${file.js.bypass}, **/*.min.js, **/less.js" includes="**/*.js">
           <exclude name="${dir.js}/otherscripts-concat.js"/>
           <exclude name="${dir.js}/scripts-concat.js"/>
         </fileset>          
@@ -858,7 +858,7 @@
             <fileset dir="${dir.publish}/${dir.css}" includes="**/*.css" defaultexcludes="false"/>
         </delete>
         
-        <apply dir="${dir.source}/${dir.less}" executable="java" parallel="false" failonerror="true">
+        <apply dir="../less" executable="java" parallel="false" failonerror="true">
             <fileset dir="./${dir.source}/">
                 <include name="**/${dir.less}/${file.root.less.stylesheet}"/>
             </fileset>
@@ -882,7 +882,7 @@
 
         <checksum file="${dir.intermediate}/${dir.css}/style.less.min.css" algorithm="sha" property="css.fullsha" />
         <propertyregex property="css.sha" input="${css.fullsha}" regexp=".{${hash.length}}" select="\0" />
-        <property name="style.css" value="${dir.css}/${css.sha}.css" />
+        <property name="style.css" value="../css/${css.sha}.css" />
         <copy file="${dir.intermediate}/${dir.css}/style.less.min.css" tofile="${dir.publish}/${dir.css}/${css.sha}.css" />
     </target>
 
@@ -895,13 +895,13 @@
 
 
     <target name="css-split" description="turns style.css into multiple files @imported together">
-        <copy file="${dir.source}/${dir.css}/${file.root.stylesheet}" tofile="${dir.source}/${dir.css}/${file.root.stylesheet}.temp"/>
+        <copy file="../css/${file.root.stylesheet}" tofile="../css/${file.root.stylesheet}.temp"/>
 
-        <replaceregexp file="${dir.source}/${dir.css}/${file.root.stylesheet}.temp"
+        <replaceregexp file="../css/${file.root.stylesheet}.temp"
                match=".*"
                replace="/* remove me */" flags="s" />
 
-        <loadfile property="root" srcfile="${dir.source}/${dir.css}/${file.root.stylesheet}"/>
+        <loadfile property="root" srcfile="../css/${file.root.stylesheet}"/>
         <var name="curr.buffer" value=""/>
 
         <for delimiter="${line.separator}" param="currline" list="${root}">
@@ -953,16 +953,16 @@
                 <var name="curr.file" unset="true"/>
             </then>
         </if>
-        <replace file="${dir.source}/${dir.css}/${file.root.stylesheet}.temp" token="/* remove me */" value="${curr.buffer}"/>
-        <copy file="${dir.source}/${dir.css}/${file.root.stylesheet}" tofile="${dir.source}/${dir.css}/${file.root.stylesheet}.orig" overwrite="false"/>
-        <move file="${dir.source}/${dir.css}/${file.root.stylesheet}.temp" tofile="${dir.source}/${dir.css}/${file.root.stylesheet}" overwrite="false"/>
+        <replace file="../css/${file.root.stylesheet}.temp" token="/* remove me */" value="${curr.buffer}"/>
+        <copy file="../css/${file.root.stylesheet}" tofile="../css/${file.root.stylesheet}.orig" overwrite="false"/>
+        <move file="../css/${file.root.stylesheet}.temp" tofile="../css/${file.root.stylesheet}" overwrite="false"/>
     </target>
 
     <target name="-css" depends="-mkdirs" description="Concatenates and Minifies any stylesheets @imported via the file.stylesheets">
         <echo message="Concatenating any @imports..."/>
 
         <!-- copy source file to intermediate directory -->
-        <copy file="${dir.source}/${dir.css}/${file.root.stylesheet}" tofile="${dir.intermediate}/${dir.css}/${file.root.stylesheet}"/>
+        <copy file="../css/${file.root.stylesheet}" tofile="${dir.intermediate}/${dir.css}/${file.root.stylesheet}"/>
 
         <!-- replace imports with h5bp-import tags (part 1) this one wraps @media types -->
         <replaceregexp file="${dir.intermediate}/${dir.css}/${file.root.stylesheet}"
@@ -1018,13 +1018,13 @@
 
         <checksum file="${dir.intermediate}/${dir.css}/style-concat.min.css" algorithm="sha" property="css.fullsha" />
         <propertyregex property="css.sha" input="${css.fullsha}" regexp=".{${hash.length}}" select="\0" />
-        <property name="style.css" value="${dir.css}/${css.sha}.css" />
+        <property name="style.css" value="../css/${css.sha}.css" />
         <copy file="${dir.intermediate}/${dir.css}/style-concat.min.css" tofile="${dir.publish}/${dir.css}/${css.sha}.css" />
 
         <echo message="Minifying any unconcatenated css files..."/>
 
         <apply executable="java" parallel="false">
-            <fileset dir="${dir.source}/${dir.css}/" excludes="${concat-files}" includes="**/*.css"/>
+            <fileset dir="../css/" excludes="${concat-files}" includes="**/*.css"/>
             <arg line="-jar"/>
             <arg path="${dir.build.tools}/${tool.yuicompressor}"/>
             <srcfile/>
@@ -1161,6 +1161,6 @@
 
 	<!-- Import project.xml (put any custom build targets in this file so that they aren't overwritten when build.xml is updated) -->
 	<!-- See: https://github.com/h5bp/html5-boilerplate/issues/704 -->
-	<import file="./project.xml" />
+	<import file="project.xml" />
 
 </project>
