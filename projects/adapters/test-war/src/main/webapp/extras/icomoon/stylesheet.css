@@ -5,7 +5,7 @@
 @font-face {
     font-family: 'IcoMoonRegular';
     src: url('full-webfont.eot');
-    src: url('full-webfont.eot?#iefix') format('embedded-opentype'),
+    src: url('full-webfont.eot') format('embedded-opentype'),
          url('full-webfont.woff') format('woff'),
          url('full-webfont.ttf') format('truetype'),
          url('full-webfont.svg#IcoMoonRegular') format('svg');
