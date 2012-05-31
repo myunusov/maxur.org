@@ -1,4 +1,4 @@
-package org.maxur.adapter.kickstrap;
+package org.maxur.test.war;
 
 import org.apache.wicket.markup.html.panel.Panel;
 

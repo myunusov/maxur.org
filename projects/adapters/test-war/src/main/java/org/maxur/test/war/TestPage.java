@@ -1,6 +1,5 @@
 package org.maxur.test.war;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.maxur.adapter.kickstrap.BasePage;
 
@@ -14,8 +13,8 @@ public class TestPage extends BasePage {
 
     public TestPage() {
         super();
-        add(new Label("message", "Hello World!"));
-        add(new TestPanel("test"));
+        add(new TestPanel("header"));
+        add(new FooterPanel("footer"));
     }
 
     protected Model<String> applicationTitle() {
