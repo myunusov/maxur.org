@@ -2,6 +2,7 @@ package org.maxur.test.war;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
+import org.maxur.adapter.kickstrap.BasePage;
 
 /**
  * @author Maxim Yunusov
@@ -26,3 +27,4 @@ public class TestPage extends BasePage {
         return new Model<>("Test Application");
     }
 }
+

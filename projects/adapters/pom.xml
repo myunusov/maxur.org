@@ -25,6 +25,8 @@
         <module>jquery</module>
         <module>html5</module>
         <module>h5bp</module>
+        <module>bootstrap</module>
+        <module>kickstrap</module>
 
         <module>test-war</module>
     </modules>
