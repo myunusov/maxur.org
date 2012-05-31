@@ -29,16 +29,13 @@ public abstract class BasePage extends WebPage {
     @Named("theme")
     private StyleBehavior styleBehavior;
 
-
     public BasePage() {
         add(new Label("application.title", applicationTitle()));
         add(new ApplicationDescription("application.description", applicationDescription()));
         add(new FaviconLink("favicon", faviconHref()));
         add(new KickstrapCoreBehavior());
         add(getStyleBehavior());
-        add(new HeaderPanel("header"));
         add(new JavaScriptPanel("java_script"));
-        add(new FooterPanel("footer"));
     }
 
     private Behavior getStyleBehavior() {

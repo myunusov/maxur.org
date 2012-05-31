@@ -1,5 +1,6 @@
 package org.maxur.test.war;
 
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
@@ -12,5 +13,6 @@ public class TestPanel extends Panel {
 
     public TestPanel(final String id) {
         super(id);
+        add(new Label("message", "Hello World!"));
     }
 }
