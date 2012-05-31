@@ -2,13 +2,15 @@ package org.maxur.commons.component.application;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import org.apache.wicket.Application;
 import org.apache.wicket.guice.GuiceComponentInjector;
 import org.apache.wicket.guice.GuiceInjectorHolder;
+import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
-import org.maxur.commons.osgi.MutableInjectorHolder;
 import org.maxur.commons.domain.Observer;
+import org.maxur.commons.osgi.MutableInjectorHolder;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,17 +61,30 @@ public abstract class AbstractOSGiWebApplication extends WebApplication
      */
     @Override
     protected final void init() {
-        getComponentInstantiationListeners().add(createInjector());
-        this.classResolver = new OsgiClassResolver();
-        this.classResolver.addClassLoader(this.getClass().getClassLoader());
-        getApplicationSettings().setClassResolver(classResolver);
+        createInjector();
+        createResolver();
+        initGuarder();
         doInit();
     }
 
-    private GuiceComponentInjector createInjector() {
-        return injector != null ?
+    private void initGuarder() {
+        final SecurePackageResourceGuard guard = (SecurePackageResourceGuard) Application.get()
+                .getResourceSettings()
+                .getPackageResourceGuard();
+        guard.addPattern("+*.woff");
+        guard.addPattern("+*.ttf");
+    }
+
+    private void createInjector() {
+        getComponentInstantiationListeners().add(injector != null ?
                 new GuiceComponentInjector(this, injector) :
-                new GuiceComponentInjector(this);
+                new GuiceComponentInjector(this));
+    }
+
+    private void createResolver() {
+        this.classResolver = new OsgiClassResolver();
+        this.classResolver.addClassLoader(this.getClass().getClassLoader());
+        getApplicationSettings().setClassResolver(classResolver);
     }
 
     @Override

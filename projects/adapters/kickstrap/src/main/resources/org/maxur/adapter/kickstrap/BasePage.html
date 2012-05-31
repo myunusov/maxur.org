@@ -1,0 +1,83 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:wicket="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title wicket:id="application.title">[Application Title]</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta wicket:id="application.description" name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <link wicket:id="favicon" rel="icon" href="../../../../../../../../test-war/src/main/webapp/favicon.ico" type="image/x-icon" />
+    <wicket:remove><!-- For the sticky footer --></wicket:remove>
+    <!--[if !IE 7]>
+    <style type="text/css">#sf-wrapper {
+        display: table;
+        height: 100%
+    }</style><![endif]-->
+
+    <wicket:remove>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <script src="extras/h5bp/js/libs/modernizr-2.5.3.min.js"></script>
+    </wicket:remove>
+</head>
+
+<body>
+
+<div id="sf-wrapper">
+    <div class="container main">
+        <header wicket:id="header">
+        </header>
+        <wicket:child/>
+        <wicket:remove><!-- JavaScript at the bottom for fast page loading --></wicket:remove>
+        <div wicket:id="java_script">
+            <wicket:remove>
+            <script src="extras/h5bp/js/libs/jquery-1.7.1.min.js"></script>
+            <script src="extras/prettify/prettify.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <!-- If you'd rather pick and choose, comment the above and uncomment what you need below -->
+            <!--script type="text/javascript" src="js/bootstrap-alert.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-button.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-carousel.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-collapse.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-dropdown.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-modal.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-modal.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-modal.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-popover.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-scrollspy.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-tab.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-tooltip.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-transition.min.js"></script-->
+            <!--script type="text/javascript" src="js/bootstrap-typeahead.min.js"></script-->
+            <!--script type="text/javascript" src=""></script-->
+            <script type="text/javascript">
+                // Use the modernizr.load() function to run polyfills for older browsers.
+                Modernizr.load({
+                });
+            </script>
+            </wicket:remove>
+        </div>
+    </div>
+    <!-- End .container.main -->
+</div>
+<!-- End #sf-wrapper -->
+<div class="container">
+    <footer wicket:id="footer" id="footer">
+        <wicket:remove>
+        <p><i class="icon-github-sign"></i> Built with <a
+                href="http://ajkochanowicz.github.com/Kickstrap/">Kickstrap</a></p>
+        </wicket:remove>
+    </footer>
+</div>
+<!-- A little ie7- magic -->
+<script type="text/javascript"> $(function () {
+    if ($.browser.msie && parseInt($.browser.version, 10) === 6) {
+        $('.row div[class^="span"]:last-child').addClass("last-child");
+        $('[class="span"]').addClass("margin-left-20");
+        $(':button[class="btn"], :reset[class="btn"], :submit[class="btn"], input[type="button"]').addClass("button-reset");
+        $(":checkbox").addClass("input-checkbox");
+        $('[class^="icon-"], [class=" icon-"]').addClass("icon-sprite");
+        $(".pagination li:first-child a").addClass("pagination-first-child")
+    }
+}) </script>
+</body>
+</html>

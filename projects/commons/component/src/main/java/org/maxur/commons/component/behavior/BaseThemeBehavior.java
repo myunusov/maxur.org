@@ -12,6 +12,10 @@ public class BaseThemeBehavior extends CompositeBehavior implements ThemeBehavio
      */
     private static final long serialVersionUID = -6567719420886502433L;
 
+    public BaseThemeBehavior() {
+        super();
+    }
+
     public BaseThemeBehavior(Behavior... behaviors) {
         super(behaviors);
     }
