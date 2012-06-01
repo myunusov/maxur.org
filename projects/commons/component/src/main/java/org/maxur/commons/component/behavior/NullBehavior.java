@@ -36,7 +36,7 @@ public final class NullBehavior extends Behavior {
      * @see org.apache.wicket.behavior.Behavior#isEnabled(org.apache.wicket.Component).
      */
     @Override
-    public final boolean isEnabled(final Component component) {
+    public boolean isEnabled(final Component component) {
         return false;
     }
 }

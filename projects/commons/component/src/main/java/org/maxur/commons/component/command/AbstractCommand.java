@@ -32,7 +32,7 @@ public abstract class AbstractCommand implements Command {
      * @param component a {@link org.apache.wicket.markup.html.WebComponent} object.
      */
     @Override
-    public void bind(final IRequestableComponent component) {
+    public final void bind(final IRequestableComponent component) {
         this.component = component;
     }
 
@@ -51,7 +51,7 @@ public abstract class AbstractCommand implements Command {
      *
      * @param titleKey a {@link java.lang.String} object.
      */
-    protected void setTitleKey(final String titleKey) {
+    protected final void setTitleKey(final String titleKey) {
         this.titleKey = titleKey;
     }
 
@@ -70,7 +70,7 @@ public abstract class AbstractCommand implements Command {
      *
      * @return a {@link org.apache.wicket.markup.html.WebComponent} object.
      */
-    public IRequestableComponent getComponent() {
+    public final IRequestableComponent getComponent() {
         return component;
     }
 }

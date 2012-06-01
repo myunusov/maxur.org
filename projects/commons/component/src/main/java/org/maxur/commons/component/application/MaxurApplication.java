@@ -15,7 +15,6 @@ import org.maxur.commons.component.model.bookmark.Bookmark;
 import org.maxur.commons.component.model.bookmark.Bookmarks;
 import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
-import org.maxur.commons.view.api.MenuItems;
 import org.maxur.commons.view.api.PageProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +40,6 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     @Inject
     @Named("application.version")
     private String version;
-
-    @Inject
-    private MenuItems menuItems;
 
     @Inject
     private WebBrowserDetector detector;
