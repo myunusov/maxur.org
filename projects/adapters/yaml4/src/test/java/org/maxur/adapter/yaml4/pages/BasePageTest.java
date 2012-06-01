@@ -25,7 +25,7 @@ public class BasePageTest extends AbstractWicketTest {
      */
     @Before
     public void testSetup() {
-        getTester().startPage(BasePage.class);
+        getTester().startPage(FakeBasePage.class);
     }
 
     /**

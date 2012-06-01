@@ -3,7 +3,7 @@ package org.maxur.taskun.war.pages.about;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.wicket.markup.html.basic.Label;
-import org.maxur.adapter.yaml4.pages.BasePage;
+import org.maxur.taskun.war.pages.TaskunBasePage;
 
 
 /**
@@ -12,7 +12,7 @@ import org.maxur.adapter.yaml4.pages.BasePage;
  * @author Maxim Yunusov
  * @version 1.0 27.09.11
  */
-public class AboutPage extends BasePage {
+public class AboutPage extends TaskunBasePage {
 
     @Inject
     @Named("application.title")

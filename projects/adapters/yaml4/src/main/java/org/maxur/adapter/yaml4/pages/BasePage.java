@@ -16,7 +16,7 @@ import org.maxur.commons.component.mainmenu.MenuPanel;
  * @author Maxim Yunusov
  * @version 1.0 27.09.11
  */
-public class BasePage extends WebPage {
+public abstract class BasePage extends WebPage {
 
     /**
      * The Serial Version UID.
@@ -31,7 +31,8 @@ public class BasePage extends WebPage {
      */
     public BasePage() {
         add(getThemeBehavior());
-        add(new Label("application.title", new ResourceModel("application.title").wrapOnAssignment(this)));
+        add(new Label("application.title",
+                new ResourceModel("application.title")));
         add(new HeaderPanel("header"));
         add(new MenuPanel("menu"));
         add(new FooterPanel("footer"));
