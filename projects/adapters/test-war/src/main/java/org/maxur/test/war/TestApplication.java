@@ -31,7 +31,7 @@ public class TestApplication extends WebApplication {
      */
     @Override
     public Class<? extends Page> getHomePage() {
-        return TestPage.class;
+        return HomePage.class;
     }
 
     /**
