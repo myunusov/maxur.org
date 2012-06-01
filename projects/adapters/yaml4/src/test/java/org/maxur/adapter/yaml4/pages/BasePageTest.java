@@ -1,12 +1,12 @@
-package org.maxur.taskun.war.pages;
+package org.maxur.adapter.yaml4.pages;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.apache.wicket.markup.html.basic.Label;
 import org.junit.Before;
 import org.junit.Test;
+import org.maxur.adapter.yaml4.AbstractWicketTest;
 import org.maxur.commons.component.mainmenu.MenuPanel;
-import org.maxur.taskun.war.AbstractWicketTest;
 
 /**
  * @author Maxim Yunusov

@@ -3,7 +3,7 @@ package org.maxur.taskun.war.pages.about;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.wicket.markup.html.basic.Label;
-import org.maxur.taskun.war.pages.BasePage;
+import org.maxur.adapter.yaml4.pages.BasePage;
 
 
 /**

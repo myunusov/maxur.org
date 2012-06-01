@@ -7,10 +7,10 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.maxur.commons.component.model.bookmark.Bookmarks;
 import org.maxur.commons.view.api.MenuItems;
 import org.maxur.commons.view.api.PageProvider;
-import org.maxur.taskun.war.pages.error.AccessDeniedPage;
-import org.maxur.taskun.war.pages.error.ExpiredPage;
-import org.maxur.taskun.war.pages.error.InternalErrorPage;
-import org.maxur.taskun.war.pages.error.NotFoundPage;
+import org.maxur.adapter.yaml4.pages.error.AccessDeniedPage;
+import org.maxur.adapter.yaml4.pages.error.ExpiredPage;
+import org.maxur.adapter.yaml4.pages.error.InternalErrorPage;
+import org.maxur.adapter.yaml4.pages.error.NotFoundPage;
 import org.maxur.taskun.war.pages.home.HomePage;
 
 /**

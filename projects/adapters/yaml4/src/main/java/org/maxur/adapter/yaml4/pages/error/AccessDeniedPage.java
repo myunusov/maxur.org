@@ -1,6 +1,6 @@
-package org.maxur.taskun.war.pages.error;
+package org.maxur.adapter.yaml4.pages.error;
 
-import org.maxur.taskun.war.pages.BasePage;
+import org.maxur.adapter.yaml4.pages.BasePage;
 
 /**
  * @author Maxim Yunusov

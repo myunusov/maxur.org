@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.maxur.taskun.domain.Issue;
 import org.maxur.taskun.domain.IssueLister;
-import org.maxur.taskun.war.pages.BasePage;
+import org.maxur.adapter.yaml4.pages.BasePage;
 
 import java.util.List;
 

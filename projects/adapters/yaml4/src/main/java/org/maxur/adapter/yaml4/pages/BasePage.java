@@ -1,4 +1,4 @@
-package org.maxur.taskun.war.pages;
+package org.maxur.adapter.yaml4.pages;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;

@@ -10,4 +10,8 @@ public final class WebBrowserUtils {
         return new BaseWebBrowser(WebBrowserType.IE, version);
     }
 
+    public static WebBrowser ie(final String version) {
+        return new BaseWebBrowser(WebBrowserType.IE, version);
+    }
+
 }
