@@ -35,7 +35,6 @@
             <scope>provided</scope>
         </dependency>
 
-
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>maxur-commons</artifactId>
@@ -46,20 +45,7 @@
 
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>maxur-yaml</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.maxur</groupId>
             <artifactId>maxur-yaml4</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.maxur</groupId>
-            <artifactId>maxur-blue-theme</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>

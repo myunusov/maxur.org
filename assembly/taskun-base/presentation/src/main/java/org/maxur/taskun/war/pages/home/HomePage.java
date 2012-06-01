@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.maxur.taskun.domain.Issue;
 import org.maxur.taskun.domain.IssueLister;
-import org.maxur.adapter.yaml4.pages.BasePage;
+import org.maxur.taskun.war.pages.TaskunBasePage;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * @author Maxim Yunusov
  * @version 1.0 27.09.11
  */
-public class HomePage extends BasePage {
+public class HomePage extends TaskunBasePage {
 
     /**
      * The Serial Version UID.
