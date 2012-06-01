@@ -1,4 +1,4 @@
-package org.maxur.taskun.war.pages.error;
+package org.maxur.adapter.yaml4.pages.error;
 
 /**
  * @author Maxim Yunusov

@@ -4,10 +4,10 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.junit.Before;
 import org.junit.Test;
-import org.maxur.taskun.war.AbstractWicketTest;
+import org.maxur.adapter.yaml4.pages.FooterPanel;
+import org.maxur.adapter.yaml4.pages.HeaderPanel;
 import org.maxur.commons.component.mainmenu.MenuPanel;
-import org.maxur.taskun.war.pages.FooterPanel;
-import org.maxur.taskun.war.pages.HeaderPanel;
+import org.maxur.taskun.war.AbstractWicketTest;
 
 /**
  * @author Maxim Yunusov

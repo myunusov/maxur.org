@@ -10,7 +10,6 @@ import org.maxur.taskun.war.pages.home.HomePageTest;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        BasePageTest.class,
         HomePageTest.class
 })
 public class UTPageSuite {

@@ -1,27 +1,27 @@
-package org.maxur.taskun.war.pages;
+package org.maxur.adapter.yaml4.pages;
 
 import org.apache.wicket.markup.html.panel.Panel;
 
 /**
- * It's footer panel controller class.
+ * It's header panel controller class.
  *
  * @author Maxim Yunusov
  * @version 1.0 15.10.11
  */
-public class FooterPanel extends Panel {
+public class HeaderPanel extends Panel {
 
     /**
      * The Serial Version UID.
      */
-    private static final long serialVersionUID = -4841954978169043747L;
+    private static final long serialVersionUID = 9063122762266182766L;
 
     /**
-     * It's footer panel constructor.
+     * It's header panel constructor.
      *
      * @param id The non-null id of this component.
      * @see org.apache.wicket.Component#Component(String)
      */
-    public FooterPanel(final String id) {
+    public HeaderPanel(final String id) {
         super(id);
     }
 }
