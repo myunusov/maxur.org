@@ -6,6 +6,9 @@ package org.maxur.commons.component.model.webclient;
  */
 public final class WebBrowserUtils {
 
+    private WebBrowserUtils() {
+    }
+
     public static WebBrowser ie(int version) {
         return new BaseWebBrowser(WebBrowserType.IE, version);
     }
