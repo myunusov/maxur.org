@@ -5,7 +5,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>guice-jars</artifactId>
-    <version>1.0</version>
     <packaging>pom</packaging>
     <name>Guice Container</name>
 
