@@ -49,6 +49,7 @@
 
     <modules>
         <module>poms</module>
+        <module>build-tools</module>
         <module>assembly</module>
         <module>projects</module>
         <module>dependencies</module>
@@ -103,8 +104,15 @@
                     <plugin>
                         <groupId>com.atlassian.maven.plugins</groupId>
                         <artifactId>maven-clover2-plugin</artifactId>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.maxur</groupId>
+                                <artifactId>build-tools</artifactId>
+                                <version>1.0</version>
+                            </dependency>
+                        </dependencies>
                         <configuration>
-                            <licenseLocation>${project.root}/clover.license</licenseLocation>
+                            <licenseLocation>clover.license</licenseLocation>
                             <targetPercentage>75%</targetPercentage>
                             <includesTestSourceRoots>false</includesTestSourceRoots>
                             <jdk>${project.source.compile}</jdk>
@@ -122,7 +130,6 @@
                                 ${project.root}.clover/base
                             </baseDir>
                             <generateXml>true</generateXml>
-
                         </configuration>
                         <executions>
                             <execution>
@@ -236,7 +243,44 @@
                 <artifactId>jdepend-maven-plugin</artifactId>
                 <version>2.0-beta-2</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.maxur</groupId>
+                        <artifactId>build-tools</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>5.5</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.sun</groupId>
+                                <artifactId>tools</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                    <xrefLocation>${project.reporting.outputDirectory}/xref</xrefLocation>
+                    <configLocation>maxur-check-style.xml</configLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>checkstyle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -300,6 +344,22 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                    <xrefLocation>${project.reporting.outputDirectory}/xref</xrefLocation>
+                    <configLocation>maxur-check-style.xml</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
 
     <dependencyManagement>
         <dependencies>
