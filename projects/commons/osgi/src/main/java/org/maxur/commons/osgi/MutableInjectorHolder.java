@@ -1,5 +1,9 @@
 package org.maxur.commons.osgi;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Injector;
+import org.maxur.commons.domain.FreshnessController;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,4 +30,17 @@ public final class MutableInjectorHolder {
     public static void stop(final String pid) {
         injectors.remove(pid);
     }
+
+    public static void update(final String pid) {
+        get(pid).update();
+    }
+
+    public static void addModule(final String pid, final AbstractModule module) {
+        get(pid).addModule(module);
+    }
+
+    public static FreshnessController<Injector> freshnessController(final String pid) {
+        return get(pid).freshnessController();
+    }
+
 }

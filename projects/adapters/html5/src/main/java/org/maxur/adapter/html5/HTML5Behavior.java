@@ -19,7 +19,7 @@ public class HTML5Behavior extends BaseResourcesBehavior implements JScriptBehav
     private static final long serialVersionUID = 8706570401077541844L;
 
     @Override
-    public void renderHead(Component component, IHeaderResponse response) {
+    public final void renderHead(final Component component, final IHeaderResponse response) {
         super.renderHead(component, response);
         response.render(JavaScriptHeaderItem.forReference(
                 new JavaScriptResourceReference(this.getClass(), "html5.js")

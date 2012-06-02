@@ -34,7 +34,7 @@ public final class ControlProviders {
         for (OSGiServiceManager<?> manager : managers) {
             manager.start(bc, this.pid);
         }
-        MutableInjectorHolder.get(this.pid).addModule(new ProvidersModule());
+        MutableInjectorHolder.addModule(this.pid, new ProvidersModule());
         return this;
     }
 
