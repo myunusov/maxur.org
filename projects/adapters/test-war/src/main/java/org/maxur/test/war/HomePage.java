@@ -104,7 +104,8 @@ public class HomePage extends WebPage {
             @Override
             public void onComponentTag(final org.apache.wicket.Component component, final ComponentTag tag) {
                 super.onComponentTag(component, tag);
-                final String className = command.isActive() ? "active" : ""; tag.put("class", className);
+                final String className = command.isActive() ? "active" : "";
+                tag.put("class", className);
             }
         }
     }

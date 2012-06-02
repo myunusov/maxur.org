@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
-import org.maxur.commons.domain.Observer;
+import org.maxur.commons.domain.FreshnessController;
 import org.maxur.commons.osgi.MutableInjectorHolder;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
@@ -19,22 +19,20 @@ import javax.servlet.http.HttpServletRequest;
  * @author Maxim Yunusov
  * @version 1.0 10.05.12
  */
-public abstract class AbstractOSGiWebApplication extends WebApplication
-        implements OSGiWebApplication, Observer {
+public abstract class AbstractOSGiWebApplication extends WebApplication implements OSGiWebApplication {
 
     private OsgiClassResolver classResolver;
 
-    private final String pid;
-
-    @Inject
-    private Injector injector;
-
-    private boolean isStale;
+    private final FreshnessController<Injector> freshnessController;
 
     public AbstractOSGiWebApplication(final String pid) {
-        this.pid = pid;
-        MutableInjectorHolder.get(pid).inject(this);
-        MutableInjectorHolder.get(pid).addObserver(this);
+        freshnessController = MutableInjectorHolder.freshnessController(pid);
+        freshnessController.get().injectMembers(this);
+    }
+
+    @Inject
+    public void updateInjector(Injector injector) {
+        setMetaData(GuiceInjectorHolder.INJECTOR_KEY, new GuiceInjectorHolder(injector));
     }
 
     @Override
@@ -45,9 +43,10 @@ public abstract class AbstractOSGiWebApplication extends WebApplication
     /** {@inheritDoc} */
     @Override
     public WebRequest newWebRequest(HttpServletRequest servletRequest, String filterPath) {
-        if (this.isStale) {
-            MutableInjectorHolder.get(pid).inject(this);
-            setMetaData(GuiceInjectorHolder.INJECTOR_KEY, new GuiceInjectorHolder(injector));
+        if (freshnessController.isStale()) {
+            final Injector injector = freshnessController.get();
+            injector.injectMembers(this);
+
         }
         return super.newWebRequest(servletRequest, filterPath);
     }
@@ -55,14 +54,12 @@ public abstract class AbstractOSGiWebApplication extends WebApplication
     /**
      * It's template method. It can not be overrides.
      * One can use 'doInit' for override purpose.
-     *
      * {@inheritDoc}
-     *
      */
     @Override
     protected final void init() {
-        createInjector();
-        createResolver();
+        initInjector();
+        initResolver();
         initGuarder();
         doInit();
     }
@@ -75,21 +72,17 @@ public abstract class AbstractOSGiWebApplication extends WebApplication
         guard.addPattern("+*.ttf");
     }
 
-    private void createInjector() {
+    private void initInjector() {
+        final Injector injector = freshnessController.get();
         getComponentInstantiationListeners().add(injector != null ?
                 new GuiceComponentInjector(this, injector) :
                 new GuiceComponentInjector(this));
     }
 
-    private void createResolver() {
+    private void initResolver() {
         this.classResolver = new OsgiClassResolver();
         this.classResolver.addClassLoader(this.getClass().getClassLoader());
         getApplicationSettings().setClassResolver(classResolver);
-    }
-
-    @Override
-    public void update() {
-        this.isStale = true;
     }
 
     protected abstract void doInit();

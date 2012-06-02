@@ -1,15 +1,21 @@
 package org.maxur.commons.osgi;
 
-import com.google.inject.ConfigurationException;
-import org.maxur.commons.domain.Observer;
+import com.google.inject.Injector;
+import org.maxur.commons.domain.FreshnessController;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.HashSet;
+
+import static org.maxur.commons.domain.ArgumentChecker.assertIsInterface;
+import static org.maxur.commons.domain.ArgumentChecker.assertIsInterfaceOf;
 
 /**
  * @author Maxim Yunusov
@@ -41,47 +47,56 @@ public final class ControlServices  {
         }
     }
 
-    public void bind(final Class<?> servesClass, final Object service, final Annotation annotation) {
-        // TODO service must be instance of servesClass
+    public void bind(final Class<?> interfaceClass, final Object service, final Annotation annotation) {
+        assertIsInterface(interfaceClass);
+        assertIsInterfaceOf(interfaceClass, service);
         services.add(ServiceDescription.builder()
-                .factory(new OSGiServiceFactory(service))
-                .type(servesClass)
+                .factory(new OSGiServiceFactory(service, interfaceClass))
+                .type(interfaceClass)
                 .annotation(annotation)
                 .build()
         );
     }
 
-    class OSGiServiceFactory implements ServiceFactory, Observer {
+    class OSGiServiceFactory implements ServiceFactory {
 
         private final Object service;
 
-        private final MutableInjector injector = MutableInjectorHolder.get(pid);
+        private final Class<?> interfaceClass;
 
-        public OSGiServiceFactory(final Object service) {
+        private final FreshnessController<Injector> freshnessController;
+
+        public OSGiServiceFactory(final Object service, Class<?> interfaceClass) {
             this.service = service;
-            if (null != injector) {
-                injector.addObserver(this);
-            }
+            this.interfaceClass = interfaceClass;
+            freshnessController = MutableInjectorHolder.freshnessController(pid);
         }
 
         @Override
         public Object getService(final Bundle bundle, final ServiceRegistration serviceRegistration) {
-            return service;
+
+            return Proxy.newProxyInstance
+                    (service.getClass().getClassLoader(),
+                            new Class[]{interfaceClass},
+                            new InvocationHandler() {
+                                public Object invoke(
+                                        final Object proxy,
+                                        final Method method,
+                                        final Object[] args
+                                ) throws Throwable {
+                                    if (freshnessController.isStale()) {
+                                        final Injector injector = freshnessController.get();
+                                        injector.injectMembers(service);
+                                    }
+                                    return method.invoke(service, args);
+                                }
+                            });
         }
 
         @Override
         public void ungetService(final Bundle bundle, final ServiceRegistration serviceRegistration, final Object o) {
         }
 
-        @Override
-        public void update() {
-            if (null != injector) {
-                try {
-                    injector.inject(service);
-                } catch (ConfigurationException ignore) {
-                }
-            }
-        }
     }
 
 

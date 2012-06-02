@@ -4,7 +4,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import org.maxur.commons.domain.AbstractFreshnessController;
 import org.maxur.commons.domain.BaseObservable;
+import org.maxur.commons.domain.FreshnessController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,5 +76,30 @@ public class MutableInjector extends BaseObservable {
         this.injector = null;
         notifyObservers();
     }
+
+    public FreshnessController<Injector> freshnessController() {
+        return new InjectorFreshnessController(this);
+    }
+
+
+    private static class InjectorFreshnessController extends AbstractFreshnessController<Injector> {
+
+        private static final long serialVersionUID = 5839489044064207753L;
+
+        private final MutableInjector mutableInjector;
+
+        public InjectorFreshnessController(final MutableInjector mutableInjector) {
+            super(mutableInjector.getInjector());
+            mutableInjector.addObserver(this);
+            this.mutableInjector = mutableInjector;
+        }
+
+        @Override
+        protected Injector refresh() {
+            return mutableInjector.getInjector();
+        }
+
+    }
+
 
 }

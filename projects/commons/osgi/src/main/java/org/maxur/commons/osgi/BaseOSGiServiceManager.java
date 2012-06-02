@@ -31,7 +31,7 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
     private String pid;
 
     protected void notifyObserver() {
-        MutableInjectorHolder.get(pid).update();
+        MutableInjectorHolder.update(pid);
     }
 
     public boolean isMultiple() {
