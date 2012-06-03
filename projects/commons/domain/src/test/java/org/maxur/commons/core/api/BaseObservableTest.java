@@ -1,8 +1,10 @@
-package org.maxur.commons.domain;
+package org.maxur.commons.core.api;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.maxur.commons.core.api.BaseObservable;
+import org.maxur.commons.core.api.Observer;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 

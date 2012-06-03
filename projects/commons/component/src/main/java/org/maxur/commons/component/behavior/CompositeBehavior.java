@@ -6,8 +6,8 @@ import org.apache.wicket.behavior.IBehaviorListener;
 import org.apache.wicket.event.IEvent;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.maxur.commons.component.utils.SerializableArrayList;
-import org.maxur.commons.component.utils.SerializableList;
+import org.maxur.commons.core.api.SerializableArrayList;
+import org.maxur.commons.core.api.SerializableList;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

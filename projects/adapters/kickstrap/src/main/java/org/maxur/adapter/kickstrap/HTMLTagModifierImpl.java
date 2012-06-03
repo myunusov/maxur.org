@@ -11,7 +11,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.util.resource.ResourceStreamNotFoundException;
 import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
-import org.maxur.commons.component.utils.StringUtils;
+import org.maxur.commons.core.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

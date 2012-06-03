@@ -1,4 +1,4 @@
-package org.maxur.commons.component.utils;
+package org.maxur.commons.core.utils;
 
 import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.ParameterizedType;

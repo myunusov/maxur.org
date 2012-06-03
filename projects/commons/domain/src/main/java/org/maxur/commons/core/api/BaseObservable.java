@@ -1,4 +1,4 @@
-package org.maxur.commons.domain;
+package org.maxur.commons.core.api;
 
 import java.util.HashSet;
 import java.util.Set;

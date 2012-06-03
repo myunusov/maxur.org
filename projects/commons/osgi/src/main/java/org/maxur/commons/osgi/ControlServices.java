@@ -1,7 +1,7 @@
 package org.maxur.commons.osgi;
 
 import com.google.inject.Injector;
-import org.maxur.commons.domain.FreshnessController;
+import org.maxur.commons.core.api.FreshnessController;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceFactory;
@@ -14,8 +14,8 @@ import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.HashSet;
 
-import static org.maxur.commons.domain.ArgumentChecker.assertIsInterface;
-import static org.maxur.commons.domain.ArgumentChecker.assertIsInterfaceOf;
+import static org.maxur.commons.core.api.ArgumentChecker.assertIsInterface;
+import static org.maxur.commons.core.api.ArgumentChecker.assertIsInterfaceOf;
 
 /**
  * @author Maxim Yunusov

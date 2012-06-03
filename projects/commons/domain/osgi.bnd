@@ -1,1 +1,1 @@
-Export-Package: org.maxur.commons.domain.*
+Export-Package: org.maxur.commons.core.*,org.maxur.commons.core.utils

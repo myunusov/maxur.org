@@ -2,7 +2,7 @@ package org.maxur.commons.osgi;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
-import org.maxur.commons.domain.FreshnessController;
+import org.maxur.commons.core.api.FreshnessController;
 
 import java.util.HashMap;
 import java.util.Map;
