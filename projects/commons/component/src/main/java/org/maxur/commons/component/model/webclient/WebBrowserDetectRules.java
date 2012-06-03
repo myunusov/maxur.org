@@ -1,8 +1,8 @@
 package org.maxur.commons.component.model.webclient;
 
-import org.maxur.commons.component.utils.SerializableArrayList;
-import org.maxur.commons.component.utils.SerializableList;
-import org.maxur.commons.component.utils.StringUtils;
+import org.maxur.commons.core.api.SerializableArrayList;
+import org.maxur.commons.core.api.SerializableList;
+import org.maxur.commons.core.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package org.maxur.commons.component.utils;
+package org.maxur.commons.core.api;
 
 import java.util.Iterator;
 

@@ -1,4 +1,4 @@
-package org.maxur.commons.component.utils;
+package org.maxur.commons.core.utils;
 
 /**
  * Idea by Alex Tracer

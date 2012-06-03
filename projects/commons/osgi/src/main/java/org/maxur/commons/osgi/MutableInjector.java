@@ -4,9 +4,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import org.maxur.commons.domain.AbstractFreshnessController;
-import org.maxur.commons.domain.BaseObservable;
-import org.maxur.commons.domain.FreshnessController;
+import org.maxur.commons.core.api.AbstractFreshnessController;
+import org.maxur.commons.core.api.BaseObservable;
+import org.maxur.commons.core.api.FreshnessController;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
-import org.maxur.commons.domain.FreshnessController;
+import org.maxur.commons.core.api.FreshnessController;
 import org.maxur.commons.osgi.MutableInjectorHolder;
 import org.maxur.commons.view.api.OSGiWebApplication;
 

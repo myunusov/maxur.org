@@ -18,8 +18,8 @@
 
     <properties>
         <project.root>${project.basedir}/../../../</project.root>
-        <bundle.symbolicName>org.maxur.commons.domain</bundle.symbolicName>
-        <bundle.namespace>org.maxur.commons.domain</bundle.namespace>
+        <bundle.symbolicName>org.maxur.commons.core</bundle.symbolicName>
+        <bundle.namespace>org.maxur.commons.core</bundle.namespace>
     </properties>
 
     <dependencies>

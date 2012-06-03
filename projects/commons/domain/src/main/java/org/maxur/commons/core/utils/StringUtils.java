@@ -1,4 +1,6 @@
-package org.maxur.commons.component.utils;
+package org.maxur.commons.core.utils;
+
+import org.maxur.commons.core.api.OuterIterator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
