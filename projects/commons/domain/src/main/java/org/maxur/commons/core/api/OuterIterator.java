@@ -6,7 +6,7 @@ import java.util.Iterator;
  * @author Maxim Yunusov
  * @version 1.0 30.05.12
  */
-public class OuterIterator<T> {
+public final class OuterIterator<T> {
 
     private final Iterator<T> iterator;
 

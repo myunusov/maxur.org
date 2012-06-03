@@ -14,7 +14,7 @@ import java.util.Hashtable;
  * @author Maxim Yunusov
  * @version 1.0 27.05.12
  */
-public class ServiceDescription implements Provider<Object> {
+public final class ServiceDescription implements Provider<Object> {
 
     private static final String ANNOTATION = "annotation";
 

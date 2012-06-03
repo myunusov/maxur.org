@@ -9,7 +9,7 @@ import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
-import org.maxur.commons.core.api.FreshnessController;
+import org.maxur.commons.core.api.Refresher;
 import org.maxur.commons.osgi.MutableInjectorHolder;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
@@ -23,11 +23,11 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
 
     private OsgiClassResolver classResolver;
 
-    private final FreshnessController<Injector> freshnessController;
+    private final Refresher<Injector> refresher;
 
     public AbstractOSGiWebApplication(final String pid) {
-        freshnessController = MutableInjectorHolder.freshnessController(pid);
-        freshnessController.get().injectMembers(this);
+        refresher = MutableInjectorHolder.freshnessController(pid);
+        refresher.get().injectMembers(this);
     }
 
     @Inject
@@ -43,8 +43,8 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
     /** {@inheritDoc} */
     @Override
     public WebRequest newWebRequest(HttpServletRequest servletRequest, String filterPath) {
-        if (freshnessController.isStale()) {
-            final Injector injector = freshnessController.get();
+        if (refresher.isStale()) {
+            final Injector injector = refresher.get();
             injector.injectMembers(this);
 
         }
@@ -73,7 +73,7 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
     }
 
     private void initInjector() {
-        final Injector injector = freshnessController.get();
+        final Injector injector = refresher.get();
         getComponentInstantiationListeners().add(injector != null ?
                 new GuiceComponentInjector(this, injector) :
                 new GuiceComponentInjector(this));

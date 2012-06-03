@@ -62,7 +62,7 @@ public class HomePage extends WebPage {
         /**
          * Serial Version UID.
          */
-        private static final long serialVersionUID = 8835336241872539442L;
+        private static final long serialVersionUID = 1012129408351088541L;
 
         /**
          * Constructs new MenuItemsView instance.
