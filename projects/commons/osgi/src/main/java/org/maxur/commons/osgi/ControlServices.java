@@ -1,7 +1,7 @@
 package org.maxur.commons.osgi;
 
 import com.google.inject.Injector;
-import org.maxur.commons.core.api.FreshnessController;
+import org.maxur.commons.core.api.Refresher;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceFactory;
@@ -64,12 +64,12 @@ public final class ControlServices  {
 
         private final Class<?> interfaceClass;
 
-        private final FreshnessController<Injector> freshnessController;
+        private final Refresher<Injector> refresher;
 
         public OSGiServiceFactory(final Object service, Class<?> interfaceClass) {
             this.service = service;
             this.interfaceClass = interfaceClass;
-            freshnessController = MutableInjectorHolder.freshnessController(pid);
+            refresher = MutableInjectorHolder.freshnessController(pid);
         }
 
         @Override
@@ -84,8 +84,8 @@ public final class ControlServices  {
                                         final Method method,
                                         final Object[] args
                                 ) throws Throwable {
-                                    if (freshnessController.isStale()) {
-                                        final Injector injector = freshnessController.get();
+                                    if (refresher.isStale()) {
+                                        final Injector injector = refresher.get();
                                         injector.injectMembers(service);
                                     }
                                     return method.invoke(service, args);

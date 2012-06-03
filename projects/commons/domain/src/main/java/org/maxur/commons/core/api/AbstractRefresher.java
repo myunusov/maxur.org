@@ -4,7 +4,7 @@ package org.maxur.commons.core.api;
 * @author Maxim Yunusov
 * @version 1.0 02.06.12
 */
-public abstract class AbstractFreshnessController<T> implements Observer, FreshnessController<T> {
+public abstract class AbstractRefresher<T> implements Observer, Refresher<T> {
 
     private static final long serialVersionUID = -6562206165620000361L;
 
@@ -12,7 +12,7 @@ public abstract class AbstractFreshnessController<T> implements Observer, Freshn
 
     private T item;
 
-    protected AbstractFreshnessController(final T item) {
+    protected AbstractRefresher(final T item) {
         this.item = item;
     }
 
