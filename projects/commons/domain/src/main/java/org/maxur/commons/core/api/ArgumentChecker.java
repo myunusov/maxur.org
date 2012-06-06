@@ -6,6 +6,9 @@ package org.maxur.commons.core.api;
  */
 public final class ArgumentChecker {
 
+    /**
+     * Utility classes should not have a public or default constructor.
+     */
     private ArgumentChecker() {
     }
 

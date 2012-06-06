@@ -12,8 +12,8 @@ public class SerializableArrayList<E extends Serializable> extends ArrayList<E> 
 
     private static final long serialVersionUID = -8140532191332903834L;
 
-    public SerializableArrayList(final List<E> behaviors) {
-        super(behaviors);
+    public SerializableArrayList(final List<E> list) {
+        super(list);
     }
 
     public SerializableArrayList() {
