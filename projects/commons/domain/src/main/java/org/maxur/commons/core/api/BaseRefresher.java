@@ -12,7 +12,7 @@ public class BaseRefresher<T> implements Refresher<T> {
 
     private final Holder<T> itemHolder;
 
-    private T item;
+    transient private T item;
 
     public BaseRefresher(final Holder<T> itemHolder) {
         this.itemHolder = itemHolder;
