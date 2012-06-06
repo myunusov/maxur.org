@@ -39,8 +39,8 @@ public final class MutableInjectorHolder {
         get(pid).addModule(module);
     }
 
-    public static Refresher<Injector> freshnessController(final String pid) {
-        return get(pid).freshnessController();
+    public static Refresher<Injector> refresher(final String pid) {
+        return get(pid).refresher();
     }
 
 }

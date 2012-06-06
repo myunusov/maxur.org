@@ -26,7 +26,7 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
     private final Refresher<Injector> refresher;
 
     public AbstractOSGiWebApplication(final String pid) {
-        refresher = MutableInjectorHolder.freshnessController(pid);
+        refresher = MutableInjectorHolder.refresher(pid);
         refresher.get().injectMembers(this);
     }
 

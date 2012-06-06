@@ -4,8 +4,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-import org.maxur.commons.core.api.AbstractRefresher;
+import org.maxur.commons.core.api.BaseRefresher;
 import org.maxur.commons.core.api.BaseObservable;
+import org.maxur.commons.core.api.Holder;
 import org.maxur.commons.core.api.Refresher;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.Map;
  * @author Maxim Yunusov
  * @version 1.0 26.05.12
  */
-public class MutableInjector extends BaseObservable {
+public class MutableInjector extends BaseObservable implements Holder<Injector> {
 
     private Injector injector;
 
@@ -77,29 +78,18 @@ public class MutableInjector extends BaseObservable {
         notifyObservers();
     }
 
-    public Refresher<Injector> freshnessController() {
-        return new InjectorRefresher(this);
+    public Refresher<Injector> refresher() {
+        return new BaseRefresher<>(this);
     }
 
-
-    private static class InjectorRefresher extends AbstractRefresher<Injector> {
-
-        private static final long serialVersionUID = 5839489044064207753L;
-
-        private final MutableInjector mutableInjector;
-
-        public InjectorRefresher(final MutableInjector mutableInjector) {
-            super(mutableInjector.getInjector());
-            mutableInjector.addObserver(this);
-            this.mutableInjector = mutableInjector;
-        }
-
-        @Override
-        protected Injector refresh() {
-            return mutableInjector.getInjector();
-        }
-
+    @Override
+    public Injector get() {
+        return injector;
     }
 
+    @Override
+    public void refresh() {
+        this.injector = this.makeInjector();
+    }
 
 }

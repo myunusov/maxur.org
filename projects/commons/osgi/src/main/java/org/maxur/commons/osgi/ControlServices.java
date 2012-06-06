@@ -69,7 +69,7 @@ public final class ControlServices  {
         public OSGiServiceFactory(final Object service, Class<?> interfaceClass) {
             this.service = service;
             this.interfaceClass = interfaceClass;
-            refresher = MutableInjectorHolder.freshnessController(pid);
+            refresher = MutableInjectorHolder.refresher(pid);
         }
 
         @Override
