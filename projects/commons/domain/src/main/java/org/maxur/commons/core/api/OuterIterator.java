@@ -21,7 +21,7 @@ public final class OuterIterator<T> {
     }
 
     public static <T> OuterIterator<T> get(final Iterable<T> iterable) {
-        return new OuterIterator<>(iterable.iterator());
+        return get(iterable.iterator());
     }
 
     public T element() {
