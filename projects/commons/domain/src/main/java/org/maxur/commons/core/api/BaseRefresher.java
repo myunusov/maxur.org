@@ -1,6 +1,8 @@
 package org.maxur.commons.core.api;
 
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
 * @author Maxim Yunusov
@@ -12,7 +14,7 @@ public class BaseRefresher<T> implements Refresher<T> {
 
     private final Holder<T> itemHolder;
 
-    transient private T item;
+    private transient T item;
 
     public BaseRefresher(final Holder<T> itemHolder) {
         this.itemHolder = itemHolder;
@@ -32,5 +34,18 @@ public class BaseRefresher<T> implements Refresher<T> {
         }
         return this.item;
     }
+
+    /**
+     * item is transient and must be set by deserialization
+     *
+     * @param in ObjectInputStream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        item = null;
+    }
+
 
 }
