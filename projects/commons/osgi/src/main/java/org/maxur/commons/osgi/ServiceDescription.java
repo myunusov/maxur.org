@@ -56,11 +56,6 @@ public final class ServiceDescription implements Provider<Object> {
         return (null == factory ? instance : factory).hashCode();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
     public void register(final BundleContext bc) {
         final Dictionary<String, Object> properties;
         if (isAnnotated()) {

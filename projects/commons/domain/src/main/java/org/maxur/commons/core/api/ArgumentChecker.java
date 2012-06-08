@@ -26,4 +26,11 @@ public final class ArgumentChecker {
                             object.getClass().getName());
         }
     }
+
+    public static void assertNotNull(final Object field) {
+        if (null == field) {
+            throw new IllegalStateException("Some field is null");
+        }
+    }
+
 }

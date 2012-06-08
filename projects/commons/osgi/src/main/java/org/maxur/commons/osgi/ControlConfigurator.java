@@ -9,13 +9,15 @@ import org.osgi.service.cm.ManagedService;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import static org.maxur.commons.core.api.ArgumentChecker.assertNotNull;
+
 /**
  * @author Maxim Yunusov
  * @version 1.0 22.05.12
  */
 public final class ControlConfigurator implements ManagedService {
 
-    private ServiceRegistration registration;
+    private ServiceRegistration registration = null;
 
     private final Properties properties;
 
@@ -37,6 +39,7 @@ public final class ControlConfigurator implements ManagedService {
     }
 
     public void stop() {
+        assertNotNull(registration);
         this.registration.unregister();
     }
 
