@@ -61,23 +61,23 @@ public class BaseOSGiServiceManagerTest {
 
     @Test
     public void shouldBeReturnProvidedClass() throws Exception {
-        assertSame(Object.class, serviceManager.getProvidedClass());
+        assertSame(Object.class, serviceManager.getServiceDescriptions().getProvidedClass());
     }
 
     @Test
     public void shouldBeAnnotated() throws Exception {
-        assertTrue(annotatedServiceManager.isAnnotated());
+        assertTrue(annotatedServiceManager.getServiceDescriptions().isAnnotated());
     }
 
     @Test
     public void shouldBeNotAnnotated() throws Exception {
-        assertFalse(serviceManager.isAnnotated());
+        assertFalse(serviceManager.getServiceDescriptions().isAnnotated());
     }
 
 
     @Test
     public void shouldBeReturnAnnotation() throws Exception {
-        assertEquals(named("FakeObject"), annotatedServiceManager.getAnnotation());
+        assertEquals(named("FakeObject"), annotatedServiceManager.getServiceDescriptions().getAnnotation());
     }
 
     @Test

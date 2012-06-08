@@ -1,8 +1,5 @@
 package org.maxur.commons.osgi;
 
-import com.google.inject.binder.AnnotatedBindingBuilder;
-import com.google.inject.multibindings.Multibinder;
-import org.maxur.commons.core.api.Observer;
 import org.osgi.framework.BundleContext;
 
 import java.util.Collection;
@@ -18,12 +15,12 @@ public final class ControlProviders {
 
     private final String pid;
 
-    private ControlProviders(final String pid) {
-        this.pid = pid;
+    public static ControlProviders make(final String pid) {
+        return new ControlProviders(pid);
     }
 
-    public static ControlProviders init(final String pid) {
-        return new ControlProviders(pid);
+    private ControlProviders(final String pid) {
+        this.pid = pid;
     }
 
     public void addServiceManager(final BaseOSGiServiceManager manager) {
@@ -32,9 +29,9 @@ public final class ControlProviders {
 
     public ControlProviders start(final BundleContext bc) {
         for (OSGiServiceManager<?> manager : managers) {
-            manager.start(bc, this.pid);
+            manager.start(bc, pid);
+            MutableInjectorHolder.addModule(pid, new ProvidersModule(manager.getServiceDescriptions()));
         }
-        MutableInjectorHolder.addModule(this.pid, new ProvidersModule());
         return this;
     }
 
@@ -42,44 +39,6 @@ public final class ControlProviders {
         for (OSGiServiceManager<?> manager : managers) {
             manager.stop();
         }
-    }
-
-    private final class ProvidersModule extends MutableModule implements Observer {
-
-
-        @Override
-        protected void configure() {
-            for (OSGiServiceManager<?> manager : managers) {
-                final ServiceDescriptions descriptions = manager.getServiceDescriptions();
-                descriptions.addObserver(this);
-                if (manager.isMultiple()) {
-                    final Multibinder binder;
-                    if (manager.isAnnotated()) {
-                        binder = Multibinder.newSetBinder(
-                                binder(), manager.getProvidedClass(), manager.getAnnotation()
-                        );
-                    } else {
-                        binder = Multibinder.newSetBinder(binder(), manager.getProvidedClass());
-                    }
-                    for (ServiceDescription description : descriptions) {
-                        //noinspection unchecked
-                        binder.addBinding().toProvider(description);
-                    }
-                } else {
-                    for (ServiceDescription description : descriptions) {
-                        @SuppressWarnings("unchecked")
-                        final AnnotatedBindingBuilder<Object> bind =
-                                (AnnotatedBindingBuilder<Object>) bind(manager.getProvidedClass());
-                        if (description.isAnnotated()) {
-                            bind.annotatedWith(description.getAnnotation()).toProvider(description);
-                        } else {
-                            bind.toProvider(description);
-                        }
-                    }
-                }
-            }
-        }
-
     }
 
 }
