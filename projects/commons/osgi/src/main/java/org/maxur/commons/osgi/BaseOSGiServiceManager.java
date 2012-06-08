@@ -3,7 +3,6 @@ package org.maxur.commons.osgi;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.lang.annotation.Annotation;
@@ -62,30 +61,7 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
     }
 
     protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
-
-        return new ServiceTracker(bc, createFilter(bc), null) {
-
-            @Override
-            public Object addingService(final ServiceReference reference) {
-                final Object service = context.getService(reference);
-                // TODO must be not null and instance of  providedClass
-                final ServiceDescription description = ServiceDescription.builder()
-                        .reference(reference)
-                        .type(serviceDescriptions.getProvidedClass())
-                        .instance(service)
-                        .build();
-                if (serviceDescriptions.hasSameAnnotation(description)) {
-                    serviceDescriptions.put(reference, description);
-                }
-                return service;
-            }
-
-            @Override
-            public void removedService(final ServiceReference reference, final Object service) {
-                serviceDescriptions.remove(reference);
-                context.ungetService(reference);
-            }
-        };
+        return new BaseServiceTracker(bc, createFilter(bc), serviceDescriptions);
     }
 
     private Filter createFilter(final BundleContext bc) throws InvalidSyntaxException {
