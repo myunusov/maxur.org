@@ -1,6 +1,5 @@
 package org.maxur.commons.osgi;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import org.maxur.commons.core.api.BaseRefresher;
 import org.maxur.commons.core.api.Holder;
@@ -21,7 +20,7 @@ public final class MutableInjectorHolder {
     private MutableInjectorHolder() {
     }
 
-    public static InjectorBuilder get(final String pid) {
+    public static InjectorBuilder builder(final String pid) {
         return injectors.get(pid);
     }
 
@@ -33,12 +32,8 @@ public final class MutableInjectorHolder {
         injectors.remove(pid);
     }
 
-    public static void update(final String pid) {
-        get(pid).update();
-    }
-
-    public static void addModule(final String pid, final AbstractModule module) {
-        get(pid).addModule(module);
+    public static void addModule(final String pid, final MutableModule module) {
+        builder(pid).addModule(module);
     }
 
     public static Refresher<Injector> refresher(final String pid) {
@@ -57,12 +52,12 @@ public final class MutableInjectorHolder {
 
         @Override
         public Injector get() {
-            return MutableInjectorHolder.get(pid).getResult();
+            return MutableInjectorHolder.builder(pid).getResult();
         }
 
         @Override
         public void refresh() {
-            MutableInjectorHolder.get(pid).build();
+            MutableInjectorHolder.builder(pid).build();
 
         }
     }

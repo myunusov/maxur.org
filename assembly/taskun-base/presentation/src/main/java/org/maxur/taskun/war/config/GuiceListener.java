@@ -16,7 +16,7 @@ public class GuiceListener extends GuiceServletContextListener {
 
     @Override
     protected Injector getInjector() {
-        final InjectorBuilder holder = MutableInjectorHolder.get(BaseTaskunActivator.PID);
+        final InjectorBuilder holder = MutableInjectorHolder.builder(BaseTaskunActivator.PID);
         holder.setParentInjector(createInjector());
         return holder.getResult();
     }

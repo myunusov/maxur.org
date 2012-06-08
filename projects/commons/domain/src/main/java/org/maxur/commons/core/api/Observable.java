@@ -25,6 +25,6 @@ public interface Observable {
      * @see Observer
      *
      */
-    void notifyObservers();
+    void update();
 
 }
