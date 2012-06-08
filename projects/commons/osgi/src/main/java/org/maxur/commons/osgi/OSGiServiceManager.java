@@ -3,7 +3,6 @@ package org.maxur.commons.osgi;
 import org.osgi.framework.BundleContext;
 
 import java.lang.annotation.Annotation;
-import java.util.Collection;
 
 /**
  * This interface represent functions to controls OSGi trackers and notify all observers on any changes.
@@ -13,7 +12,7 @@ import java.util.Collection;
  */
 public interface OSGiServiceManager<T> {
 
-    Collection<ServiceDescription> getServiceDescriptions();
+    ServiceDescriptions getServiceDescriptions();
 
     Class<T> getProvidedClass();
 

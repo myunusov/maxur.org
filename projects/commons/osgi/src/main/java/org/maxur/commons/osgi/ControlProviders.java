@@ -1,8 +1,8 @@
 package org.maxur.commons.osgi;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
+import org.maxur.commons.core.api.Observer;
 import org.osgi.framework.BundleContext;
 
 import java.util.Collection;
@@ -44,11 +44,14 @@ public final class ControlProviders {
         }
     }
 
-    private final class ProvidersModule extends AbstractModule {
+    private final class ProvidersModule extends MutableModule implements Observer {
+
+
         @Override
         protected void configure() {
             for (OSGiServiceManager<?> manager : managers) {
-                final Collection<ServiceDescription> descriptions = manager.getServiceDescriptions();
+                final ServiceDescriptions descriptions = manager.getServiceDescriptions();
+                descriptions.addObserver(this);
                 if (manager.isMultiple()) {
                     final Multibinder binder;
                     if (manager.isAnnotated()) {
@@ -76,5 +79,7 @@ public final class ControlProviders {
                 }
             }
         }
+
     }
+
 }
