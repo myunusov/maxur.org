@@ -1,6 +1,5 @@
 package org.maxur.commons.osgi;
 
-import com.google.inject.AbstractModule;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
@@ -11,7 +10,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import static com.google.inject.name.Names.named;
 
@@ -25,11 +26,14 @@ public final class ControlConfigurator implements ManagedService {
 
     private final Logger logger = LoggerFactory.getLogger(ControlConfigurator.class);
 
-    private final String pid;
-
     private final Dictionary<String,String> serviceProperties;
 
     private ServiceRegistration registration;
+
+    private final String pid;
+
+    private final ConfiguratorModule configuratorModule = new ConfiguratorModule();
+
 
     public static ControlConfigurator init(final String pid) {
         return new ControlConfigurator(pid);
@@ -47,6 +51,7 @@ public final class ControlConfigurator implements ManagedService {
                 this,
                 this.serviceProperties
         );
+        MutableInjectorHolder.addModule(this.pid, this.configuratorModule);
         return this;
     }
 
@@ -56,7 +61,7 @@ public final class ControlConfigurator implements ManagedService {
 
     public void updated(final Dictionary properties) throws ConfigurationException {
         log(properties == null ? NULL_PROPERTIES : properties);
-        updateService(properties == null ? NULL_PROPERTIES : properties);
+        configuratorModule.setProperties(properties);
     }
 
     private void log(Dictionary newProperties) {
@@ -69,29 +74,34 @@ public final class ControlConfigurator implements ManagedService {
         }
     }
 
-    private void updateService(final Dictionary properties) {
-        MutableInjectorHolder.addModule(pid, new ConfiguratorModule(properties));
-    }
 
-    private static final class ConfiguratorModule extends AbstractModule {
+    private static final class ConfiguratorModule extends MutableModule {
 
-        private final Dictionary properties;
-
-        public ConfiguratorModule(final Dictionary properties) {
-            this.properties = properties;
-        }
+        private Map<String, String> properties = new HashMap<>();
 
         @Override
         protected void configure() {
-            final Enumeration keys = properties.keys();
-            while (keys.hasMoreElements()) {
-                final String key = keys.nextElement().toString();
-                if (Constants.SERVICE_PID.equals(key)) {
-                    continue;
+            for (Map.Entry<String, String> entry : properties.entrySet()) {
+                if (!Constants.SERVICE_PID.equals(entry.getKey())) {
+                    bindConstant().annotatedWith(named(entry.getKey())).to(entry.getValue());
                 }
-                final String value = properties.get(key).toString();
-                bindConstant().annotatedWith(named(key)).to(value);
             }
+        }
+
+        public void setProperties(Dictionary properties) {
+            this.properties.clear();
+            if  (properties != null) {
+                final Enumeration keys = properties.keys();
+                while (keys.hasMoreElements()) {
+                    final String key = keys.nextElement().toString();
+                    if (Constants.SERVICE_PID.equals(key)) {
+                        continue;
+                    }
+                    final String value = properties.get(key).toString();
+                    this.properties.put(key, value);
+                }
+            }
+            update();
         }
     }
 }

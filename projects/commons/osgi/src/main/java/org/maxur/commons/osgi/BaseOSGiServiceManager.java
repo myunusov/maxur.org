@@ -7,9 +7,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.lang.annotation.Annotation;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Maxim Yunusov
@@ -17,8 +14,6 @@ import java.util.Map;
  * @since <pre>5/21/12</pre>
  */
 public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
-
-    private final Map<ServiceReference, ServiceDescription> serviceDescriptions = new HashMap<>();
 
     private final Class<T> providedClass;
 
@@ -30,9 +25,8 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
 
     private String pid;
 
-    protected void notifyObserver() {
-        MutableInjectorHolder.update(pid);
-    }
+    private final ServiceDescriptions serviceDescriptions = new ServiceDescriptions();
+
 
     public boolean isMultiple() {
         return isMultiple;
@@ -49,9 +43,8 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
     }
 
     @Override
-    public Collection<ServiceDescription> getServiceDescriptions() {
-        // TODO must be check for unique annotation in single (non multiple) case
-        return serviceDescriptions.values();
+    public ServiceDescriptions getServiceDescriptions() {
+        return serviceDescriptions;
     }
 
     @Override
@@ -90,6 +83,7 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
 
         return new ServiceTracker(bc, createFilter(bc), null) {
 
+            @Override
             public Object addingService(final ServiceReference reference) {
                 final Object service = context.getService(reference);
                 // TODO must be not null and instance of  providedClass
@@ -102,17 +96,14 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
                         !description.isAnnotated() :
                         annotation.equals(description.getAnnotation())) {
                     serviceDescriptions.put(reference, description);
-                    notifyObserver();
                 }
                 return service;
             }
 
-            @SuppressWarnings("SuspiciousMethodCalls")
+            @Override
             public void removedService(final ServiceReference reference, final Object service) {
-                //noinspection unchecked
                 serviceDescriptions.remove(reference);
                 context.ungetService(reference);
-                notifyObserver();
             }
         };
     }
