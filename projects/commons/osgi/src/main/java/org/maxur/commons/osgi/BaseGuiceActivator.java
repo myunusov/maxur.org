@@ -33,19 +33,28 @@ public abstract class BaseGuiceActivator implements BundleActivator {
     public void start(final BundleContext bc) {
         logger.debug("STARTING {}", pid);
         MutableInjectorHolder.start(pid);
-        controlConfigurator = ControlConfigurator
-                .init(pid)
-                .start(bc);
+
+        if (controlServices != null) {
+            controlServices.stop();
+        }
 
         if (controlProviders != null) {
             controlProviders.stop();
         }
 
-        controlServices = ControlServices.init(pid);
-        controlProviders = ControlProviders.init(pid);
+        if (controlConfigurator != null) {
+            controlConfigurator.stop();
+        }
+
+
+        controlServices = ControlServices.make(pid);
+        controlProviders = ControlProviders.make(pid);
+        controlConfigurator = ControlConfigurator.make(pid);
         config();
+        controlConfigurator.start(bc);
         controlProviders.start(bc);
         controlServices.start(bc);
+
     }
 
     /**
@@ -113,7 +122,6 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         private Annotation annotation;
 
         public Exporter(final Object service, final ControlServices controlServices) {
-            //To change body of created methods use File | Settings | File Templates.
             this.service = service;
             this.controlServices = controlServices;
         }

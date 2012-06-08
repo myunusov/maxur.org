@@ -6,8 +6,8 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import org.maxur.commons.core.api.Observer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Maxim Yunusov
@@ -19,12 +19,13 @@ public class InjectorBuilder implements Observer {
 
     private Injector parentInjector;
 
-    private final Map<Class<? extends AbstractModule>, MutableModule> modules = new HashMap<>();
+    private final Set<MutableModule> modules;
 
     /**
      * Must be called from MutableInjectorHolder only.
      */
     InjectorBuilder() {
+        modules = new HashSet<>();
     }
 
     public void setParentInjector(final Injector injector) {
@@ -33,7 +34,7 @@ public class InjectorBuilder implements Observer {
     }
 
     public void addModule(final MutableModule module) {
-        this.modules.put(module.getClass(), module);
+        this.modules.add(module);
         module.addObserver(this);
     }
 
@@ -70,7 +71,7 @@ public class InjectorBuilder implements Observer {
         return new AbstractModule() {
             @Override
             protected void configure() {
-                for (AbstractModule module : modules.values()) {
+                for (AbstractModule module : modules) {
                     install(module);
                 }
             }

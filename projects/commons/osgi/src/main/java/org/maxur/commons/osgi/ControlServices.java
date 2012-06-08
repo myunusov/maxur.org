@@ -27,7 +27,7 @@ public final class ControlServices  {
 
     private final Collection<ServiceDescription> services = new HashSet<>();
 
-    public static ControlServices init(final String pid) {
+    public static ControlServices make(final String pid) {
         return new ControlServices(pid);
     }
 
@@ -51,14 +51,14 @@ public final class ControlServices  {
         assertIsInterface(interfaceClass);
         assertIsInterfaceOf(interfaceClass, service);
         services.add(ServiceDescription.builder()
-                .factory(new OSGiServiceFactory(service, interfaceClass))
+                .factory(new OSGiServiceFactory(service, interfaceClass, this.pid))
                 .type(interfaceClass)
                 .annotation(annotation)
                 .build()
         );
     }
 
-    class OSGiServiceFactory implements ServiceFactory {
+    static class OSGiServiceFactory implements ServiceFactory {
 
         private final Object service;
 
@@ -66,7 +66,7 @@ public final class ControlServices  {
 
         private final Refresher<Injector> refresher;
 
-        public OSGiServiceFactory(final Object service, Class<?> interfaceClass) {
+        public OSGiServiceFactory(final Object service, final Class<?> interfaceClass, final String pid) {
             this.service = service;
             this.interfaceClass = interfaceClass;
             refresher = MutableInjectorHolder.refresher(pid);

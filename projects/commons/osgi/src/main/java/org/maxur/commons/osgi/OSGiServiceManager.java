@@ -2,8 +2,6 @@ package org.maxur.commons.osgi;
 
 import org.osgi.framework.BundleContext;
 
-import java.lang.annotation.Annotation;
-
 /**
  * This interface represent functions to controls OSGi trackers and notify all observers on any changes.
  *
@@ -11,10 +9,6 @@ import java.lang.annotation.Annotation;
  * @version 1.0 24.05.12
  */
 public interface OSGiServiceManager<T> {
-
-    ServiceDescriptions getServiceDescriptions();
-
-    Class<T> getProvidedClass();
 
     /**
      * Start OSGi tracker.
@@ -34,9 +28,10 @@ public interface OSGiServiceManager<T> {
      */
     void reset(BundleContext bc);
 
-    boolean isMultiple();
+    /**
+     * Returns Service Descriptions instance.
+     * @return Service Descriptions instance.
+     */
+    ServiceDescriptions getServiceDescriptions();
 
-    boolean isAnnotated();
-
-    Annotation getAnnotation();
 }

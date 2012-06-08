@@ -15,41 +15,23 @@ import java.lang.annotation.Annotation;
  */
 public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
 
-    private final Class<T> providedClass;
-
-    private final boolean isMultiple;
-
-    private final Annotation annotation;
-
     private ServiceTracker tracker;
 
     private String pid;
 
-    private final ServiceDescriptions serviceDescriptions = new ServiceDescriptions();
-
-
-    public boolean isMultiple() {
-        return isMultiple;
-    }
+    private final ServiceDescriptions serviceDescriptions;
 
     public BaseOSGiServiceManager(
             final Class<T> providedClass,
             final boolean canBeMultiple,
             final Annotation annotation
     ) {
-        this.providedClass = providedClass;
-        this.isMultiple = canBeMultiple;
-        this.annotation = annotation;
+        serviceDescriptions = new ServiceDescriptions(providedClass, canBeMultiple, annotation);
     }
 
     @Override
     public ServiceDescriptions getServiceDescriptions() {
         return serviceDescriptions;
-    }
-
-    @Override
-    public Class<T> getProvidedClass() {
-        return providedClass;
     }
 
     @Override
@@ -89,12 +71,10 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
                 // TODO must be not null and instance of  providedClass
                 final ServiceDescription description = ServiceDescription.builder()
                         .reference(reference)
-                        .type(providedClass)
+                        .type(serviceDescriptions.getProvidedClass())
                         .instance(service)
                         .build();
-                if (null == annotation ?
-                        !description.isAnnotated() :
-                        annotation.equals(description.getAnnotation())) {
+                if (serviceDescriptions.hasSameAnnotation(description)) {
                     serviceDescriptions.put(reference, description);
                 }
                 return service;
@@ -109,16 +89,7 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
     }
 
     private Filter createFilter(final BundleContext bc) throws InvalidSyntaxException {
-        return bc.createFilter(String.format("(objectClass=%s)", providedClass.getName()));
+        return bc.createFilter(String.format("(objectClass=%s)", serviceDescriptions.getProvidedClass().getName()));
     }
 
-    @Override
-    public boolean isAnnotated() {
-        return null != annotation;
-    }
-
-    @Override
-    public Annotation getAnnotation() {
-        return annotation;
-    }
 }
