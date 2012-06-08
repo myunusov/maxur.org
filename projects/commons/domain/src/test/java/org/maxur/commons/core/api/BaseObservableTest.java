@@ -3,8 +3,6 @@ package org.maxur.commons.core.api;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.maxur.commons.core.api.BaseObservable;
-import org.maxur.commons.core.api.Observer;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -31,7 +29,7 @@ public class BaseObservableTest {
     @Test
     public void shouldBeAddNewObserver() throws Exception {
         observable.addObserver(observer);
-        observable.notifyObservers();
+        observable.update();
         verify(observer).update();
     }
 
@@ -39,7 +37,7 @@ public class BaseObservableTest {
     public void shouldBeRemovedObserver() throws Exception {
         observable.addObserver(observer);
         observable.removeObserver(observer);
-        observable.notifyObservers();
+        observable.update();
         verifyNoMoreInteractions(observer);
     }
 

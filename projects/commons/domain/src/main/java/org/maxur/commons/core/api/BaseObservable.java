@@ -28,12 +28,12 @@ public class BaseObservable implements Observable {
     }
 
     /**
-     * @see  Observable#notifyObservers().
+     * @see  Observable#update().
      *
      * Template method (with hooks).
      */
     @Override
-    public final void notifyObservers() {
+    public final void update() {
         beforeUpdate();
         for (Observer observer : observers) {
             observer.update();

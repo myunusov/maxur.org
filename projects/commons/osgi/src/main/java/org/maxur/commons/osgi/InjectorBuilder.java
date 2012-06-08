@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import org.maxur.commons.core.api.Observer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,13 +13,13 @@ import java.util.Map;
  * @author Maxim Yunusov
  * @version 1.0 26.05.12
  */
-public class InjectorBuilder {
+public class InjectorBuilder implements Observer {
 
     private Injector injector;
 
     private Injector parentInjector;
 
-    private final Map<Class<? extends AbstractModule>, AbstractModule> modules = new HashMap<>();
+    private final Map<Class<? extends AbstractModule>, MutableModule> modules = new HashMap<>();
 
     /**
      * Must be called from MutableInjectorHolder only.
@@ -31,11 +32,14 @@ public class InjectorBuilder {
         update();
     }
 
-    public void addModule(final AbstractModule module) {
+    public void addModule(final MutableModule module) {
         this.modules.put(module.getClass(), module);
-        update();
+        module.addObserver(this);
     }
 
+    /**
+     * Injector must be rebuild on update module.
+     */
     public void update() {
         this.injector = null;
     }
@@ -51,7 +55,7 @@ public class InjectorBuilder {
      */
     public Injector getResult() {
         if (null == this.injector) {
-            this.injector = this.makeInjector();
+            build();
         }
         return injector;
     }
