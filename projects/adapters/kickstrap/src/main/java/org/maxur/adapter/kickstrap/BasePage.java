@@ -42,7 +42,7 @@ public abstract class BasePage extends WebPage {
         return styleBehavior != null ? styleBehavior.asBehavior() : NullBehavior.get();
     }
 
-    protected Model<String> faviconHref() {
+    private Model<String> faviconHref() {
         return new Model<>(FAVICON_ICO);
     }
 

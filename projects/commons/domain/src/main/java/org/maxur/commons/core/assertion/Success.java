@@ -5,7 +5,7 @@ package org.maxur.commons.core.assertion;
  * @version 1.0
  * @since <pre>6/9/12</pre>
  */
-class Success implements Result {
+final class Success implements Result {
 
     private Success() {
     }
