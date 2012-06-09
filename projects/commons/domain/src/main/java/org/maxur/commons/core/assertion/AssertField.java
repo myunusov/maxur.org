@@ -4,18 +4,15 @@ package org.maxur.commons.core.assertion;
  * @author Maxim Yunusov
  * @version 1.0 09.06.12
  */
-class AssertField implements AssertValue {
+class AssertField extends AssertInstance {
 
-    private final Object field;
-
-    public AssertField(final Object field) {
-        this.field = field;
+    public AssertField(final Object instance) {
+        super(instance);
     }
 
     @Override
-    public void notNull() {
-        if (null == field) {
-            throw new IllegalStateException("Some field is null");
-        }
+    protected Fail fail(final String message) {
+        throw new IllegalStateException(message);
     }
+
 }

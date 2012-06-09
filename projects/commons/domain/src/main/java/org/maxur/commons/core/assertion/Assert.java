@@ -20,4 +20,12 @@ public final class Assert {
         return new AssertField(field);
     }
 
+    public static AssertValue when(final Object field) {
+        return new Checker(field);
+    }
+
+    public static RuntimeException error(final String message) {
+        return new IllegalStateException(message);
+    }
+
 }
