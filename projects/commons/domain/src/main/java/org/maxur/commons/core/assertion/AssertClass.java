@@ -6,7 +6,7 @@ package org.maxur.commons.core.assertion;
  */
 public interface AssertClass {
 
-    void isInterface();
+    Result isInterface();
 
-    void isInterfaceOf(Object object);
+    Result isInterfaceOf(Object object);
 }

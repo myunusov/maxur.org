@@ -9,7 +9,8 @@ import org.osgi.service.cm.ManagedService;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import static org.maxur.commons.core.assertion.Assert.field;
+import static org.maxur.commons.core.assertion.Assert.error;
+import static org.maxur.commons.core.assertion.Assert.when;
 
 /**
  * @author Maxim Yunusov
@@ -39,7 +40,7 @@ public final class ControlConfigurator implements ManagedService {
     }
 
     public void stop() {
-        field(registration).notNull();
+        when(registration).notNull().then(error("ControlConfigurator 'start' must be called before 'stop'"));
         this.registration.unregister();
     }
 

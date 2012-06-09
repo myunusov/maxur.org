@@ -2,7 +2,6 @@ package org.maxur.commons.osgi;
 
 import com.google.inject.Injector;
 import org.maxur.commons.core.api.Refresher;
-import org.maxur.commons.core.assertion.Assert;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceFactory;
@@ -14,6 +13,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Collection;
 import java.util.HashSet;
+
+import static org.maxur.commons.core.assertion.Assert.argument;
 
 /**
  * @author Maxim Yunusov
@@ -46,7 +47,7 @@ public final class ControlServices  {
     }
 
     public void bind(final Class<?> interfaceClass, final Object service, final Annotation annotation) {
-        Assert.argument(interfaceClass).isInterfaceOf(service);
+        argument(interfaceClass).isInterfaceOf(service);
         services.add(ServiceDescription.builder()
                 .factory(new OSGiServiceFactory(service, interfaceClass, this.pid))
                 .type(interfaceClass)

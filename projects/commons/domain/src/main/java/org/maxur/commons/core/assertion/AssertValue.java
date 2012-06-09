@@ -6,5 +6,7 @@ package org.maxur.commons.core.assertion;
  */
 public interface AssertValue {
 
-    void notNull();
+    Result notNull();
+
+    Result isClass();
 }
