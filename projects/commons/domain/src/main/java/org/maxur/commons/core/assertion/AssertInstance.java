@@ -7,7 +7,7 @@ package org.maxur.commons.core.assertion;
  */
 abstract class AssertInstance implements AssertValue, AssertClass {
 
-    protected final Object instance;
+    private final Object instance;
 
     public AssertInstance(final Object instance) {
         this.instance = instance;
