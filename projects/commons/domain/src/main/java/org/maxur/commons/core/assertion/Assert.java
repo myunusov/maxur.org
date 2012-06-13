@@ -20,7 +20,7 @@ public final class Assert {
         return new AssertField(field);
     }
 
-    public static AssertValue when(final Object field) {
+    public static AssertValue check(final Object field) {
         return new Checker(field);
     }
 

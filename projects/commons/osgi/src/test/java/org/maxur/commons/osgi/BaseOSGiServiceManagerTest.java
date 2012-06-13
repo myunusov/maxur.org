@@ -3,6 +3,7 @@ package org.maxur.commons.osgi;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.maxur.commons.osgi.providers.BaseServiceManager;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.osgi.framework.BundleContext;
@@ -31,26 +32,26 @@ public class BaseOSGiServiceManagerTest {
     @Mock
     private BundleContext bc;
 
-    private BaseOSGiServiceManager<Object> serviceManager;
-    private BaseOSGiServiceManager<Object> annotatedServiceManager;
-    private BaseOSGiServiceManager<Object> invalidServiceManager;
+    private BaseServiceManager<Object> serviceManager;
+    private BaseServiceManager<Object> annotatedServiceManager;
+    private BaseServiceManager<Object> invalidServiceManager;
 
 
     @Before
     public void setUp() throws Exception {
-        serviceManager = new BaseOSGiServiceManager<Object>(Object.class, false, null) {
+        serviceManager = new BaseServiceManager<Object>(Object.class, false, null) {
             @Override
             protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
                 return tracker;
             }
         };
-        annotatedServiceManager = new BaseOSGiServiceManager<Object>(Object.class, false, named("FakeObject")) {
+        annotatedServiceManager = new BaseServiceManager<Object>(Object.class, false, named("FakeObject")) {
             @Override
             protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
                 return tracker;
             }
         };
-        invalidServiceManager = new BaseOSGiServiceManager<Object>(Object.class, false, null) {
+        invalidServiceManager = new BaseServiceManager<Object>(Object.class, false, null) {
             @Override
             protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
                 throw new InvalidSyntaxException("Error", "in invalid class");
@@ -61,23 +62,23 @@ public class BaseOSGiServiceManagerTest {
 
     @Test
     public void shouldBeReturnProvidedClass() throws Exception {
-        assertSame(Object.class, serviceManager.getServiceDescriptions().getProvidedClass());
+        assertSame(Object.class, serviceManager.getProvidersGroup().getProvidedClass());
     }
 
     @Test
     public void shouldBeAnnotated() throws Exception {
-        assertTrue(annotatedServiceManager.getServiceDescriptions().isAnnotated());
+        assertTrue(annotatedServiceManager.getProvidersGroup().isAnnotated());
     }
 
     @Test
     public void shouldBeNotAnnotated() throws Exception {
-        assertFalse(serviceManager.getServiceDescriptions().isAnnotated());
+        assertFalse(serviceManager.getProvidersGroup().isAnnotated());
     }
 
 
     @Test
     public void shouldBeReturnAnnotation() throws Exception {
-        assertEquals(named("FakeObject"), annotatedServiceManager.getServiceDescriptions().getAnnotation());
+        assertEquals(named("FakeObject"), annotatedServiceManager.getProvidersGroup().getAnnotation());
     }
 
     @Test

@@ -1,5 +1,6 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.providers;
 
+import org.maxur.commons.osgi.base.MutableInjectorHolder;
 import org.osgi.framework.BundleContext;
 
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.HashSet;
  */
 public final class ControlProviders {
 
-    private final Collection<OSGiServiceManager<?>> managers = new HashSet<>();
+    private final Collection<ServiceManager<?>> managers = new HashSet<>();
 
     private final String pid;
 
@@ -23,20 +24,20 @@ public final class ControlProviders {
         this.pid = pid;
     }
 
-    public void addServiceManager(final BaseOSGiServiceManager manager) {
+    public void addServiceManager(final BaseServiceManager manager) {
         managers.add(manager);
     }
 
     public ControlProviders start(final BundleContext bc) {
-        for (OSGiServiceManager<?> manager : managers) {
+        for (ServiceManager<?> manager : managers) {
             manager.start(bc, pid);
-            MutableInjectorHolder.addModule(pid, new ProvidersModule(manager.getServiceDescriptions()));
+            MutableInjectorHolder.addModule(pid, new ProvidersModule(manager.getProvidersGroup()));
         }
         return this;
     }
 
     public void stop() {
-        for (OSGiServiceManager<?> manager : managers) {
+        for (ServiceManager<?> manager : managers) {
             manager.stop();
         }
     }

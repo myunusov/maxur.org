@@ -1,10 +1,11 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.base;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import org.maxur.commons.core.api.Observer;
+import org.maxur.commons.osgi.base.MutableModule;
 
 import java.util.HashSet;
 import java.util.Set;

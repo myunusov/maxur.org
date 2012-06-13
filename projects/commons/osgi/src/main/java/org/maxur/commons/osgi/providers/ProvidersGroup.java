@@ -1,4 +1,4 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.providers;
 
 import org.maxur.commons.core.api.BaseObservable;
 import org.osgi.framework.ServiceReference;
@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public final class ServiceDescriptions extends BaseObservable implements Iterable<ServiceDescription> {
+public final class ProvidersGroup extends BaseObservable implements Iterable<ProviderDescription> {
 
-    private final Map<ServiceReference, ServiceDescription> serviceDescriptions = new HashMap<>();
+    private final Map<ServiceReference, ProviderDescription> descriptions = new HashMap<>();
 
     private final Class providedClass;
 
@@ -18,7 +18,7 @@ public final class ServiceDescriptions extends BaseObservable implements Iterabl
 
     private final Annotation annotation;
 
-    public ServiceDescriptions(
+    public ProvidersGroup(
             final Class providedClass,
             final boolean canBeMultiple,
             final Annotation annotation
@@ -29,24 +29,24 @@ public final class ServiceDescriptions extends BaseObservable implements Iterabl
     }
 
     public void clear() {
-        serviceDescriptions.clear();
+        descriptions.clear();
         update();
     }
 
     public void remove(final ServiceReference reference) {
-        serviceDescriptions.remove(reference);
+        descriptions.remove(reference);
         update();
     }
 
-    public ServiceDescription put(final ServiceReference reference, final ServiceDescription description) {
-        final ServiceDescription serviceDescription = serviceDescriptions.put(reference, description);
+    public ProviderDescription put(final ServiceReference reference, final ProviderDescription description) {
+        final ProviderDescription serviceDescription = descriptions.put(reference, description);
         update();
         return serviceDescription;
     }
 
     @Override
-    public Iterator<ServiceDescription> iterator() {
-        return serviceDescriptions.values().iterator();
+    public Iterator<ProviderDescription> iterator() {
+        return descriptions.values().iterator();
     }
 
     public boolean isMultiple() {
@@ -65,7 +65,7 @@ public final class ServiceDescriptions extends BaseObservable implements Iterabl
         return annotation;
     }
 
-    boolean hasSameAnnotation(final ServiceDescription description) {
+    boolean hasSameAnnotation(final ProviderDescription description) {
         return isAnnotated() ? annotation.equals(description.getAnnotation()) : !description.isAnnotated();
     }
 }

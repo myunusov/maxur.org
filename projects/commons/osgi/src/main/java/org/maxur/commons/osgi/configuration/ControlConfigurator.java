@@ -1,5 +1,7 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.configuration;
 
+import org.maxur.commons.core.utils.DictionaryUtils;
+import org.maxur.commons.osgi.base.MutableInjectorHolder;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
@@ -7,10 +9,9 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import static org.maxur.commons.core.assertion.Assert.error;
-import static org.maxur.commons.core.assertion.Assert.when;
+import static org.maxur.commons.core.assertion.Assert.check;
 
 /**
  * @author Maxim Yunusov
@@ -34,20 +35,18 @@ public final class ControlConfigurator implements ManagedService {
     }
 
     public ControlConfigurator start(final BundleContext bc) {
-        this.registration = bc.registerService(ManagedService.class.getName(), this, makeServiceProperties(pid));
+        this.registration = bc.registerService(
+                ManagedService.class.getName(),
+                this,
+                DictionaryUtils.singleton(Constants.SERVICE_PID, pid)
+        );
         MutableInjectorHolder.addModule(pid, new ConfiguratorModule(this.properties));
         return this;
     }
 
     public void stop() {
-        when(registration).notNull().then(error("ControlConfigurator 'start' must be called before 'stop'"));
+        check(registration).notNull().ifNot(error("ControlConfigurator: 'start' must be called before 'stop'"));
         this.registration.unregister();
-    }
-
-    private Dictionary<String, String> makeServiceProperties(final String pid) {
-        final Dictionary<String,String> serviceProperties = new Hashtable<>();
-        serviceProperties.put(Constants.SERVICE_PID, pid);
-        return serviceProperties;
     }
 
     @Override
