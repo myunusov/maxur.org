@@ -22,6 +22,18 @@
         <bundle.namespace>org.maxur.commons.core</bundle.namespace>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <properties>
+                <sonar.pitest.mode>active</sonar.pitest.mode>
+                <sonar.pit.target.classes>org.maxur.commons.core.*</sonar.pit.target.classes>
+                <sonar.pit.target.tests>org.maxur.commons.core.*</sonar.pit.target.tests>
+            </properties>
+        </profile>
+    </profiles>
+
+
     <build>
         <plugins>
             <plugin>
@@ -38,6 +50,9 @@
                         <value>-XX:-UseSplitVerifier</value>
                         <jvmArg>-ea</jvmArg>
                     </jvmArgs>
+                    <outputFormats>
+                        <outputFormat>HTML,XML</outputFormat>
+                    </outputFormats>
                 </configuration>
             </plugin>
         </plugins>

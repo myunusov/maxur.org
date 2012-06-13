@@ -13,7 +13,7 @@ import java.util.Dictionary;
  * @author Maxim Yunusov
  * @version 1.0 13.06.12
  */
-public class ServiceDescription extends AbstractServiceDescription {
+public final class ServiceDescription extends AbstractServiceDescription {
 
     private Class<?> type;
 
@@ -48,7 +48,7 @@ public class ServiceDescription extends AbstractServiceDescription {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof AbstractServiceDescription) {
+        if (obj instanceof ServiceDescription) {
             final ServiceDescription description = (ServiceDescription) obj;
             return factory.equals(description.factory);
         } else {

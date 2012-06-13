@@ -10,7 +10,7 @@ import java.lang.annotation.Annotation;
  * @author Maxim Yunusov
  * @version 1.0 13.06.12
  */
-public class ProviderDescription extends AbstractServiceDescription implements Provider<Object> {
+public final class ProviderDescription extends AbstractServiceDescription implements Provider<Object> {
 
     private Object instance;
 

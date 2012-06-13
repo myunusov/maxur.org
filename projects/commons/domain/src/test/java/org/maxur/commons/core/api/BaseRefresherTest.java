@@ -6,6 +6,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -71,5 +77,56 @@ public class BaseRefresherTest {
         refresher.get();
     }
 
+    @Test
+    public void testSerialization() throws Exception {
+        //Serialization
+        final FakeHolder fakeHolder = new FakeHolder();
+        BaseRefresher<Refreshable> object1 = new BaseRefresher<>(fakeHolder);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(bos);
+        out.writeObject(object1);
 
+        //De-serialization
+        ByteArrayInputStream bis = new   ByteArrayInputStream(bos.toByteArray());
+        ObjectInputStream in = new ObjectInputStream(bis);
+        BaseRefresher<Refreshable> object2 = (BaseRefresher<Refreshable>) in.readObject();
+
+
+        assertEquals(true ,object2.isStale());
+        assertEquals(fakeHolder.get() ,object2.get());
+
+
+    }
+
+
+    private static class FakeHolder implements Holder<Refreshable> {
+
+        private static final long serialVersionUID = -4352380108037946658L;
+
+        private FakeRefreshable refreshable = new FakeRefreshable();
+
+        @Override
+        public Refreshable get() {
+            return refreshable;
+        }
+
+        @Override
+        public void refresh() {
+        }
+
+        private static class FakeRefreshable implements Refreshable, Serializable {
+
+            private static final long serialVersionUID = 6027252065711366268L;
+
+            @Override
+            public Refreshable refresh() {
+                return this;
+            }
+
+            @Override
+            public boolean equals(Object obj) {
+                return (obj instanceof FakeRefreshable) || super.equals(obj);
+            }
+        }
+    }
 }

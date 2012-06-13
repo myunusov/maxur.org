@@ -34,23 +34,9 @@ public class BaseObservable implements Observable {
      */
     @Override
     public final void update() {
-        beforeUpdate();
         for (Observer observer : observers) {
             observer.update();
         }
-        afterUpdate();
-    }
-
-    /**
-     * Hook on after Update.
-     */
-    protected void afterUpdate() {
-    }
-
-    /**
-     * Hook on before Update.
-     */
-    protected void beforeUpdate() {
     }
 
 }
