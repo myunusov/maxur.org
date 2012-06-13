@@ -6,7 +6,7 @@ import org.maxur.commons.core.api.SerializableList;
 
 import static org.maxur.commons.core.assertion.Assert.argument;
 import static org.maxur.commons.core.assertion.Assert.field;
-import static org.maxur.commons.core.assertion.Assert.when;
+import static org.maxur.commons.core.assertion.Assert.check;
 
 /**
  * @author Maxim Yunusov
@@ -46,12 +46,12 @@ public class AssertTest {
 
     @Test(expected = IllegalStateException.class)
     public void testCheckNotNullWithNull() throws Exception {
-        when(null).notNull().then(new IllegalStateException());
+        check(null).notNull().ifNot(new IllegalStateException());
     }
 
     @Test
     public void testCheckNotNullWithNotNull() throws Exception {
-        when(new Object()).notNull().then(new IllegalStateException());
+        check(new Object()).notNull().ifNot(new IllegalStateException());
     }
 
 

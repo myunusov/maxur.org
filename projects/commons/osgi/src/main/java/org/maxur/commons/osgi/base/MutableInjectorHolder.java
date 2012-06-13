@@ -1,4 +1,4 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.base;
 
 import com.google.inject.Injector;
 import org.maxur.commons.core.api.BaseRefresher;

@@ -1,4 +1,4 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.providers;
 
 import org.osgi.framework.BundleContext;
 
@@ -8,7 +8,7 @@ import org.osgi.framework.BundleContext;
  * @author Maxim Yunusov
  * @version 1.0 24.05.12
  */
-public interface OSGiServiceManager<T> {
+public interface ServiceManager<T> {
 
     /**
      * Start OSGi tracker.
@@ -32,6 +32,6 @@ public interface OSGiServiceManager<T> {
      * Returns Service Descriptions instance.
      * @return Service Descriptions instance.
      */
-    ServiceDescriptions getServiceDescriptions();
+    ProvidersGroup getProvidersGroup();
 
 }

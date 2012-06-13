@@ -1,4 +1,4 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.base;
 
 import com.google.inject.AbstractModule;
 import org.maxur.commons.core.api.BaseObservable;

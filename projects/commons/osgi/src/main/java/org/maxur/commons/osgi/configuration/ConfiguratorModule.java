@@ -1,6 +1,7 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.configuration;
 
 import org.maxur.commons.core.api.Observer;
+import org.maxur.commons.osgi.base.MutableModule;
 import org.osgi.framework.Constants;
 
 import java.util.Map;

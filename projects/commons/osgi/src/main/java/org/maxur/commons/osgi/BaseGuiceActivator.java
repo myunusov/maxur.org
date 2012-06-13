@@ -1,5 +1,10 @@
 package org.maxur.commons.osgi;
 
+import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.configuration.ControlConfigurator;
+import org.maxur.commons.osgi.providers.BaseServiceManager;
+import org.maxur.commons.osgi.providers.ControlProviders;
+import org.maxur.commons.osgi.services.ControlServices;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
@@ -32,28 +37,11 @@ public abstract class BaseGuiceActivator implements BundleActivator {
      */
     public void start(final BundleContext bc) {
         logger.debug("STARTING {}", pid);
+        doStop();
         MutableInjectorHolder.start(pid);
-
-        if (controlServices != null) {
-            controlServices.stop();
-        }
-
-        if (controlProviders != null) {
-            controlProviders.stop();
-        }
-
-        if (controlConfigurator != null) {
-            controlConfigurator.stop();
-        }
-
-
-        controlServices = ControlServices.make(pid);
-        controlProviders = ControlProviders.make(pid);
-        controlConfigurator = ControlConfigurator.make(pid);
+        doInit();
         config();
-        controlConfigurator.start(bc);
-        controlProviders.start(bc);
-        controlServices.start(bc);
+        doStart(bc);
 
     }
 
@@ -61,11 +49,34 @@ public abstract class BaseGuiceActivator implements BundleActivator {
      * Called whenever the OSGi framework stops our bundle
      */
     public void stop(final BundleContext bc) {
-        controlServices.stop();
-        controlConfigurator.stop();
-        controlProviders.stop();
+        doStop();
         MutableInjectorHolder.stop(pid);
         logger.debug("STOPPING {}", pid);
+    }
+
+
+    private void doStart(BundleContext bc) {
+        controlConfigurator.start(bc);
+        controlProviders.start(bc);
+        controlServices.start(bc);
+    }
+
+    private void doInit() {
+        controlServices = ControlServices.make(pid);
+        controlProviders = ControlProviders.make(pid);
+        controlConfigurator = ControlConfigurator.make(pid);
+    }
+
+    private void doStop() {
+        if (controlServices != null) {
+            controlServices.stop();
+        }
+        if (controlProviders != null) {
+            controlProviders.stop();
+        }
+        if (controlConfigurator != null) {
+            controlConfigurator.stop();
+        }
     }
 
     protected abstract void config();
@@ -109,7 +120,7 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         }
 
         public void toOSGiService() {
-            controlProviders.addServiceManager(new BaseOSGiServiceManager<>(providedClass, isMultiple, annotation));
+            controlProviders.addServiceManager(new BaseServiceManager<>(providedClass, isMultiple, annotation));
         }
     }
 

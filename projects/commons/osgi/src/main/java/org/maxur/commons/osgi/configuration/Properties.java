@@ -1,4 +1,4 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.configuration;
 
 import org.maxur.commons.core.api.BaseObservable;
 import org.osgi.framework.Constants;

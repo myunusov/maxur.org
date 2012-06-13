@@ -1,4 +1,4 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.providers;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
@@ -12,25 +12,25 @@ import java.lang.annotation.Annotation;
  * @version 1.0
  * @since <pre>5/21/12</pre>
  */
-public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
+public class BaseServiceManager<T> implements ServiceManager<T> {
 
     private ServiceTracker tracker;
 
     private String pid;
 
-    private final ServiceDescriptions serviceDescriptions;
+    private final ProvidersGroup providersGroup;
 
-    public BaseOSGiServiceManager(
+    public BaseServiceManager(
             final Class<T> providedClass,
             final boolean canBeMultiple,
             final Annotation annotation
     ) {
-        serviceDescriptions = new ServiceDescriptions(providedClass, canBeMultiple, annotation);
+        providersGroup = new ProvidersGroup(providedClass, canBeMultiple, annotation);
     }
 
     @Override
-    public ServiceDescriptions getServiceDescriptions() {
-        return serviceDescriptions;
+    public ProvidersGroup getProvidersGroup() {
+        return providersGroup;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
         if (null != this.tracker) {
             this.tracker.close();
         }
-        serviceDescriptions.clear();
+        providersGroup.clear();
     }
 
     @Override
@@ -61,11 +61,11 @@ public class BaseOSGiServiceManager<T> implements OSGiServiceManager<T> {
     }
 
     protected ServiceTracker makeTracker(final BundleContext bc) throws InvalidSyntaxException {
-        return new BaseServiceTracker(bc, createFilter(bc), serviceDescriptions);
+        return new BaseServiceTracker(bc, createFilter(bc), providersGroup);
     }
 
     private Filter createFilter(final BundleContext bc) throws InvalidSyntaxException {
-        return bc.createFilter(String.format("(objectClass=%s)", serviceDescriptions.getProvidedClass().getName()));
+        return bc.createFilter(String.format("(objectClass=%s)", providersGroup.getProvidedClass().getName()));
     }
 
 }

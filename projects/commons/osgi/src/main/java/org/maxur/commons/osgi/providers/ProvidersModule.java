@@ -1,8 +1,9 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.providers;
 
 import com.google.inject.binder.AnnotatedBindingBuilder;
 import com.google.inject.multibindings.Multibinder;
 import org.maxur.commons.core.api.Observer;
+import org.maxur.commons.osgi.base.MutableModule;
 
 /**
  * @author Maxim Yunusov
@@ -10,9 +11,9 @@ import org.maxur.commons.core.api.Observer;
  */
 final class ProvidersModule extends MutableModule implements Observer {
 
-    private final ServiceDescriptions descriptions;
+    private final ProvidersGroup descriptions;
 
-    ProvidersModule(final ServiceDescriptions descriptions) {
+    ProvidersModule(final ProvidersGroup descriptions) {
         this.descriptions = descriptions;
         this.descriptions.addObserver(this);
     }
@@ -28,7 +29,7 @@ final class ProvidersModule extends MutableModule implements Observer {
 
     @SuppressWarnings("unchecked")
     private void bindSingleProviders() {
-        for (ServiceDescription description : this.descriptions) {
+        for (ProviderDescription description : this.descriptions) {
             final AnnotatedBindingBuilder<Object> bind =
                     (AnnotatedBindingBuilder<Object>) bind(this.descriptions.getProvidedClass());
             if (description.isAnnotated()) {
@@ -48,7 +49,7 @@ final class ProvidersModule extends MutableModule implements Observer {
         } else {
             binder = Multibinder.newSetBinder(binder(), this.descriptions.getProvidedClass());
         }
-        for (ServiceDescription description : this.descriptions) {
+        for (ProviderDescription description : this.descriptions) {
             binder.addBinding().toProvider(description);
         }
     }

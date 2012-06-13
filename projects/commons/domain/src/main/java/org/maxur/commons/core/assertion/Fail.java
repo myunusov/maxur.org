@@ -11,7 +11,7 @@ class Fail implements Result {
     }
 
     @Override
-    public void then(final RuntimeException error) {
+    public void ifNot(final RuntimeException error) {
         throw error;
     }
 

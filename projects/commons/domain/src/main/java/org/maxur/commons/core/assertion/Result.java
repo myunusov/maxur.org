@@ -6,5 +6,5 @@ package org.maxur.commons.core.assertion;
  * @since <pre>6/9/12</pre>
  */
 public interface Result {
-    void then(RuntimeException error);
+    void ifNot(RuntimeException error);
 }

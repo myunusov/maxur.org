@@ -1,4 +1,4 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.providers;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
@@ -11,35 +11,34 @@ import org.osgi.util.tracker.ServiceTracker;
 */
 class BaseServiceTracker extends ServiceTracker {
 
-    private final ServiceDescriptions serviceDescriptions;
+    private final ProvidersGroup providersGroup;
 
     public BaseServiceTracker(
             final BundleContext bc,
             final Filter filter,
-            final ServiceDescriptions serviceDescriptions
+            final ProvidersGroup providersGroup
     ) {
         super(bc, filter, null);
-        this.serviceDescriptions = serviceDescriptions;
+        this.providersGroup = providersGroup;
     }
 
     @Override
     public Object addingService(final ServiceReference reference) {
         final Object service = context.getService(reference);
         // TODO must be not null and instance of  providedClass
-        final ServiceDescription description = ServiceDescription.builder()
+        final ProviderDescription description = ProviderDescription.builder()
                 .reference(reference)
-                .type(serviceDescriptions.getProvidedClass())
                 .instance(service)
                 .build();
-        if (serviceDescriptions.hasSameAnnotation(description)) {
-            serviceDescriptions.put(reference, description);
+        if (providersGroup.hasSameAnnotation(description)) {
+            providersGroup.put(reference, description);
         }
         return service;
     }
 
     @Override
     public void removedService(final ServiceReference reference, final Object service) {
-        serviceDescriptions.remove(reference);
+        providersGroup.remove(reference);
         context.ungetService(reference);
     }
 }

@@ -1,7 +1,8 @@
-package org.maxur.commons.osgi;
+package org.maxur.commons.osgi.services;
 
 import com.google.inject.Injector;
 import org.maxur.commons.core.api.Refresher;
+import org.maxur.commons.osgi.base.MutableInjectorHolder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceFactory;
