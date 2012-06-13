@@ -20,11 +20,12 @@
         <project.root>${project.basedir}/../../../</project.root>
         <bundle.symbolicName>org.maxur.commons.core</bundle.symbolicName>
         <bundle.namespace>org.maxur.commons.core</bundle.namespace>
+        <sonar.pitest.mode>reuseReport</sonar.pitest.mode>
     </properties>
 
     <profiles>
         <profile>
-            <id>sonar</id>
+            <id>sonar-pit</id>
             <properties>
                 <sonar.pitest.mode>active</sonar.pitest.mode>
                 <sonar.pit.target.classes>org.maxur.commons.core.*</sonar.pit.target.classes>
@@ -51,9 +52,19 @@
                         <jvmArg>-ea</jvmArg>
                     </jvmArgs>
                     <outputFormats>
-                        <outputFormat>HTML,XML</outputFormat>
+                        <outputFormat>HTML</outputFormat>
+                        <outputFormat>XML</outputFormat>
                     </outputFormats>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>mutationCoverage</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
 
