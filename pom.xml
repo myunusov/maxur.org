@@ -299,6 +299,12 @@
                     <version>2.1</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>0.27</version>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>

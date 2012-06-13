@@ -22,6 +22,28 @@
         <bundle.namespace>org.maxur.commons.core</bundle.namespace>
     </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <configuration>
+                    <targetTests>
+                        <param>org.maxur.commons.core.*</param>
+                    </targetTests>
+                    <targetClasses>
+                        <param>org.maxur.commons.core.*</param>
+                    </targetClasses>
+                    <jvmArgs>
+                        <value>-XX:-UseSplitVerifier</value>
+                        <jvmArg>-ea</jvmArg>
+                    </jvmArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
