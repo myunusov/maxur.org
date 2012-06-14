@@ -1,6 +1,9 @@
 package org.maxur.commons.core.api;
 
 /**
+ * This interface represents an observable object.
+ * See subject class of Observer GoF pattern.
+ *
  * @author Maxim Yunusov
  * @version 1.0 26.05.12
  */
@@ -8,12 +11,14 @@ public interface Observable {
 
     /**
      * Adds new observer.
+     *
      * @param observer A Observer of Observable instance.
      */
     void addObserver(Observer observer);
 
     /**
      * Remove the observer.
+     *
       * @param observer A Observer of Observable instance.
      */
     void removeObserver(Observer observer);

@@ -22,18 +22,30 @@ public class StringUtilsTest {
     }
 
     @Test
+    public void shouldBeReturnEmptyString() throws Exception {
+        assertEquals("", StringUtils.emptyString());
+    }
+
+    @Test
     public void shouldBeBlankOnEmptyString() throws Exception {
         assertFalse(StringUtils.isNotBlank(StringUtils.emptyString()));
     }
-
-
-
-
 
     @Test
     public void shouldBeJoin() throws Exception {
         assertEquals("a b c", StringUtils.join(" ", "a", "b", "c"));
     }
+
+    @Test
+    public void shouldBeJoinWithBlankElements() throws Exception {
+        assertEquals("a,b,c", StringUtils.join(",", "a", "", "b", "", "c", ""));
+    }
+
+    @Test
+    public void shouldBeJoinWithSpaceElements() throws Exception {
+        assertEquals("a, ,b, ,c, ", StringUtils.join(",", "a", " ", "b", " ", "c", " "));
+    }
+
 
     @Test
     public void shouldBeJoinWithSeparator() throws Exception {

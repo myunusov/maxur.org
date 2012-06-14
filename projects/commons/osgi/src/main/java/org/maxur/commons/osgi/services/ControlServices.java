@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.HashSet;
 
-import static org.maxur.commons.core.assertion.Assert.argument;
+import static org.maxur.commons.core.assertion.Contract.argument;
 
 /**
  * @author Maxim Yunusov

@@ -1,9 +1,9 @@
 package org.maxur.commons.core.api;
 
 /**
- *
  * Interface of Observer.
- * See patterns Gof Observer.
+ *
+ * See Observer Gof pattern.
  *
  * @author Maxim Yunusov
  * @version 1.0 25.05.12

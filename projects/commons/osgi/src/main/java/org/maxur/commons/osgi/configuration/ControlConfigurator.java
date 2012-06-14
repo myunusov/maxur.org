@@ -10,8 +10,8 @@ import org.osgi.service.cm.ManagedService;
 
 import java.util.Dictionary;
 
-import static org.maxur.commons.core.assertion.Assert.error;
-import static org.maxur.commons.core.assertion.Assert.check;
+import static org.maxur.commons.core.assertion.Contract.error;
+import static org.maxur.commons.core.assertion.Contract.check;
 
 /**
  * @author Maxim Yunusov
@@ -45,7 +45,7 @@ public final class ControlConfigurator implements ManagedService {
     }
 
     public void stop() {
-        check(registration).notNull().ifNot(error("ControlConfigurator: 'start' must be called before 'stop'"));
+        check(registration).notNull().onFailThrow(error("ControlConfigurator: 'start' must be called before 'stop'"));
         this.registration.unregister();
     }
 
