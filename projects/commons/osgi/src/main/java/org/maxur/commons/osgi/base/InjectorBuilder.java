@@ -5,7 +5,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 import org.maxur.commons.core.api.Observer;
-import org.maxur.commons.osgi.base.MutableModule;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -46,8 +45,9 @@ public class InjectorBuilder implements Observer {
         this.injector = null;
     }
 
-    public void build() {
+    public Injector build() {
         this.injector = this.makeInjector();
+        return this.injector;
     }
 
     /**
@@ -59,7 +59,7 @@ public class InjectorBuilder implements Observer {
         if (null == this.injector) {
             build();
         }
-        return injector;
+        return this.injector;
     }
 
     private Injector makeInjector() {

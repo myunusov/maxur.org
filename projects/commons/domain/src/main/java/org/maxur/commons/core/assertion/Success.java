@@ -15,7 +15,7 @@ final class Success implements Result {
     }
 
     @Override
-    public void ifNot(final RuntimeException error) {
+    public void onFailThrow(final RuntimeException error) {
     }
 
 }

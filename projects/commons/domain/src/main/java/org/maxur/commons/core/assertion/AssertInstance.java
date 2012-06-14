@@ -44,12 +44,10 @@ abstract class AssertInstance implements AssertValue, AssertClass {
         return instance.getClass().getName();
     }
 
-    protected abstract Fail fail(String message);
-
     protected Success success() {
         return Success.get();
     }
 
-
+    protected abstract Fail fail(String message);
 
 }

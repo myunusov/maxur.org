@@ -9,4 +9,6 @@ public interface AssertClass {
     Result isInterface();
 
     Result isInterfaceOf(Object object);
+
+    Result isClass();
 }

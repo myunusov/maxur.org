@@ -1,7 +1,7 @@
 package org.maxur.commons.core.api;
 
 import org.junit.Test;
-import org.maxur.commons.core.assertion.Assert;
+import org.maxur.commons.core.assertion.Contract;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,13 +15,13 @@ public class SerializableArrayListTest {
     @Test
     public void shouldBeSerializable() throws Exception {
         final SerializableArrayList<Serializable> list = new SerializableArrayList<Serializable>();
-        Assert.argument(Serializable.class).isInterfaceOf(list);
+        Contract.argument(Serializable.class).isInterfaceOf(list);
     }
 
     @Test
     public void shouldBeSerializableWithListArgument() throws Exception {
         final SerializableArrayList<Serializable> list = new SerializableArrayList<>(new ArrayList<Serializable>());
-        Assert.argument(Serializable.class).isInterfaceOf(list);
+        Contract.argument(Serializable.class).isInterfaceOf(list);
     }
 
 }

@@ -1,15 +1,13 @@
 package org.maxur.commons.osgi.base;
 
 import com.google.inject.Injector;
-import org.maxur.commons.core.api.BaseRefresher;
-import org.maxur.commons.core.api.Holder;
+import org.maxur.commons.core.api.AbstractRefresher;
 import org.maxur.commons.core.api.Refresher;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author Maxim Yunusov
  * @version 1.0 13.05.12
  */
@@ -37,29 +35,35 @@ public final class MutableInjectorHolder {
     }
 
     public static Refresher<Injector> refresher(final String pid) {
-        return new BaseRefresher<>(new InjectorHolder(pid));
+        return new InjectorRefresher(pid);
     }
 
-    public static class InjectorHolder implements Holder<Injector> {
+    private static class InjectorRefresher extends AbstractRefresher<Injector> {
 
-        private static final long serialVersionUID = -3954477844908111590L;
+        private static final long serialVersionUID = -2613436504821318003L;
 
-        private final String pid;
+        private String pid;
 
-        public InjectorHolder(final String pid) {
+        private transient Injector item;
+
+        public InjectorRefresher(final String pid) {
+            super();
             this.pid = pid;
+            this.item = MutableInjectorHolder.builder(pid).getResult();
+        }
+
+        @Override
+        public boolean isStale() {
+            return super.isStale() || this.item != MutableInjectorHolder.builder(pid).getResult();
         }
 
         @Override
         public Injector get() {
-            return MutableInjectorHolder.builder(pid).getResult();
+            if (isStale()) {
+                this.item = MutableInjectorHolder.builder(pid).build();
+            }
+            return this.item;
         }
 
-        @Override
-        public void refresh() {
-            MutableInjectorHolder.builder(pid).build();
-
-        }
     }
-
 }

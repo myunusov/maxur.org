@@ -4,11 +4,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Base implementation of Observable interface.
+ * @see Observable
+ *
  * @author Maxim Yunusov
  * @version 1.0 26.05.12
  */
 public class BaseObservable implements Observable {
 
+    /**
+     * Set of observers for this object.
+     */
     private final Set<Observer> observers = new HashSet<>();
 
     /**
@@ -29,8 +35,6 @@ public class BaseObservable implements Observable {
 
     /**
      * @see  Observable#update().
-     *
-     * Template method (with hooks).
      */
     @Override
     public final void update() {
