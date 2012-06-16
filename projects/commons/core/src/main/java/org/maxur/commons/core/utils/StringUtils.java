@@ -65,8 +65,7 @@ public final class StringUtils {
 
     private static String addNext(final String separator, final OuterIterator<String> iterator) {
         final StringBuilder builder = new StringBuilder(iterator.element());
-        while (iterator.hasNext()) {
-            iterator.next();
+        for (;iterator.hasNext();iterator.next()) {
             if (isNotBlank(iterator.element())) {
                 builder.append(separator).append(iterator.element());
             }

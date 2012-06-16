@@ -31,7 +31,7 @@
         <module>view-api</module>
         <module>component</module>
         <module>osgi</module>
-        <module>domain</module>
+        <module>core</module>
         <module>datasource</module>
     </modules>
 
