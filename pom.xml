@@ -119,18 +119,18 @@
                             <includesTestSourceRoots>false</includesTestSourceRoots>
                             <jdk>${project.source.compile}</jdk>
                             <generateXml>true</generateXml>
-                            <baseDir>
-                                ${project.root}.clover/base/${project.groupId}-${project.artifactId}/
-                            </baseDir>
+                            <generateHistorical>true</generateHistorical>
                             <cloverDatabase>
                                 ${project.root}.clover/${project.groupId}-${project.artifactId}.db
                             </cloverDatabase>
                             <snapshot>
                                 ${project.root}.clover/${project.groupId}-${project.artifactId}/clover.snapshot
                             </snapshot>
-                            <generateHistorical>true</generateHistorical>
+                            <baseDir>
+                                ${project.root}.clover/${project.groupId}-${project.artifactId}/base
+                            </baseDir>
                             <historyDir>
-                                ${project.root}.clover/history/${project.groupId}-${project.artifactId}/
+                                ${project.root}.clover/${project.groupId}-${project.artifactId}/history
                             </historyDir>
                         </configuration>
                         <executions>
