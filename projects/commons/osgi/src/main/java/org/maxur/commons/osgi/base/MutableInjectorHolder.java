@@ -49,7 +49,6 @@ public final class MutableInjectorHolder {
         public InjectorRefresher(final String pid) {
             super();
             this.pid = pid;
-            this.item = MutableInjectorHolder.builder(pid).getResult();
         }
 
         @Override

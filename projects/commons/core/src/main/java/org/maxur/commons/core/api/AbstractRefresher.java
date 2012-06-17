@@ -17,7 +17,7 @@ public abstract class AbstractRefresher<I> implements Refresher<I> {
     private boolean isStale;
 
     public AbstractRefresher() {
-        isStale = false;
+        isStale = true;
     }
 
     @Override
