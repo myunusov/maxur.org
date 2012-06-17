@@ -44,6 +44,7 @@
         <project.source.compile>1.7</project.source.compile>
         <project.target.compile>1.7</project.target.compile>
         <clover.version>3.1.0</clover.version>
+        <maven.clover.context.block.names>assert</maven.clover.context.block.names>
         <sonar.version>2.0</sonar.version>
         <sonar.pitest.mode>skip</sonar.pitest.mode>
         <sonar.pit.fail.when.no.mutations>false</sonar.pit.fail.when.no.mutations>
@@ -99,7 +100,7 @@
         <profile>
             <id>clover</id>
             <properties>
-                <maven.clover.context.block.names>assert</maven.clover.context.block.names>
+
             </properties>
             <build>
                 <plugins>
@@ -238,11 +239,41 @@
                 </plugins>
             </build>
         </profile>
-
     </profiles>
-
     <build>
 
+        <plugins>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-clover2-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.maxur</groupId>
+                        <artifactId>build-tools</artifactId>
+                        <version>1.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <licenseLocation>${project.root}/clover.license</licenseLocation>
+                    <includesTestSourceRoots>false</includesTestSourceRoots>
+                    <jdk>${project.source.compile}</jdk>
+                    <encoding>${project.source.encoding}</encoding>
+                    <generateXml>true</generateXml>
+                    <cloverDatabase>
+                        ${project.root}.clover/${project.groupId}-${project.artifactId}.db
+                    </cloverDatabase>
+                    <snapshot>
+                        ${project.root}.clover/${project.groupId}-${project.artifactId}/clover.snapshot
+                    </snapshot>
+                    <baseDir>
+                        ${project.root}.clover/${project.groupId}-${project.artifactId}/base
+                    </baseDir>
+                    <historyDir>
+                        ${project.root}.clover/${project.groupId}-${project.artifactId}/history
+                    </historyDir>
+                </configuration>
+            </plugin>
+        </plugins>
 
         <pluginManagement>
             <plugins>
