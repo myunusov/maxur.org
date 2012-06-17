@@ -24,6 +24,14 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>unit-tests-jars</artifactId>
+            <version>1.0</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.framework</artifactId>
             <version>3.3.0-SNAPSHOT</version>
@@ -32,18 +40,12 @@
 
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>unit-tests-jars</artifactId>
-            <version>1.0</version>
-            <type>pom</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.maxur</groupId>
             <artifactId>wicket-jars</artifactId>
             <version>1.0</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>guice-jars</artifactId>
@@ -58,33 +60,52 @@
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>yaml-gray</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>maxur-commons-osgi</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>maxur-commons-core</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>maxur-commons-component</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>maxur-view-api</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>taskun-core</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>taskun-simple</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
