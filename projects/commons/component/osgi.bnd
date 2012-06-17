@@ -1,4 +1,4 @@
 Bundle-Activator: ${bundle.namespace}.config.CommonsComponentActivator
 Import-Package: *,com.google.inject,org.apache.wicket.protocol.http,org.apache.wicket.markup.html.form.upload,org.apache.wicket.markup.html.panel,org.slf4j,org.aopalliance.intercept
-Export-Package: org.maxur.commons.component.*,org.maxur.commons.component.behavior.*,org.maxur.commons.component.protocol.http
+Export-Package: org.maxur.commons.component.*
 

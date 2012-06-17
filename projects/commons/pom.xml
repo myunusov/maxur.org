@@ -32,6 +32,7 @@
         <module>component</module>
         <module>osgi</module>
         <module>core</module>
+        <module>contract</module>
         <module>datasource</module>
     </modules>
 

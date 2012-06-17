@@ -118,6 +118,10 @@
                             <targetPercentage>75%</targetPercentage>
                             <includesTestSourceRoots>false</includesTestSourceRoots>
                             <jdk>${project.source.compile}</jdk>
+                            <generateXml>true</generateXml>
+                            <baseDir>
+                                ${project.root}.clover/base/${project.groupId}-${project.artifactId}/
+                            </baseDir>
                             <cloverDatabase>
                                 ${project.root}.clover/${project.groupId}-${project.artifactId}.db
                             </cloverDatabase>
@@ -126,12 +130,8 @@
                             </snapshot>
                             <generateHistorical>true</generateHistorical>
                             <historyDir>
-                                ${project.root}.clover/history
+                                ${project.root}.clover/history/${project.groupId}-${project.artifactId}/
                             </historyDir>
-                            <baseDir>
-                                ${project.root}.clover/base
-                            </baseDir>
-                            <generateXml>true</generateXml>
                         </configuration>
                         <executions>
                             <execution>
@@ -262,6 +262,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.5</version>
+                    <configuration>
+                        <encoding>${project.source.encoding}</encoding>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-source-plugin</artifactId>
