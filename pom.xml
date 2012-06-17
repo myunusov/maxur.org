@@ -185,6 +185,9 @@
                 </plugins>
             </reporting>
         </profile>
+        <profile>
+            <id>pitest</id>
+        </profile>
         <!--DEV PROFILE -->
         <profile>
             <id>DEV</id>

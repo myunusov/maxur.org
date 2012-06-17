@@ -25,50 +25,47 @@
 
     <profiles>
         <profile>
-            <id>sonar-pit</id>
+            <id>pitest</id>
             <properties>
                 <sonar.pitest.mode>active</sonar.pitest.mode>
                 <sonar.pit.target.classes>org.maxur.commons.core.*</sonar.pit.target.classes>
                 <sonar.pit.target.tests>org.maxur.commons.core.*</sonar.pit.target.tests>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <configuration>
+                            <targetTests>
+                                <param>org.maxur.commons.core.*</param>
+                            </targetTests>
+                            <targetClasses>
+                                <param>org.maxur.commons.core.*</param>
+                            </targetClasses>
+                            <jvmArgs>
+                                <value>-XX:-UseSplitVerifier</value>
+                                <jvmArg>-ea</jvmArg>
+                            </jvmArgs>
+                            <outputFormats>
+                                <outputFormat>HTML</outputFormat>
+                                <outputFormat>XML</outputFormat>
+                            </outputFormats>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>mutationCoverage</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>mutationCoverage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
-
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <configuration>
-                    <targetTests>
-                        <param>org.maxur.commons.core.*</param>
-                    </targetTests>
-                    <targetClasses>
-                        <param>org.maxur.commons.core.*</param>
-                    </targetClasses>
-                    <jvmArgs>
-                        <value>-XX:-UseSplitVerifier</value>
-                        <jvmArg>-ea</jvmArg>
-                    </jvmArgs>
-                    <outputFormats>
-                        <outputFormat>HTML</outputFormat>
-                        <outputFormat>XML</outputFormat>
-                    </outputFormats>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>mutationCoverage</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>mutationCoverage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-
-    </build>
 
     <dependencies>
         <dependency>
