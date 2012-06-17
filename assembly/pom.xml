@@ -32,6 +32,10 @@
             <id>DEV</id>
             <properties>
                 <maven-pax-plugin-log.param>debug</maven-pax-plugin-log.param>
+                <osgi.shell.telnet.ip>127.0.0.1</osgi.shell.telnet.ip>
+                <osgi.shell.telnet.port>6666</osgi.shell.telnet.port>
+                <osgi.shell.telnet.maxconn>2</osgi.shell.telnet.maxconn>
+                <osgi.shell.telnet.socketTimeout>0</osgi.shell.telnet.socketTimeout>
             </properties>
             <dependencies>
                 <dependency>
@@ -61,6 +65,33 @@
                         <exclusion>
                             <groupId>org.osgi</groupId>
                             <artifactId>org.osgi.core</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.apache.felix</groupId>
+                            <artifactId>org.apache.felix.shell</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.shell.remote</artifactId>
+                    <version>1.1.2</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.osgi</groupId>
+                            <artifactId>org.osgi.compendium</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.osgi</groupId>
+                            <artifactId>org.osgi.core</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.apache.felix</groupId>
+                            <artifactId>org.apache.felix.shell</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.apache.felix</groupId>
+                            <artifactId>org.apache.felix.gogo.runtime</artifactId>
                         </exclusion>
                     </exclusions>
                 </dependency>

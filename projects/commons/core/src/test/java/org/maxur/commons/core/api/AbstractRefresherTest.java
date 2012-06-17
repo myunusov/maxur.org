@@ -13,7 +13,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Maxim Yunusov
@@ -34,7 +34,7 @@ public class AbstractRefresherTest {
 
     @Test
     public void testIsStale() throws Exception {
-        assertFalse(refresher.isStale());
+        assertTrue(refresher.isStale());
     }
 
     @Test
