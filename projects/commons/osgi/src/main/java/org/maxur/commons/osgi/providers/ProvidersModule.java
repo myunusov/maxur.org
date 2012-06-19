@@ -11,16 +11,16 @@ import org.maxur.commons.osgi.base.MutableModule;
  */
 final class ProvidersModule extends MutableModule implements Observer {
 
-    private final ProvidersGroup descriptions;
+    private final ProvidersGroup group;
 
-    ProvidersModule(final ProvidersGroup descriptions) {
-        this.descriptions = descriptions;
-        this.descriptions.addObserver(this);
+    ProvidersModule(final ProvidersGroup group) {
+        this.group = group;
+        this.group.addObserver(this);
     }
 
     @Override
     protected void configure() {
-        if (this.descriptions.isMultiple()) {
+        if (this.group.isMultiple()) {
             bindMultipleProviders();
         } else {
             bindSingleProviders();
@@ -29,28 +29,28 @@ final class ProvidersModule extends MutableModule implements Observer {
 
     @SuppressWarnings("unchecked")
     private void bindSingleProviders() {
-        for (ProviderDescription description : this.descriptions) {
+        for (ServiceProvider service : this.group) {
             final AnnotatedBindingBuilder<Object> bind =
-                    (AnnotatedBindingBuilder<Object>) bind(this.descriptions.getProvidedClass());
-            if (description.isAnnotated()) {
-                bind.annotatedWith(description.getAnnotation());
+                    (AnnotatedBindingBuilder<Object>) bind(this.group.getProvidedClass());
+            if (service.isAnnotated()) {
+                bind.annotatedWith(service.getAnnotation());
             }
-            bind.toProvider(description);
+            bind.toProvider(service);
         }
     }
 
     @SuppressWarnings("unchecked")
     private void bindMultipleProviders() {
         final Multibinder binder;
-        if (this.descriptions.isAnnotated()) {
+        if (this.group.isAnnotated()) {
             binder = Multibinder.newSetBinder(
-                    binder(), this.descriptions.getProvidedClass(), this.descriptions.getAnnotation()
+                    binder(), this.group.getProvidedClass(), this.group.getAnnotation()
             );
         } else {
-            binder = Multibinder.newSetBinder(binder(), this.descriptions.getProvidedClass());
+            binder = Multibinder.newSetBinder(binder(), this.group.getProvidedClass());
         }
-        for (ProviderDescription description : this.descriptions) {
-            binder.addBinding().toProvider(description);
+        for (ServiceProvider service : this.group) {
+            binder.addBinding().toProvider(service);
         }
     }
 

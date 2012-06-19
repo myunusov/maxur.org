@@ -30,4 +30,5 @@ public final class BaseTaskunActivator extends BaseGuiceActivator {
         bind(WebBrowserDetector.class).toOSGiService();
     }
 
+
 }

@@ -1,6 +1,9 @@
 package org.maxur.commons.osgi.providers;
 
 import org.maxur.commons.core.api.BaseObservable;
+import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.base.OSGiManager;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import java.lang.annotation.Annotation;
@@ -8,9 +11,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public final class ProvidersGroup extends BaseObservable implements Iterable<ProviderDescription> {
+public final class ProvidersGroup extends BaseObservable implements Iterable<ServiceProvider>, OSGiManager {
 
-    private final Map<ServiceReference, ProviderDescription> descriptions = new HashMap<>();
+    private final Map<ServiceReference, ServiceProvider> providers = new HashMap<>();
 
     private final Class providedClass;
 
@@ -18,35 +21,37 @@ public final class ProvidersGroup extends BaseObservable implements Iterable<Pro
 
     private final Annotation annotation;
 
-    public ProvidersGroup(
-            final Class providedClass,
-            final boolean canBeMultiple,
-            final Annotation annotation
-    ) {
+    ProvidersGroup(final Class providedClass, final boolean canBeMultiple, final Annotation annotation) {
         this.providedClass = providedClass;
         this.canBeMultiple = canBeMultiple;
         this.annotation = annotation;
     }
 
-    public void clear() {
-        descriptions.clear();
-        update();
-    }
-
-    public void remove(final ServiceReference reference) {
-        descriptions.remove(reference);
-        update();
-    }
-
-    public ProviderDescription put(final ServiceReference reference, final ProviderDescription description) {
-        final ProviderDescription serviceDescription = descriptions.put(reference, description);
-        update();
-        return serviceDescription;
+    @Override
+    public void start(BundleContext bc, String pid) {
+        MutableInjectorHolder.addModule(pid, new ProvidersModule(this));
     }
 
     @Override
-    public Iterator<ProviderDescription> iterator() {
-        return descriptions.values().iterator();
+    public void stop() {
+        providers.clear();
+        update();
+    }
+
+    @Override
+    public Iterator<ServiceProvider> iterator() {
+        return providers.values().iterator();
+    }
+
+    public void remove(final ServiceReference reference) {
+        providers.remove(reference);
+        update();
+    }
+
+    public ServiceProvider put(final ServiceReference reference, final ServiceProvider service) {
+        final ServiceProvider provider = providers.put(reference, service);
+        update();
+        return provider;
     }
 
     public boolean isMultiple() {
@@ -65,7 +70,8 @@ public final class ProvidersGroup extends BaseObservable implements Iterable<Pro
         return annotation;
     }
 
-    boolean hasSameAnnotation(final ProviderDescription description) {
-        return isAnnotated() ? annotation.equals(description.getAnnotation()) : !description.isAnnotated();
+    boolean hasSameAnnotation(final ServiceProvider service) {
+        return isAnnotated() ? annotation.equals(service.getAnnotation()) : !service.isAnnotated();
     }
+
 }

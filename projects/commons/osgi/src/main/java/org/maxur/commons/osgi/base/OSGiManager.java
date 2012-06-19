@@ -1,4 +1,4 @@
-package org.maxur.commons.osgi.providers;
+package org.maxur.commons.osgi.base;
 
 import org.osgi.framework.BundleContext;
 
@@ -8,10 +8,10 @@ import org.osgi.framework.BundleContext;
  * @author Maxim Yunusov
  * @version 1.0 24.05.12
  */
-public interface ServiceManager<T> {
+public interface OSGiManager {
 
     /**
-     * Start OSGi tracker.
+     * Start management.
      *
      * @param bc A Bundle Context
      * @param pid A bundle identifier.
@@ -19,19 +19,9 @@ public interface ServiceManager<T> {
     void start(BundleContext bc, String pid);
 
     /**
-     * Stop OSGi tracker.
+     * Stop management.
      */
     void stop();
 
-    /**
-     * Reset OSGi tracker.
-     */
-    void reset(BundleContext bc);
-
-    /**
-     * Returns Service Descriptions instance.
-     * @return Service Descriptions instance.
-     */
-    ProvidersGroup getProvidersGroup();
 
 }

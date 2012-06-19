@@ -16,7 +16,7 @@ import java.lang.reflect.Proxy;
  * @author Maxim Yunusov
  * @version 1.0 13.06.12
  */
-class BaseServiceFactory implements ServiceFactory {
+public class BaseServiceFactory implements ServiceFactory {
 
     private final Object service;
 

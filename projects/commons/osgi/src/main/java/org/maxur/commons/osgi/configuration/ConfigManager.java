@@ -2,6 +2,7 @@ package org.maxur.commons.osgi.configuration;
 
 import org.maxur.commons.core.utils.DictionaryUtils;
 import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.base.OSGiManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
@@ -10,43 +11,30 @@ import org.osgi.service.cm.ManagedService;
 
 import java.util.Dictionary;
 
-import static org.maxur.commons.core.assertion.Contract.error;
-import static org.maxur.commons.core.assertion.Contract.check;
-
 /**
  * @author Maxim Yunusov
  * @version 1.0 22.05.12
  */
-public final class ControlConfigurator implements ManagedService {
+public final class ConfigManager implements OSGiManager, ManagedService {
+
+    private final Properties properties = new Properties();
 
     private ServiceRegistration registration = null;
 
-    private final Properties properties;
-
-    private final String pid;
-
-    public static ControlConfigurator make(final String pid) {
-        return new ControlConfigurator(pid);
-    }
-
-    private ControlConfigurator(final String pid) {
-        this.pid = pid;
-        this.properties = new Properties();
-    }
-
-    public ControlConfigurator start(final BundleContext bc) {
+    public void start(final BundleContext bc, final String pid) {
         this.registration = bc.registerService(
                 ManagedService.class.getName(),
                 this,
                 DictionaryUtils.singleton(Constants.SERVICE_PID, pid)
         );
         MutableInjectorHolder.addModule(pid, new ConfiguratorModule(this.properties));
-        return this;
     }
 
     public void stop() {
-        check(registration).notNull().onFailThrow(error("ControlConfigurator: 'start' must be called before 'stop'"));
-        this.registration.unregister();
+        if (null != registration) {
+            this.registration.unregister();
+            registration = null;
+        }
     }
 
     @Override

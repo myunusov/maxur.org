@@ -10,11 +10,11 @@ import java.lang.annotation.Annotation;
  * @author Maxim Yunusov
  * @version 1.0 13.06.12
  */
-public final class ProviderDescription extends AbstractServiceDescription implements Provider<Object> {
+public final class ServiceProvider extends AbstractServiceDescription implements Provider<Object> {
 
     private Object instance;
 
-    private ProviderDescription() {
+    private ServiceProvider() {
         super();
     }
 
@@ -29,9 +29,9 @@ public final class ProviderDescription extends AbstractServiceDescription implem
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ProviderDescription) {
-            final ProviderDescription description = (ProviderDescription) obj;
-            return (instance.equals(description.instance));
+        if (obj instanceof ServiceProvider) {
+            final ServiceProvider service = (ServiceProvider) obj;
+            return (instance.equals(service.instance));
         } else {
             return super.equals(obj);
         }
@@ -43,10 +43,10 @@ public final class ProviderDescription extends AbstractServiceDescription implem
 
     public static final class Builder {
 
-        private final ProviderDescription result;
+        private final ServiceProvider result;
 
         public Builder() {
-            result = new ProviderDescription();
+            result = new ServiceProvider();
         }
 
         public Builder instance(final Object instance) {
@@ -59,7 +59,7 @@ public final class ProviderDescription extends AbstractServiceDescription implem
             return this;
         }
 
-        public ProviderDescription build() {
+        public ServiceProvider build() {
             return result;
         }
     }

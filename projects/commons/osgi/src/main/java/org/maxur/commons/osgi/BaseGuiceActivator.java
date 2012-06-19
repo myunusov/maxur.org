@@ -1,16 +1,17 @@
 package org.maxur.commons.osgi;
 
+import org.maxur.commons.osgi.base.CompositeManager;
 import org.maxur.commons.osgi.base.MutableInjectorHolder;
-import org.maxur.commons.osgi.configuration.ControlConfigurator;
-import org.maxur.commons.osgi.providers.BaseServiceManager;
-import org.maxur.commons.osgi.providers.ControlProviders;
-import org.maxur.commons.osgi.services.ControlServices;
+import org.maxur.commons.osgi.configuration.ConfigManager;
+import org.maxur.commons.osgi.providers.Binder;
+import org.maxur.commons.osgi.providers.ProvidersGroup;
+import org.maxur.commons.osgi.providers.ServiceTrackersHolder;
+import org.maxur.commons.osgi.services.Exporter;
+import org.maxur.commons.osgi.services.ServiceManager;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.annotation.Annotation;
 
 /**
  * @author Maxim Yunusov
@@ -20,11 +21,13 @@ public abstract class BaseGuiceActivator implements BundleActivator {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private ControlProviders controlProviders;
+    private CompositeManager<ProvidersGroup> providerGroupsManager = new CompositeManager<>();
 
-    private ControlConfigurator controlConfigurator;
+    private CompositeManager<ServiceManager> servicesManager = new CompositeManager<>();
 
-    private ControlServices controlServices;
+    private ConfigManager configManager = new ConfigManager();
+
+    private ServiceTrackersHolder trackersHolder = new ServiceTrackersHolder();
 
     private final String pid;
 
@@ -38,11 +41,10 @@ public abstract class BaseGuiceActivator implements BundleActivator {
     public void start(final BundleContext bc) {
         logger.debug("STARTING {}", pid);
         doStop();
+        // TODO PID must be unique
         MutableInjectorHolder.start(pid);
-        doInit();
         config();
         doStart(bc);
-
     }
 
     /**
@@ -54,98 +56,29 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         logger.debug("STOPPING {}", pid);
     }
 
-
     private void doStart(BundleContext bc) {
-        controlConfigurator.start(bc);
-        controlProviders.start(bc);
-        controlServices.start(bc);
-    }
-
-    private void doInit() {
-        controlServices = ControlServices.make(pid);
-        controlProviders = ControlProviders.make(pid);
-        controlConfigurator = ControlConfigurator.make(pid);
+        configManager.start(bc, pid);
+        providerGroupsManager.start(bc, pid);
+        servicesManager.start(bc, pid);
+        trackersHolder.init(bc, providerGroupsManager.get());
+        trackersHolder.start(bc, pid);
     }
 
     private void doStop() {
-        if (controlServices != null) {
-            controlServices.stop();
-        }
-        if (controlProviders != null) {
-            controlProviders.stop();
-        }
-        if (controlConfigurator != null) {
-            controlConfigurator.stop();
-        }
+        trackersHolder.stop();
+        servicesManager.stop();
+        providerGroupsManager.stop();
+        configManager.stop();
     }
 
     protected abstract void config();
 
     protected Binder bind(final Class<?> providedClass) {
-        return new Binder(providedClass, controlProviders);
+        return new Binder(providerGroupsManager, providedClass);
     }
 
-    public Exporter export(final Object service) {
-        return new Exporter(service, controlServices);
+    protected Exporter export(final Object service) {
+        return new Exporter(servicesManager, service);
     }
-
-    public static final class Binder {
-
-        private final Class<?> providedClass;
-
-        private final ControlProviders controlProviders;
-
-        private boolean isMultiple = false;
-
-        private Annotation annotation;
-
-        private Binder(final Class<?> providedClass, final ControlProviders controlProviders) {
-            this.providedClass = providedClass;
-            this.controlProviders = controlProviders;
-        }
-
-        public Binder single() {
-            this.isMultiple = false;
-            return this;
-        }
-
-        public Binder multiple() {
-            this.isMultiple = true;
-            return this;
-        }
-
-        public Binder annotatedWith(final Annotation annotation) {
-            this.annotation = annotation;
-            return this;
-        }
-
-        public void toOSGiService() {
-            controlProviders.addServiceManager(new BaseServiceManager<>(providedClass, isMultiple, annotation));
-        }
-    }
-
-    public static final class Exporter {
-
-        private final Object service;
-
-        private final ControlServices controlServices;
-
-        private Annotation annotation;
-
-        public Exporter(final Object service, final ControlServices controlServices) {
-            this.service = service;
-            this.controlServices = controlServices;
-        }
-
-        public Exporter annotatedWith(final Annotation annotation) {
-            this.annotation = annotation;
-            return this;
-        }
-
-        public void asOSGiService(final Class<?> servesClass) {
-            controlServices.bind(servesClass, service, annotation);
-        }
-    }
-
 
 }

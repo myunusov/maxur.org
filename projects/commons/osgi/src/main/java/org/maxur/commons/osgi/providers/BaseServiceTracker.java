@@ -5,40 +5,52 @@ import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 /**
 * @author Maxim Yunusov
 * @version 1.0 09.06.12
 */
 class BaseServiceTracker extends ServiceTracker {
 
-    private final ProvidersGroup providersGroup;
+    private final Collection<ProvidersGroup> groups = new HashSet<>();
 
-    public BaseServiceTracker(
-            final BundleContext bc,
-            final Filter filter,
-            final ProvidersGroup providersGroup
-    ) {
+    public BaseServiceTracker(final BundleContext bc, final Filter filter) {
         super(bc, filter, null);
-        this.providersGroup = providersGroup;
+    }
+
+    public void add(final ProvidersGroup group) {
+        groups.add(group);
     }
 
     @Override
     public Object addingService(final ServiceReference reference) {
         final Object service = context.getService(reference);
-        // TODO must be not null and instance of  providedClass
-        final ProviderDescription description = ProviderDescription.builder()
+        assert service != null;
+        final ServiceProvider provider = ServiceProvider.builder()
                 .reference(reference)
                 .instance(service)
                 .build();
-        if (providersGroup.hasSameAnnotation(description)) {
-            providersGroup.put(reference, description);
+        for (ProvidersGroup group : groups) {
+            if (group.hasSameAnnotation(provider)) {
+                group.put(reference, provider);
+            }
         }
         return service;
     }
 
     @Override
     public void removedService(final ServiceReference reference, final Object service) {
-        providersGroup.remove(reference);
+        final ServiceProvider provider = ServiceProvider.builder()
+                .reference(reference)
+                .instance(service)
+                .build();
+        for (ProvidersGroup group : groups) {
+            if (group.hasSameAnnotation(provider)) {
+                group.remove(reference);
+            }
+        }
         context.ungetService(reference);
     }
 }
