@@ -1,7 +1,7 @@
 package org.maxur.commons.osgi;
 
 import org.maxur.commons.osgi.base.CompositeManager;
-import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.holder.InjectorHolderList;
 import org.maxur.commons.osgi.configuration.ConfigManager;
 import org.maxur.commons.osgi.providers.Binder;
 import org.maxur.commons.osgi.providers.ProvidersGroup;
@@ -42,7 +42,7 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         logger.debug("STARTING {}", pid);
         doStop();
         // TODO PID must be unique
-        MutableInjectorHolder.start(pid);
+        InjectorHolderList.start(pid);
         config();
         doStart(bc);
     }
@@ -52,7 +52,7 @@ public abstract class BaseGuiceActivator implements BundleActivator {
      */
     public void stop(final BundleContext bc) {
         doStop();
-        MutableInjectorHolder.stop(pid);
+        InjectorHolderList.stop(pid);
         logger.debug("STOPPING {}", pid);
     }
 

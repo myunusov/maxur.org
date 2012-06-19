@@ -1,7 +1,7 @@
 package org.maxur.commons.osgi.configuration;
 
 import org.maxur.commons.core.utils.DictionaryUtils;
-import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.holder.InjectorHolderList;
 import org.maxur.commons.osgi.base.OSGiManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -27,7 +27,7 @@ public final class ConfigManager implements OSGiManager, ManagedService {
                 this,
                 DictionaryUtils.singleton(Constants.SERVICE_PID, pid)
         );
-        MutableInjectorHolder.addModule(pid, new ConfiguratorModule(this.properties));
+        InjectorHolderList.holder(pid).addModule(new ConfiguratorModule(this.properties));
     }
 
     public void stop() {

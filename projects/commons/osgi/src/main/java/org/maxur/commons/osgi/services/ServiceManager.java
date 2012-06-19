@@ -1,7 +1,7 @@
 package org.maxur.commons.osgi.services;
 
 import org.maxur.commons.core.utils.DictionaryUtils;
-import org.maxur.commons.osgi.base.AbstractServiceDescription;
+import org.maxur.commons.osgi.base.AbstractService;
 import org.maxur.commons.osgi.base.OSGiManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceFactory;
@@ -14,7 +14,7 @@ import java.util.Dictionary;
  * @author Maxim Yunusov
  * @version 1.0 13.06.12
  */
-public final class ServiceManager extends AbstractServiceDescription implements OSGiManager {
+public final class ServiceManager extends AbstractService implements OSGiManager {
 
     private final Object service;
 

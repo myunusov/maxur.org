@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.holder.InjectorHolderList;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.osgi.framework.BundleContext;
@@ -67,7 +67,7 @@ public class ProvidersGroupTest {
     @Ignore
     @Test
     public void shouldBeStarted() throws Exception {
-        MutableInjectorHolder.start("id");
+        InjectorHolderList.start("id");
         serviceManager.start(bc, "id");
         verify(tracker).open();
     }
@@ -75,7 +75,7 @@ public class ProvidersGroupTest {
     @Ignore
     @Test(expected = AssertionError.class)
     public void shouldBeNotStarted() throws Exception {
-        MutableInjectorHolder.start("id");
+        InjectorHolderList.start("id");
         invalidServiceManager.start(bc, "id");
         verifyNoMoreInteractions(tracker);
     }
@@ -83,7 +83,7 @@ public class ProvidersGroupTest {
     @Ignore
     @Test
     public void shouldBeStopped() throws Exception {
-        MutableInjectorHolder.start("id");
+        InjectorHolderList.start("id");
         serviceManager.start(bc, "id");
         serviceManager.stop();
         verify(tracker).close();

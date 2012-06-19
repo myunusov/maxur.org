@@ -2,7 +2,7 @@ package org.maxur.commons.osgi.services;
 
 import com.google.inject.Injector;
 import org.maxur.commons.core.api.Refresher;
-import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.holder.InjectorRefresher;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
@@ -27,7 +27,7 @@ public class BaseServiceFactory implements ServiceFactory {
     public BaseServiceFactory(final Object service, final Class<?> interfaceClass, final String pid) {
         this.service = service;
         this.interfaceClass = interfaceClass;
-        refresher = MutableInjectorHolder.refresher(pid);
+        this.refresher = new InjectorRefresher(pid);
     }
 
     @Override

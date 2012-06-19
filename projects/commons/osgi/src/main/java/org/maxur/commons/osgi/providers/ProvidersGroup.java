@@ -1,7 +1,7 @@
 package org.maxur.commons.osgi.providers;
 
 import org.maxur.commons.core.api.BaseObservable;
-import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.holder.InjectorHolderList;
 import org.maxur.commons.osgi.base.OSGiManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -29,7 +29,7 @@ public final class ProvidersGroup extends BaseObservable implements Iterable<Ser
 
     @Override
     public void start(BundleContext bc, String pid) {
-        MutableInjectorHolder.addModule(pid, new ProvidersModule(this));
+        InjectorHolderList.holder(pid).addModule(new ProvidersModule(this));
     }
 
     @Override

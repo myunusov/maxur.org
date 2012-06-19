@@ -10,7 +10,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
 import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
 import org.maxur.commons.core.api.Refresher;
-import org.maxur.commons.osgi.base.MutableInjectorHolder;
+import org.maxur.commons.osgi.holder.InjectorRefresher;
 import org.maxur.commons.view.api.OSGiWebApplication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public abstract class AbstractOSGiWebApplication extends WebApplication implemen
     private final Refresher<Injector> refresher;
 
     public AbstractOSGiWebApplication(final String pid) {
-        refresher = MutableInjectorHolder.refresher(pid);
+        refresher = new InjectorRefresher(pid);
         refresher.get().injectMembers(this);
     }
 

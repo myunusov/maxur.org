@@ -1,7 +1,7 @@
 package org.maxur.commons.osgi.providers;
 
 import com.google.inject.Provider;
-import org.maxur.commons.osgi.base.AbstractServiceDescription;
+import org.maxur.commons.osgi.base.AbstractService;
 import org.osgi.framework.ServiceReference;
 
 import java.lang.annotation.Annotation;
@@ -10,7 +10,7 @@ import java.lang.annotation.Annotation;
  * @author Maxim Yunusov
  * @version 1.0 13.06.12
  */
-public final class ServiceProvider extends AbstractServiceDescription implements Provider<Object> {
+public final class ServiceProvider extends AbstractService implements Provider<Object> {
 
     private Object instance;
 
