@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.maxur</groupId>
-    <artifactId>maxur-theme</artifactId>
+    <artifactId>theme</artifactId>
     <packaging>pom</packaging>
     <name>Maxur CSS Themes Container</name>
 

@@ -16,10 +16,10 @@
     </parent>
 
     <modules>
-        <module>adapters</module>
-        <module>commons</module>
-        <module>taskun</module>
-        <module>pompur</module>
+        <module>maxur-adapters</module>
+        <module>maxur-commons</module>
+        <module>maxur-taskun</module>
+        <module>maxur-pompur</module>
     </modules>
 
     <properties>

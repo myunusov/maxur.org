@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>maxur-commons</artifactId>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.maxur</groupId>
+        <artifactId>projects</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <profiles>
+        <profile>
+            <id>integration</id>
+            <modules>
+                <module>it</module>
+            </modules>
+        </profile>
+    </profiles>
+
+    <properties>
+        <project.root>${project.basedir}/../../</project.root>
+        <bundles.configuration.location>${project.basedir}/config/${env}</bundles.configuration.location>
+    </properties>
+
+    <modules>
+        <module>maxur-commons-view</module>
+        <module>maxur-commons-component</module>
+        <module>maxur-commons-osgi</module>
+        <module>maxur-commons-core</module>
+        <module>maxur-commons-contract</module>
+        <module>maxur-commons-ds</module>
+    </modules>
+
+
+</project>

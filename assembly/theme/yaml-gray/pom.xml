@@ -12,7 +12,7 @@
     <parent>
         <relativePath>../../../poms/jar</relativePath>
         <groupId>org.maxur</groupId>
-        <artifactId>abstract-jar-bundle</artifactId>
+        <artifactId>jar</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -25,21 +25,21 @@
     <dependencies>
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>unit-tests-jars</artifactId>
+            <artifactId>unittests</artifactId>
             <version>1.0</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>wicket-jars</artifactId>
+            <artifactId>wicket</artifactId>
             <version>1.0</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>guice-jars</artifactId>
+            <artifactId>guice</artifactId>
             <version>1.0</version>
             <type>pom</type>
             <scope>provided</scope>
@@ -60,7 +60,7 @@
 
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>maxur-view-api</artifactId>
+            <artifactId>maxur-commons-view</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>

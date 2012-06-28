@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>abstract-compiled-bundle</artifactId>
+    <artifactId>compiled</artifactId>
     <packaging>pom</packaging>
     <name>Abstract Compiled bundle</name>
 
     <parent>
         <groupId>org.maxur</groupId>
-        <artifactId>abstract-bundle</artifactId>
+        <artifactId>poms</artifactId>
         <version>1.0</version>
     </parent>
 
@@ -96,6 +96,13 @@
                             <goal>manifest</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>deploy-to-obr</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
                 </executions>
                 <configuration>
                     <archive>
@@ -113,6 +120,9 @@
                         <Export-Package>${bundle.namespace}.*;version="${project.version}"</Export-Package>
                         <_include>-osgi.bnd</_include>
                     </instructions>
+                    <remoteOBR>repo-rel</remoteOBR>
+                    <prefixUrl>file:///home/maxim/repositories/orb/releases</prefixUrl>
+                    <ignoreLock>true</ignoreLock>
                 </configuration>
             </plugin>
 
@@ -297,7 +307,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.2</version>
+                <version>2.4</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -452,6 +462,5 @@
 
         </plugins>
     </reporting>
-
 
 </project>

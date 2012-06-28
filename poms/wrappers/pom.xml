@@ -3,14 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>abstract-wrapper-bundle</artifactId>
+    <artifactId>wrappers</artifactId>
     <packaging>pom</packaging>
 
     <name>Abstract Wrapper bundle</name>
 
     <parent>
         <groupId>org.maxur</groupId>
-        <artifactId>abstract-bundle</artifactId>
+        <artifactId>poms</artifactId>
         <version>1.0</version>
     </parent>
 

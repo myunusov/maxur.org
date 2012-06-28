@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>abstract-jar-bundle</artifactId>
+    <artifactId>jar</artifactId>
     <packaging>pom</packaging>
     <name>Abstract Jar bundle</name>
 
     <parent>
         <relativePath>../compiled</relativePath>
         <groupId>org.maxur</groupId>
-        <artifactId>abstract-compiled-bundle</artifactId>
+        <artifactId>compiled</artifactId>
         <version>1.0</version>
     </parent>
 

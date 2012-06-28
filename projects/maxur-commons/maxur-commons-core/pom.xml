@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>maxur-commons-core</artifactId>
+    <name>Maxur Commons Core Bundle</name>
+    <description>Maxur Commons Core Bundle</description>
+    <packaging>jar</packaging>
+
+    <parent>
+        <relativePath>../../../poms/jar</relativePath>
+        <groupId>org.maxur</groupId>
+        <artifactId>jar</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <properties>
+        <project.root>${project.basedir}/../../../</project.root>
+        <bundle.symbolicName>org.maxur.commons.core</bundle.symbolicName>
+        <bundle.namespace>org.maxur.commons.core</bundle.namespace>
+        <sonar.pitest.mode>reuseReport</sonar.pitest.mode>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>pitest</id>
+            <properties>
+                <sonar.pitest.mode>active</sonar.pitest.mode>
+                <sonar.pit.target.classes>org.maxur.commons.core.*</sonar.pit.target.classes>
+                <sonar.pit.target.tests>org.maxur.commons.core.*</sonar.pit.target.tests>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <configuration>
+                            <targetTests>
+                                <param>org.maxur.commons.core.*</param>
+                            </targetTests>
+                            <targetClasses>
+                                <param>org.maxur.commons.core.*</param>
+                            </targetClasses>
+                            <jvmArgs>
+                                <value>-XX:-UseSplitVerifier</value>
+                                <jvmArg>-ea</jvmArg>
+                            </jvmArgs>
+                            <outputFormats>
+                                <outputFormat>HTML</outputFormat>
+                                <outputFormat>XML</outputFormat>
+                            </outputFormats>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>mutationCoverage</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>mutationCoverage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>unittests</artifactId>
+            <version>1.0</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
