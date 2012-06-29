@@ -241,7 +241,13 @@
         </profile>
     </profiles>
     <build>
-
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav</artifactId>
+                <version>1.0-beta-2</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
@@ -483,8 +489,13 @@
         <!-- releases repo -->
         <repository>
             <id>maxur-repository</id>
-            <url>http://127.0.0.1:9090/archiva/repository/internal</url>
+            <url>dav:http://127.0.0.1:9090/archiva/repository/internal</url>
         </repository>
+        <snapshotRepository>
+            <id>maxur-snapshots</id>
+            <name>Internal Snapshot Repository</name>
+            <url>dav:http://127.0.0.1:9090/archiva/repository/snapshots</url>
+        </snapshotRepository>
 
         <site>
             <id>website</id>
