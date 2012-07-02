@@ -55,14 +55,7 @@
 
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>maxur-yaml4</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.maxur</groupId>
-            <artifactId>yaml-gray</artifactId>
+            <artifactId>maxur-bootstrap</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>

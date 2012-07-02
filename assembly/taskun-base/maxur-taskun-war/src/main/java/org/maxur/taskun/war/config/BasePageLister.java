@@ -3,16 +3,16 @@ package org.maxur.taskun.war.config;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import org.apache.wicket.markup.html.WebPage;
-import org.maxur.adapter.yaml4.pages.BasePage;
-import org.maxur.adapter.yaml4.pages.error.AccessDeniedPage;
-import org.maxur.adapter.yaml4.pages.error.ExpiredPage;
-import org.maxur.adapter.yaml4.pages.error.InternalErrorPage;
-import org.maxur.adapter.yaml4.pages.error.NotFoundPage;
 import org.maxur.commons.component.model.bookmark.BaseBookmark;
 import org.maxur.commons.component.model.bookmark.BaseBookmarks;
+import org.maxur.commons.component.page.BasePage;
 import org.maxur.commons.view.api.Bookmarks;
 import org.maxur.commons.view.api.PageLister;
 import org.maxur.taskun.war.pages.about.AboutPage;
+import org.maxur.taskun.war.pages.error.AccessDeniedPage;
+import org.maxur.taskun.war.pages.error.ExpiredPage;
+import org.maxur.taskun.war.pages.error.InternalErrorPage;
+import org.maxur.taskun.war.pages.error.NotFoundPage;
 import org.maxur.taskun.war.pages.home.HomePage;
 
 
