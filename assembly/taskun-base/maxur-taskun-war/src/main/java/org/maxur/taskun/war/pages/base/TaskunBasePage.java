@@ -7,6 +7,7 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
 import org.maxur.commons.component.behavior.NullBehavior;
+import org.maxur.taskun.war.panels.mainmenu.MenuPanel;
 import org.maxur.commons.component.page.BasePage;
 import org.maxur.commons.view.api.StyleBehavior;
 
@@ -28,11 +29,10 @@ public abstract class TaskunBasePage extends BasePage {
      */
     public TaskunBasePage() {
         add(getThemeBehavior());
-        add(new Label("application.title",
-                new ResourceModel("application.title")));
+        add(new Label("application.title", new ResourceModel("application.title")));
 //        add(new HeaderPanel("header"));
-//        add(new MenuPanel("menu"));
-//        add(new FooterPanel("footer"));
+        add(new MenuPanel("menu"));
+        add(new FooterPanel("footer"));
     }
 
     private Behavior getThemeBehavior() {

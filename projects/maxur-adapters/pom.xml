@@ -20,15 +20,11 @@
     </properties>
 
     <modules>
-        <module>yaml</module>
-        <module>yaml4</module>
         <module>jquery</module>
         <module>html5</module>
         <module>h5bp</module>
         <module>bootstrap</module>
         <module>kickstrap</module>
-
-        <module>test-war</module>
     </modules>
 
 </project>

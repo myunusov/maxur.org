@@ -4,17 +4,30 @@
     <head>
     </head>
 </wicket:remove>
+
 <body>
 <wicket:extend>
-    <section class="box info">
-        <div class="ym-grid linearize-level-1">
-            <div class="ym-g66 ym-gl">
-                <span wicket:id="list_view">
-                    Issue: <span wicket:id="label">[issue]</span><br/>
-                </span>
+
+    <div class="row-fluid">
+        <div class="span3"></div>
+        <div class="span6">
+            <div class="well">
+                <ul class="nav nav-list">
+                    <li class="nav-header" >
+                        Issues
+                    </li>
+                    <li wicket:id="list_view">
+                        <a href="#">
+                            <span wicket:id="label" class="label">[label]</span>
+                            <span wicket:id="issue">[issue]</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </section>
+        <div class="span3"></div>
+    </div>
+
 </wicket:extend>
 </body>
 </html>

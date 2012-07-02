@@ -50,8 +50,10 @@ public class HomePage extends TaskunBasePage {
 
         protected void populateItem(final ListItem<Issue> item) {
             final Issue issue = item.getModelObject();
-            item.add(new Label("label", issue.getDescription()));
-            item.add(new IssueDecorator(item.getModel()));
+            final Label label = new Label("label", issue.isTask() ? "Task" : "Defect");
+            item.add(label);   // TODO
+            item.add(new Label("issue", issue.getDescription()));
+            label.add(new IssueDecorator(item.getModel()));
         }
 
 
@@ -67,7 +69,7 @@ public class HomePage extends TaskunBasePage {
 
             public void onComponentTag(final Component component, final ComponentTag tag) {
                 if (model.getObject().isDefect()) {
-                    tag.put("style", "color:red");
+                     tag.put("class", "label label-important");
                 }
             }
         }
