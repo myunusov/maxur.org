@@ -1,4 +1,4 @@
-package org.maxur.commons.component.application.classresolver;
+package org.maxur.commons.component.application.osgi.classresolver;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.junit.Before;
@@ -38,13 +38,13 @@ public class ClassLoaderResolverTest {
     public void shouldBeReturnClassByName() throws Exception {
         resolver.addClassLoader(this.getClass().getClassLoader());
         assertEquals(ClassLoaderResolverTest.class,
-                resolver.resolve("org.maxur.commons.component.application.classresolver.ClassLoaderResolverTest"));
+                resolver.resolve("org.maxur.commons.component.application.osgi.classresolver.ClassLoaderResolverTest"));
     }
 
     @Test(expected = ClassNotFoundException.class)
     public void shouldBeReturnExceptionWithoutClassLoader() throws Exception {
         assertEquals(ClassLoaderResolverTest.class,
-                resolver.resolve("org.maxur.commons.component.application.classresolver.ClassLoaderResolverTest"));
+                resolver.resolve("org.maxur.commons.component.application.osgi.classresolver.ClassLoaderResolverTest"));
     }
 
     @Test(expected = ClassNotFoundException.class)

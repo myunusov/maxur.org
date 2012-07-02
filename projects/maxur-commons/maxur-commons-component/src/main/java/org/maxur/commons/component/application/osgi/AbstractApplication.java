@@ -1,4 +1,4 @@
-package org.maxur.commons.component.application;
+package org.maxur.commons.component.application.osgi;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -8,7 +8,7 @@ import org.apache.wicket.guice.GuiceInjectorHolder;
 import org.apache.wicket.markup.html.SecurePackageResourceGuard;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.http.WebRequest;
-import org.maxur.commons.component.application.classresolver.OsgiClassResolver;
+import org.maxur.commons.component.application.osgi.classresolver.OsgiClassResolver;
 import org.maxur.commons.core.api.Refresher;
 import org.maxur.commons.osgi.holder.InjectorRefresher;
 import org.maxur.commons.view.api.OSGiWebApplication;
@@ -19,13 +19,13 @@ import javax.servlet.http.HttpServletRequest;
  * @author Maxim Yunusov
  * @version 1.0 10.05.12
  */
-public abstract class AbstractOSGiWebApplication extends WebApplication implements OSGiWebApplication {
+public abstract class AbstractApplication extends WebApplication implements OSGiWebApplication {
 
     private OsgiClassResolver classResolver;
 
     private final Refresher<Injector> refresher;
 
-    public AbstractOSGiWebApplication(final String pid) {
+    public AbstractApplication(final String pid) {
         refresher = new InjectorRefresher(pid);
         refresher.get().injectMembers(this);
     }

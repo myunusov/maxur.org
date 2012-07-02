@@ -11,11 +11,12 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.util.time.Duration;
-import org.maxur.commons.component.model.bookmark.Bookmark;
-import org.maxur.commons.component.model.bookmark.Bookmarks;
+import org.maxur.commons.component.application.osgi.AbstractApplication;
+import org.maxur.commons.component.model.bookmark.BaseBookmark;
 import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
-import org.maxur.commons.view.api.PageProvider;
+import org.maxur.commons.view.api.Bookmarks;
+import org.maxur.commons.view.api.PageLister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Maxim Yunusov
  * @version 1.0 27.09.11
  */
-public class MaxurApplication extends AbstractOSGiWebApplication {
+public class MaxurApplication extends AbstractApplication {
 
     private static final String DEFAULT_ENCODING = "UTF-8";
 
@@ -45,51 +46,14 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     private WebBrowserDetector detector;
 
     @Inject
-    private Bookmarks bookmarks;
+    private Bookmarks<BaseBookmark> bookmarks;
 
     @Inject
-    @Named("HomePage")
-    private PageProvider homePageProvider;
+    private PageLister<WebPage> lister;
 
-    @Inject
-    @Named("InternalErrorPage")
-    private PageProvider internalErrorProvider;
-
-    @Inject
-    @Named("ExpiredPage")
-    private PageProvider expiredPageProvider;
-
-    @Inject
-    @Named("AccessDeniedPage")
-    private PageProvider accessDeniedPageProvider;
-
-
-    @Inject
-    @Named("NotFoundPage")
-    private PageProvider notFoundPageProvider;
 
     public MaxurApplication(final String pid) {
         super(pid);
-    }
-
-    /**
-     * <p>Setter for the field <code>version</code>.</p>
-     *
-     * @param version a {@link java.lang.String} Application Version.
-     */
-    @SuppressWarnings("UnusedDeclaration")
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    /**
-     * <p>Setter for the field <code>title</code>.</p>
-     *
-     * @param title a {@link java.lang.String} Application String.
-     */
-    @SuppressWarnings("UnusedDeclaration")
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     /**
@@ -97,7 +61,7 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
      */
     @Override
     public final Class<? extends WebPage> getHomePage() {
-        return homePageProvider.get();
+        return lister.getStartPage();
     }
 
     @Override
@@ -110,14 +74,14 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
     }
 
     private void setErrorPages() {
-        getApplicationSettings().setInternalErrorPage(internalErrorProvider.get());
-        getApplicationSettings().setPageExpiredErrorPage(expiredPageProvider.get());
-        getApplicationSettings().setAccessDeniedPage(accessDeniedPageProvider.get());
-        mount(new MountedMapper("/404", notFoundPageProvider.get()));
+        getApplicationSettings().setInternalErrorPage(lister.getInternalErrorPage());
+        getApplicationSettings().setPageExpiredErrorPage(lister.getPageExpiredErrorPage());
+        getApplicationSettings().setAccessDeniedPage(lister.getAccessDeniedPage());
+        mount(new MountedMapper("/404", lister.getPageNotFoundPage()));
     }
 
     private void setBookmarks() {
-        for (Bookmark bookmark : bookmarks) {
+        for (BaseBookmark bookmark : bookmarks) {
             mount(bookmark.getMapper());
         }
     }
@@ -161,6 +125,57 @@ public class MaxurApplication extends AbstractOSGiWebApplication {
 
     private HttpServletRequest getHttpServletRequest() {
         return ((HttpServletRequest) RequestCycle.get().getRequest().getContainerRequest());
+    }
+
+
+    /**
+     * <p>Setter for the field <code>bookmarks</code>.</p>
+     *
+     * @param bookmarks a {@link Bookmarks} Iterator of Bookmark.
+     */
+    @SuppressWarnings("UnusedDeclaration")
+    public void setBookmarks(final Bookmarks<BaseBookmark> bookmarks) {
+        this.bookmarks = bookmarks;
+    }
+
+    /**
+     * <p>Setter for the field <code>lister</code>.</p>
+     *
+     * @param lister a {@link WebBrowserDetector} Lister of web pages.
+     */
+    @SuppressWarnings("UnusedDeclaration")
+    public void setLister(final PageLister<WebPage> lister) {
+        this.lister = lister;
+    }
+
+    /**
+     * <p>Setter for the field <code>detector</code>.</p>
+     *
+     * @param detector a {@link WebBrowserDetector} Web Browser Detector.
+     */
+    @SuppressWarnings("UnusedDeclaration")
+    public void setDetector(final WebBrowserDetector detector) {
+        this.detector = detector;
+    }
+
+    /**
+     * <p>Setter for the field <code>version</code>.</p>
+     *
+     * @param version a {@link java.lang.String} Application Version.
+     */
+    @SuppressWarnings("UnusedDeclaration")
+    public void setVersion(final String version) {
+        this.version = version;
+    }
+
+    /**
+     * <p>Setter for the field <code>title</code>.</p>
+     *
+     * @param title a {@link java.lang.String} Application String.
+     */
+    @SuppressWarnings("UnusedDeclaration")
+    public void setTitle(final String title) {
+        this.title = title;
     }
 
 }

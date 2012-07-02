@@ -1,4 +1,4 @@
-package org.maxur.commons.component.application.classresolver;
+package org.maxur.commons.component.application.osgi.classresolver;
 
 import org.apache.wicket.Application;
 import org.apache.wicket.application.IClassResolver;

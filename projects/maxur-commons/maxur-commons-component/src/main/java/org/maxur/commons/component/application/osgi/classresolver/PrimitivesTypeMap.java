@@ -1,4 +1,4 @@
-package org.maxur.commons.component.application.classresolver;
+package org.maxur.commons.component.application.osgi.classresolver;
 
 public class PrimitivesTypeMap extends ClassResolver {
 

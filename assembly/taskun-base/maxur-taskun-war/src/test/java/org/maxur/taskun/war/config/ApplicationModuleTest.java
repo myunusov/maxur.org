@@ -4,13 +4,14 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.name.Named;
 import com.google.inject.name.Names;
+import org.apache.wicket.markup.html.WebPage;
 import org.junit.Before;
 import org.junit.Test;
-import org.maxur.commons.component.model.bookmark.Bookmarks;
+import org.maxur.commons.component.model.bookmark.BaseBookmark;
+import org.maxur.commons.view.api.Bookmarks;
 import org.maxur.commons.view.api.MenuItems;
-import org.maxur.commons.view.api.PageProvider;
+import org.maxur.commons.view.api.PageLister;
 import org.maxur.taskun.war.pages.home.HomePage;
 
 import static org.junit.Assert.assertEquals;
@@ -26,10 +27,10 @@ public class ApplicationModuleTest {
     private MenuItems menuItems;
 
     @Inject
-    private Bookmarks bookmarks;
+    private Bookmarks<BaseBookmark> bookmarks;
 
-    @Inject @Named("HomePage")
-    private PageProvider homePageProvider;
+    @Inject
+    private PageLister<WebPage> pageLister;
 
 
     @Before
@@ -55,7 +56,7 @@ public class ApplicationModuleTest {
 
     @Test
     public void shouldBeInjectedByHomePage() throws Exception {
-        assertEquals(HomePage.class, homePageProvider.get());
+        assertEquals(HomePage.class, pageLister.getStartPage());
     }
 
 }
