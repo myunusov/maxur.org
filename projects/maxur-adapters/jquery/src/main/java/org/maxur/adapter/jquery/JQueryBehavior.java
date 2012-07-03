@@ -27,7 +27,7 @@ public class JQueryBehavior extends BaseResourcesBehavior implements JScriptBeha
     }
 
     public String getJQueryCore() {
-        return isDeploymentMode() ? "/jquery-1.7.2.min.js" : "/jquery-1.7.2.js";
+        return isDeploymentMode() ? "/js/jquery-1.7.2.min.js" : "/js/jquery-1.7.2.js";
     }
 
 }

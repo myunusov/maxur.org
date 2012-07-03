@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.maxur.taskun.war.AbstractWicketTest;
+import org.maxur.taskun.war.pages.base.FooterPanel;
+import org.maxur.taskun.war.panels.mainmenu.MenuPanel;
 
 /**
  * @author Maxim Yunusov
@@ -59,18 +61,16 @@ public class HomePageTest extends AbstractWicketTest {
      * Base Page should be has Footer Test case.
      */
     @Test
-    @Ignore
     public void shouldBeHasFooter() {
-        //getTester().assertComponent("footer", FooterPanel.class);
+        getTester().assertComponent("footer", FooterPanel.class);
     }
 
     /**
      * Base Page should be has Menu Test case.
      */
     @Test
-    @Ignore
     public void shouldBeHasMenu() {
-        //getTester().assertComponent("menu", MenuPanel.class);
+        getTester().assertComponent("menu", MenuPanel.class);
     }
 
 

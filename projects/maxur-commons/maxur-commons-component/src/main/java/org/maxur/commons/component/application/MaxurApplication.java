@@ -5,12 +5,15 @@ import com.google.inject.name.Named;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
 import org.apache.wicket.core.request.mapper.MountedMapper;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.IHeaderResponseDecorator;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.util.time.Duration;
+import org.apache.wicket.markup.head.filter.JavaScriptFilteredIntoFooterHeaderResponse;
 import org.maxur.commons.component.application.osgi.AbstractApplication;
 import org.maxur.commons.component.model.bookmark.BaseBookmark;
 import org.maxur.commons.component.model.webclient.WebBrowser;
@@ -29,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
  * @version 1.0 27.09.11
  */
 public class MaxurApplication extends AbstractApplication {
+
+    public static final String FOOTER_BUCKET_NAME = "footerJS";
 
     private static final String DEFAULT_ENCODING = "UTF-8";
 
@@ -70,6 +75,13 @@ public class MaxurApplication extends AbstractApplication {
         setMode();
         setBookmarks();
         setErrorPages();
+
+        setHeaderResponseDecorator(new IHeaderResponseDecorator() {
+            public IHeaderResponse decorate(IHeaderResponse response) {
+                return new JavaScriptFilteredIntoFooterHeaderResponse(response, FOOTER_BUCKET_NAME);
+            }
+        });
+
         logger.debug(String.format("Start %s (Version : %s)", title, version));
     }
 
