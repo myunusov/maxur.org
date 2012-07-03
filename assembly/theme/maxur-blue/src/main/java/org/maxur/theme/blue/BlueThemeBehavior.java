@@ -1,7 +1,6 @@
 package org.maxur.theme.blue;
 
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -12,7 +11,6 @@ import org.maxur.commons.component.behavior.BaseThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowser;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.component.model.webclient.WebBrowserType;
-import org.maxur.commons.view.api.StyleBehavior;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,9 +29,6 @@ public class BlueThemeBehavior extends BaseThemeBehavior {
 
     @Inject
     private WebBrowserDetector detector;
-
-    @Inject  @Named("yaml")
-    private StyleBehavior styleBehavior;
 
     @Override
     public void renderHead(final Component component, final IHeaderResponse response) {
@@ -59,7 +54,7 @@ public class BlueThemeBehavior extends BaseThemeBehavior {
 
     @Override
     public Behavior asBehavior() {
-        return new BaseThemeBehavior(styleBehavior.asBehavior(), this);
+        return this;
     }
 
 }

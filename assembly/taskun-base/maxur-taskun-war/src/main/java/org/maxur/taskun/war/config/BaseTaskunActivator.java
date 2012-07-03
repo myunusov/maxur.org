@@ -1,8 +1,8 @@
 package org.maxur.taskun.war.config;
 
+import org.maxur.commons.component.behavior.ThemeBehavior;
 import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.osgi.BaseGuiceActivator;
-import org.maxur.commons.view.api.StyleBehavior;
 import org.maxur.taskun.domain.IssueLister;
 
 import static com.google.inject.name.Names.named;
@@ -25,7 +25,7 @@ public final class BaseTaskunActivator extends BaseGuiceActivator {
 
     @Override
     protected void config() {
-        bind(StyleBehavior.class).annotatedWith(named("bootstrap_core")).toOSGiService();
+        bind(ThemeBehavior.class).annotatedWith(named("blue_theme")).toOSGiService();
         bind(IssueLister.class).toOSGiService();
         bind(WebBrowserDetector.class).toOSGiService();
     }

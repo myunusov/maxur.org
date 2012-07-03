@@ -4,9 +4,10 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.apache.wicket.behavior.Behavior;
 import org.maxur.commons.component.behavior.ThemeBehavior;
+import org.maxur.commons.component.model.webclient.BaseWebBrowserDetector;
 import org.maxur.commons.component.model.webclient.WebBrowser;
+import org.maxur.commons.component.model.webclient.WebBrowserDetector;
 import org.maxur.commons.view.api.MenuItems;
-import org.maxur.commons.view.api.StyleBehavior;
 import org.maxur.taskun.domain.Issue;
 import org.maxur.taskun.domain.IssueLister;
 import org.maxur.taskun.war.config.MenuItemsProvider;
@@ -28,12 +29,13 @@ public class TestModule extends AbstractModule {
         bind(IssueLister.class).to(FakeIssueLister.class);
         bind(MenuItems.class).toProvider(MenuItemsProvider.class);
         bind(WebBrowser.class).toInstance(ie(6));
-        bind(StyleBehavior.class).annotatedWith(named("bootstrap_core")).to(FakeThemeBehavior.class);
+        bind(WebBrowserDetector.class).toInstance(new BaseWebBrowserDetector());
+        bind(ThemeBehavior.class).annotatedWith(named("blue_theme")).to(FakeThemeBehavior.class);
         bindConstant().annotatedWith(Names.named("version")).to("test version");
         bindConstant().annotatedWith(Names.named("service.pid")).to("test pid");
     }
 
-    private static class FakeThemeBehavior extends Behavior implements ThemeBehavior {
+    private static class FakeThemeBehavior extends Behavior implements ThemeBehavior{
         private static final long serialVersionUID = -2768454036238993714L;
 
         @Override
