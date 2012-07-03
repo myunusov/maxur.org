@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>maxur-h5bp</artifactId>
+    <artifactId>h5bp</artifactId>
     <version>1.0</version>
     <name>Maxur HTML5 Boilerplate Adapter Bundle</name>
     <packaging>jar</packaging>

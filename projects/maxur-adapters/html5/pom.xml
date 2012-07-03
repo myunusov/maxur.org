@@ -6,6 +6,7 @@
 
     <artifactId>html5</artifactId>
     <name>Maxur 3d Party HTML 5 Adapter Bundle</name>
+    <version>3.6</version>
     <packaging>jar</packaging>
 
     <parent>
