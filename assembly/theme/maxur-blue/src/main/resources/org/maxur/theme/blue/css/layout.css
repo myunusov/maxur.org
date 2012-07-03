@@ -1,0 +1,32 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+.navbar .navbar-inner {
+    background-color: #336699;
+    background-image: -moz-linear-gradient(left center , #336699, #2AC7C4);
+    background-repeat: repeat-x;
+}
+
+.navbar .navbar-inner .brand {
+    color: #EEEEEE;
+}
+
+.navbar .navbar-inner .nav > li > a {
+    color: #EEEEEE;
+}
+
+.navbar .navbar-inner .nav > li > a:hover {
+    color: #FFFFFF;
+}
+
+.navbar .navbar-inner .nav .active > a, .navbar .navbar-inner .nav .active > a:hover {
+    background-color: #003366;
+    color: #EEEEEE;
+}
+
+

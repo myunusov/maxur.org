@@ -32,16 +32,25 @@ public abstract class TaskunBasePage extends BasePage {
      * It's Base Page constructor.
      */
     public TaskunBasePage() {
-        add(new HeaderResponseContainer(MaxurApplication.FOOTER_BUCKET_NAME, MaxurApplication.FOOTER_BUCKET_NAME));
-
-        add(new Label("application.title", new ResourceModel("application.title")));
-//        add(new HeaderPanel("header"));
-        add(new MenuPanel("menu"));
-        add(new FooterPanel("footer"));
-
         add(getThemeBehavior());
         add(new JQueryBehavior());
         add(new BootstrapCoreBehavior());
+
+        add(new HeaderResponseContainer(MaxurApplication.FOOTER_BUCKET_NAME, MaxurApplication.FOOTER_BUCKET_NAME));
+
+        add(new Label("application.title", new ResourceModel("application.title")));
+
+        final HeaderPanel header = new HeaderPanel("header");
+        add(header);
+        header.setRenderBodyOnly(true);
+
+        final MenuPanel menu = new MenuPanel("menu");
+        add(menu);
+        menu.setRenderBodyOnly(true);
+
+        final FooterPanel footer = new FooterPanel("footer");
+        add(footer);
+        footer.setRenderBodyOnly(true);
     }
 
     private Behavior getThemeBehavior() {
