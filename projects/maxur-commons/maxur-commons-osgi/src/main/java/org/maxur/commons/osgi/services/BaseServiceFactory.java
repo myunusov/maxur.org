@@ -7,6 +7,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,13 +19,13 @@ import java.lang.reflect.Proxy;
  */
 public class BaseServiceFactory implements ServiceFactory {
 
-    private final Object service;
+    private final Serializable service;
 
     private final Class<?> interfaceClass;
 
     private final Refresher<Injector> refresher;
 
-    public BaseServiceFactory(final Object service, final Class<?> interfaceClass, final String pid) {
+    public BaseServiceFactory(final Serializable service, final Class<?> interfaceClass, final String pid) {
         this.service = service;
         this.interfaceClass = interfaceClass;
         this.refresher = new InjectorRefresher(pid);
@@ -35,7 +36,7 @@ public class BaseServiceFactory implements ServiceFactory {
         return Proxy.newProxyInstance(
                 service.getClass().getClassLoader(),
                 new Class[]{interfaceClass},
-                new ServiceHandler()
+                new ServiceHandler(service, refresher)
         );
     }
 
@@ -43,7 +44,18 @@ public class BaseServiceFactory implements ServiceFactory {
     public void ungetService(final Bundle bundle, final ServiceRegistration serviceRegistration, final Object o) {
     }
 
-    private class ServiceHandler implements InvocationHandler {
+    private static class ServiceHandler implements InvocationHandler, Serializable {
+
+        private static final long serialVersionUID = 5586212594157048590L;
+
+        private final Serializable service;
+        private final Refresher<Injector> refresher;
+
+        private ServiceHandler(final Serializable service, final Refresher<Injector> refresher) {
+            this.service = service;
+            this.refresher = refresher;
+        }
+
         public Object invoke(
                 final Object proxy,
                 final Method method,

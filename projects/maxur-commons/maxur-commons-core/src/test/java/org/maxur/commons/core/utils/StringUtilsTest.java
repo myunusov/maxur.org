@@ -11,6 +11,8 @@ import static org.junit.Assert.assertFalse;
  */
 public class StringUtilsTest {
 
+
+
     @Test
     public void shouldBeBlankOnNull() throws Exception {
         assertFalse(StringUtils.isNotBlank(null));

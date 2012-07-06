@@ -4,6 +4,7 @@ package org.maxur.taskun.war.pages.base;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.wicket.behavior.Behavior;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.head.filter.HeaderResponseContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.ResourceModel;
@@ -25,7 +26,7 @@ public abstract class TaskunBasePage extends BasePage {
 
     @Inject
     @Named("blue_theme")
-    private ThemeBehavior themeBehavior;
+    private transient ThemeBehavior themeBehavior;
 
 
     /**
@@ -54,6 +55,9 @@ public abstract class TaskunBasePage extends BasePage {
     }
 
     private Behavior getThemeBehavior() {
+        if (themeBehavior == null) {
+            Injector.get().inject(this);
+        }
         return themeBehavior != null ? themeBehavior.asBehavior(): NullBehavior.get();
     }
 

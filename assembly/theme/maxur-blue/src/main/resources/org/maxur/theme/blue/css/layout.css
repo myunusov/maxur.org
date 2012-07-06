@@ -29,4 +29,11 @@ body {
     color: #EEEEEE;
 }
 
+article, aside, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+.super-menu {
+    width: 480px;
+}
 

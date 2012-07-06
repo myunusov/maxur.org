@@ -2,6 +2,7 @@ package org.maxur.commons.osgi.services;
 
 import org.maxur.commons.osgi.base.CompositeManager;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
 import static org.maxur.commons.core.assertion.Contract.argument;
@@ -18,7 +19,7 @@ public final class Exporter {
 
     private final Object service;
 
-    public Exporter(final CompositeManager<ServiceManager> manager, final Object service) {
+    public Exporter(final CompositeManager<ServiceManager> manager, final Serializable service) {
         this.manager = manager;
         this.service = service;
         result = new ServiceManager(service);

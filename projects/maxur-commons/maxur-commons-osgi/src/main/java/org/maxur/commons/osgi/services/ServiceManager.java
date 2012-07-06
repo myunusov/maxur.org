@@ -7,6 +7,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.util.Dictionary;
 
@@ -16,7 +17,7 @@ import java.util.Dictionary;
  */
 public final class ServiceManager extends AbstractService implements OSGiManager {
 
-    private final Object service;
+    private final Serializable service;
 
     private Class<?> type;
 
@@ -24,7 +25,7 @@ public final class ServiceManager extends AbstractService implements OSGiManager
 
     private ServiceFactory factory;
 
-    ServiceManager(final Object service) {
+    ServiceManager(final Serializable service) {
         super();
         this.service = service;
     }

@@ -13,6 +13,8 @@ import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * @author Maxim Yunusov
  * @version 1.0 23.05.12
@@ -77,7 +79,7 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         return new Binder(providerGroupsManager, providedClass);
     }
 
-    protected Exporter export(final Object service) {
+    protected Exporter export(final Serializable service) {
         return new Exporter(servicesManager, service);
     }
 
