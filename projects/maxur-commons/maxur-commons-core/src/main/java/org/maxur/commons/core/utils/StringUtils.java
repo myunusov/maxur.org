@@ -2,12 +2,6 @@ package org.maxur.commons.core.utils;
 
 import org.maxur.commons.core.api.OuterIterator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 /**
  * <p>StringUtils class.</p>
  *
@@ -36,20 +30,12 @@ public final class StringUtils {
         return value != null && value.length() > 0;
     }
 
-    public static String merge(final String separator, final String... strings) {
-        final Set<String> result = new HashSet<>();
-        for (String string : strings) {
-            result.addAll(Arrays.asList(string.split(separator)));
-        }
-        return join(separator, result);
+    public static StringList list(final String... strings) {
+        return new StringList(strings);
     }
 
-    public static String join(final String separator, final String... strings) {
-        final List<String> result = new ArrayList<>();
-        for (String string : strings) {
-            result.addAll(Arrays.asList(string.split(separator)));
-        }
-        return join(separator, result);
+    public static StringSet set(final String... strings) {
+        return new StringSet(strings);
     }
 
     public static String join(final String separator, final Iterable<String> strings) {
