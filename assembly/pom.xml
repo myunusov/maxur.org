@@ -169,15 +169,16 @@
             <artifactId>pax-confman-propsloader</artifactId>
             <version>0.2.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.ops4j.pax.logging</groupId>
             <artifactId>pax-logging-api</artifactId>
-            <version>1.6.1</version>
+            <version>1.6.9</version>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.logging</groupId>
             <artifactId>pax-logging-service</artifactId>
-            <version>1.6.1</version>
+            <version>1.6.9</version>
         </dependency>
 
         <dependency>
@@ -209,23 +210,24 @@
         <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-api</artifactId>
-            <version>1.1.2</version>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-spi</artifactId>
-            <version>1.1.2</version>
+            <version>2.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-jetty-bundle</artifactId>
-            <version>1.1.1</version>
+            <version>2.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-extender-war</artifactId>
-            <version>1.1.2</version>
+            <version>2.0.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.ops4j.pax.swissbox</groupId>
@@ -259,15 +261,16 @@
         </dependency>
 
         <!--swissbox-->
+
         <dependency>
             <groupId>org.ops4j.pax.swissbox</groupId>
             <artifactId>pax-swissbox-core</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.1</version>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.swissbox</groupId>
             <artifactId>pax-swissbox-extender</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -278,7 +281,7 @@
         <dependency>
             <groupId>org.ops4j.pax.swissbox</groupId>
             <artifactId>pax-swissbox-tracker</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -289,7 +292,12 @@
         <dependency>
             <groupId>org.ops4j.pax.swissbox</groupId>
             <artifactId>pax-swissbox-lifecycle</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.swissbox</groupId>
+            <artifactId>pax-swissbox-optional-jcl</artifactId>
+            <version>1.5.1</version>
         </dependency>
 
         <dependency>
