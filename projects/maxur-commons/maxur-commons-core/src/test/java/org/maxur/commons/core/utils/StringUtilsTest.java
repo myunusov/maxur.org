@@ -35,43 +35,43 @@ public class StringUtilsTest {
 
     @Test
     public void shouldBeJoin() throws Exception {
-        assertEquals("a b c", StringUtils.join(" ", "a", "b", "c"));
+        assertEquals("a b c", StringUtils.list("a", "b", "c").split(" ").join(" "));
     }
 
     @Test
     public void shouldBeJoinWithBlankElements() throws Exception {
-        assertEquals("a,b,c", StringUtils.join(",", "a", "", "b", "", "c", ""));
+        assertEquals("a,b,c", StringUtils.list("a", "", "b", "", "c", "").split(",").join(","));
     }
 
     @Test
     public void shouldBeJoinWithSpaceElements() throws Exception {
-        assertEquals("a, ,b, ,c, ", StringUtils.join(",", "a", " ", "b", " ", "c", " "));
+        assertEquals("a, ,b, ,c, ", StringUtils.list("a", " ", "b", " ", "c", " ").split(",").join(","));
     }
 
 
     @Test
     public void shouldBeJoinWithSeparator() throws Exception {
-        assertEquals("a b c", StringUtils.join(" ", "a b", "c"));
+        assertEquals("a b c", StringUtils.list("a b", "c").split(" ").join(" "));
     }
 
     @Test
     public void shouldBeJoinWithStartAndTileSeparator() throws Exception {
-        assertEquals("a b c", StringUtils.join(" ", " a b ", "c"));
+        assertEquals("a b c", StringUtils.list(" a b ", "c").split(" ").join(" "));
     }
 
     @Test
     public void shouldBeJoinWithSeparatorOnly() throws Exception {
-        assertEquals("", StringUtils.join(" ", "  ", " "));
+        assertEquals("", StringUtils.list("  ", " ").split(" ").join(" "));
     }
 
     @Test
     public void shouldBeJoinAsSeparator() throws Exception {
-        assertEquals("s d", StringUtils.join(" ", "  ", "s d"));
+        assertEquals("s d", StringUtils.list("  ", "s d").split(" ").join(" "));
     }
 
     @Test
     public void testMerge() throws Exception {
-        assertEquals("f d b s a", StringUtils.merge(" ", "s f a b", "d", "f", "a b"));
+        assertEquals("a b d f s", StringUtils.set("s f a b", "d", "f", "a b").split(" ").merge(" "));
     }
 
 

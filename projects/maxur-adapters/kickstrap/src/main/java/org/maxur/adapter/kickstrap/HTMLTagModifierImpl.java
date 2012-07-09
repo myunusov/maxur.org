@@ -75,7 +75,11 @@ public class HTMLTagModifierImpl implements HTMLTagModifier {
         final XmlTag nextTag = parser.nextTag();
         if (nextTag.getName().equalsIgnoreCase(HTML_TAG)) {
             final String attribute = nextTag.getAttribute(CLASS_ATTRIBUTE).toString();
-            nextTag.put(CLASS_ATTRIBUTE, StringUtils.merge(ATTRIBUTE_VALUE_SEPARATOR, attribute, getClasses()));
+            nextTag.put(CLASS_ATTRIBUTE,
+                    StringUtils.set(attribute, getClasses())
+                            .split(ATTRIBUTE_VALUE_SEPARATOR)
+                            .merge(ATTRIBUTE_VALUE_SEPARATOR)
+            );
             // write the highlighted XHTML in between the code tags
             final Response response = RequestCycle.get().getResponse();
             response.write(DOCTYPE_HTML);
