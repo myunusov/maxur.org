@@ -72,7 +72,13 @@ public class HomePage extends TaskunBasePage {
             }
         };
 
+/*
+        link.add(new AttributeAppender("onclick",
+                new Model<>("$('#" + mw.getModalWindowId() + "').modal();"), ";")
+        );*/
+
         link.add(new ModalBehavior(mw.getModalWindowId()));
+
         add(link);
 
     }

@@ -25,7 +25,6 @@ import org.apache.wicket.markup.html.panel.Panel;
     @SuppressWarnings("serial")
     public ModalWindow(final String id, final ModalPanel modalPanel) {
         super(id);
-
         wmc = new WebMarkupContainer("wmc") {
             protected void onComponentTag(final ComponentTag tag) {
                 setMarkupId(getMarkupId());
@@ -33,7 +32,6 @@ import org.apache.wicket.markup.html.panel.Panel;
             }
         };
         add(wmc);
-
         wmc.add(modalPanel);
     }
 
