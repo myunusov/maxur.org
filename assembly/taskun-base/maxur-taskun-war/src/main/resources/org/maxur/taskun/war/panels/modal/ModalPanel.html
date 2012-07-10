@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns:wicket>
 <wicket:panel>
-    <span wicket:id="header"></span>
-    <div wicket:id="content"></div>
-    <input type="button" wicket:id="cancel" value="Cancel" >
-    <input type="button" wicket:id="submit"  value="Submit" >
+
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+
+        <h3><span wicket:id="header">This is a Modal Heading</span></h3>
+    </div>
+    <div class="modal-body">
+        <div wicket:id="content"></div>
+        <h4>Text in a modal</h4>
+        <p>You can add some text here.</p>
+    </div>
+    <div class="modal-footer">
+        <a wicket:id="cancel" href="#" class="btn btn-success">Call to action</a>
+        <a wicket:id="submit" href="#" class="btn" data-dismiss="modal">Close</a>
+    </div>
+
 </wicket:panel>
 </html>
+
+
+

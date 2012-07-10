@@ -39,7 +39,7 @@ public class ModalBehavior extends Behavior {
         component.add(new JQueryBehavior());
         component.add(new BootstrapCoreBehavior());
         component.add(new BootstrapModalBehavior());
-        component.add(new JavaScriptBehavior("modal" + modalWindowId, "$('#" + modalWindowId + "').modal()"));
+       // component.add(new JavaScriptBehavior("modal" + modalWindowId, "$('#" + modalWindowId + "').modal()"));
     }
 
 }

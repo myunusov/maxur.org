@@ -47,14 +47,13 @@ public class HomePage extends TaskunBasePage {
 
         ModalWindow mw = new ModalWindow("mw",
 
-                new ModalPanel(ModalWindow.MODAL_PANEL_ID, "Delete") {
+                new ModalPanel(ModalWindow.MODAL_PANEL_ID, "This is a Modal Heading") {
                     @Override
                     public void onSubmit(AjaxRequestTarget target) {
                     }
 
                     @Override
                     public void onCancel(AjaxRequestTarget target) {
-                        // TODO Auto-generated method stub
                     }
 
                     @Override
@@ -64,6 +63,7 @@ public class HomePage extends TaskunBasePage {
                 }
         );
         add(mw);
+        mw.setRenderBodyOnly(true);
 
         AjaxLink link = new AjaxLink("link") {
             @Override
