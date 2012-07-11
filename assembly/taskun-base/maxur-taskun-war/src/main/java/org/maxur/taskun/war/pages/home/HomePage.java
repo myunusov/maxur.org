@@ -2,21 +2,17 @@ package org.maxur.taskun.war.pages.home;
 
 import com.google.inject.Inject;
 import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.maxur.taskun.domain.Issue;
 import org.maxur.taskun.domain.IssueLister;
-import org.maxur.taskun.war.pages.about.AboutPanel;
 import org.maxur.taskun.war.pages.base.TaskunBasePage;
-import org.maxur.taskun.war.panels.modal.ModalBehavior;
-import org.maxur.taskun.war.panels.modal.ModalPanel;
+import org.maxur.taskun.war.panels.modal.ModalLinkBehavior;
 import org.maxur.taskun.war.panels.modal.ModalWindow;
 
 import java.util.List;
@@ -45,25 +41,8 @@ public class HomePage extends TaskunBasePage {
     public HomePage() {
         add(new IssueListView("list_view", issueLister.listActive()));
 
-        ModalWindow mw = new ModalWindow("mw",
-
-                new ModalPanel(ModalWindow.MODAL_PANEL_ID, "This is a Modal Heading") {
-                    @Override
-                    public void onSubmit(AjaxRequestTarget target) {
-                    }
-
-                    @Override
-                    public void onCancel(AjaxRequestTarget target) {
-                    }
-
-                    @Override
-                    public Panel getContent(String id) {
-                        return new AboutPanel(id);
-                    }
-                }
-        );
+        ModalWindow mw = new ModalWindow("mw");
         add(mw);
-        mw.setRenderBodyOnly(true);
 
         Link link = new Link("link") {
             @Override
@@ -77,8 +56,7 @@ public class HomePage extends TaskunBasePage {
                 new Model<>("$('#" + mw.getModalWindowId() + "').modal();"), ";")
         );*/
 
-        link.add(new ModalBehavior(mw.getModalWindowId()));
-
+        link.add(new ModalLinkBehavior(mw));
         add(link);
 
     }

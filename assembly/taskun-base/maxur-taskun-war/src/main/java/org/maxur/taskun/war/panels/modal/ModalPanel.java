@@ -20,7 +20,7 @@ public abstract class ModalPanel extends Panel {
     private static final long serialVersionUID = -5374709317282588892L;
 
     @SuppressWarnings("serial")
-    public ModalPanel(String id, String header) {
+    public ModalPanel(final String id, final String header) {
         super(id);
 
         //Modal window header
@@ -33,7 +33,7 @@ public abstract class ModalPanel extends Panel {
         //Buttons
         AjaxLink cancel = new AjaxLink("cancel") {
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            public void onClick(final AjaxRequestTarget target) {
                 ModalPanel.this.onCancel(target);
             }
         };
@@ -41,7 +41,7 @@ public abstract class ModalPanel extends Panel {
 
         AjaxLink submit = new AjaxLink("submit") {
             @Override
-            public void onClick(AjaxRequestTarget target) {
+            public void onClick(final AjaxRequestTarget target) {
                 ModalPanel.this.onSubmit(target);
             }
         };

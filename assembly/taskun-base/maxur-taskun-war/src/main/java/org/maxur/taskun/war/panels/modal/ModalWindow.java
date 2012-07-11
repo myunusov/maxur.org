@@ -1,8 +1,9 @@
 package org.maxur.taskun.war.panels.modal;
 
-import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.maxur.taskun.war.pages.about.AboutPanel;
 
 /**
  *
@@ -18,25 +19,27 @@ import org.apache.wicket.markup.html.panel.Panel;
 
     private static final long serialVersionUID = -5805548092000080511L;
 
-    private WebMarkupContainer wmc;
-
-    public static String MODAL_PANEL_ID = "modalPanel";
-
     @SuppressWarnings("serial")
-    public ModalWindow(final String id, final ModalPanel modalPanel) {
+    public ModalWindow(final String id) {
         super(id);
-        wmc = new WebMarkupContainer("wmc") {
-            protected void onComponentTag(final ComponentTag tag) {
-                setMarkupId(getMarkupId());
-                super.onComponentTag(tag);
+        add(new AttributeAppender("class", "modal hide fade in"));
+        add(new AttributeAppender("style", "display: none;"));
+        setOutputMarkupId(true);
+        final ModalPanel modalPanel = new ModalPanel("modal_panel", "This is a Modal Heading") {
+            @Override
+            public void onSubmit(AjaxRequestTarget target) {
+            }
+
+            @Override
+            public void onCancel(AjaxRequestTarget target) {
+            }
+
+            @Override
+            public Panel getContent(String id) {
+                return new AboutPanel(id);
             }
         };
-        add(wmc);
-        wmc.add(modalPanel);
-    }
-
-    public String getModalWindowId() {
-        return wmc.getMarkupId();
+        add(modalPanel);
     }
 
 }

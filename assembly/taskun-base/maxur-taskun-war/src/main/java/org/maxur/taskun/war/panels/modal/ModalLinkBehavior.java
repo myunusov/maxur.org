@@ -4,7 +4,6 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.maxur.adapter.bootstrap.BootstrapCoreBehavior;
-import org.maxur.adapter.bootstrap.BootstrapModalBehavior;
 import org.maxur.adapter.jquery.JQueryBehavior;
 
 /**
@@ -17,13 +16,14 @@ import org.maxur.adapter.jquery.JQueryBehavior;
  * see http://www.w3resource.com/twitter-bootstrap/modals-tutorial.php
  *
  */
-@SuppressWarnings("serial")
-public class ModalBehavior extends Behavior {
+public class ModalLinkBehavior extends Behavior {
+
+    private static final long serialVersionUID = 488709957973172421L;
 
     private String modalWindowId;
 
-    public ModalBehavior(final String modalWindowId) {
-        this.modalWindowId = modalWindowId;
+    public ModalLinkBehavior(final ModalWindow window) {
+        this.modalWindowId = window.getMarkupId();
     }
 
     @Override
@@ -38,7 +38,6 @@ public class ModalBehavior extends Behavior {
         super.bind(component);
         component.add(new JQueryBehavior());
         component.add(new BootstrapCoreBehavior());
-        component.add(new BootstrapModalBehavior());
        // component.add(new JavaScriptBehavior("modal" + modalWindowId, "$('#" + modalWindowId + "').modal()"));
     }
 
