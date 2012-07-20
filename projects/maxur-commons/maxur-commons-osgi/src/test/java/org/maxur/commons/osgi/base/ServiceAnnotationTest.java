@@ -1,6 +1,5 @@
 package org.maxur.commons.osgi.base;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.google.inject.name.Names.named;
@@ -12,29 +11,24 @@ import static org.junit.Assert.assertTrue;
  * @author Maxim Yunusov
  * @version 1.0 20.06.12
  */
-public class AbstractServiceTest {
+public class ServiceAnnotationTest {
 
-    private AbstractService service;
-
-    @Before
-    public void setUp() throws Exception {
-        service = new AbstractService() {};
-    }
 
     @Test
     public void shouldNotBeAnnotatedOnInit() throws Exception {
-        assertFalse(service.isAnnotated());
+        final ServiceAnnotation serviceAnnotation = new ServiceAnnotation();
+        assertFalse(serviceAnnotation.isAnnotated());
     }
 
     @Test
     public void shouldBeAnnotatedOnSetAnnotation() throws Exception {
-        service.setAnnotation(named(""));
-        assertTrue(service.isAnnotated());
+        final ServiceAnnotation serviceAnnotation = new ServiceAnnotation(named(""));
+        assertTrue(serviceAnnotation.isAnnotated());
     }
 
     @Test
     public void shouldBeReturnAnnotationOnSetAnnotation() throws Exception {
-        service.setAnnotation(named("a"));
-        assertEquals(named("a"), service.getAnnotation());
+        final ServiceAnnotation serviceAnnotation = new ServiceAnnotation(named("a"));
+        assertEquals(named("a"), serviceAnnotation.getAnnotation());
     }
 }

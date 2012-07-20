@@ -6,7 +6,6 @@ import org.maxur.commons.osgi.configuration.ConfigManager;
 import org.maxur.commons.osgi.providers.Binder;
 import org.maxur.commons.osgi.providers.ProvidersGroup;
 import org.maxur.commons.osgi.providers.ServiceTrackersHolder;
-import org.maxur.commons.osgi.services.Exporter;
 import org.maxur.commons.osgi.services.ServiceManager;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -79,8 +78,8 @@ public abstract class BaseGuiceActivator implements BundleActivator {
         return new Binder(providerGroupsManager, providedClass);
     }
 
-    protected Exporter export(final Serializable service) {
-        return new Exporter(servicesManager, service);
+    protected ServiceManager.Exporter export(final Serializable service) {
+        return new ServiceManager.Exporter(servicesManager, service);
     }
 
 }

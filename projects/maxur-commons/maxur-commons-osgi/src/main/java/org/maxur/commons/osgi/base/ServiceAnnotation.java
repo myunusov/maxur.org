@@ -6,11 +6,28 @@ import java.lang.annotation.Annotation;
  * @author Maxim Yunusov
  * @version 1.0 27.05.12
  */
-public abstract class AbstractService {
+public class ServiceAnnotation {
 
-    protected static final String ANNOTATION = "annotation";
+    public static final String ANNOTATION = "annotation";
 
-    private Annotation annotation;
+    private final Annotation annotation;
+
+    /**
+     * The instance constructor.
+     *
+    */
+    public ServiceAnnotation() {
+        this.annotation = null;
+    }
+
+    /**
+     * The instance constructor.
+     *
+     * @param annotation A service annotation.
+     */
+    public ServiceAnnotation(final Annotation annotation) {
+        this.annotation = annotation;
+    }
 
     /**
      * Returns true if provider must be annotated.
@@ -27,14 +44,6 @@ public abstract class AbstractService {
      */
     public Annotation getAnnotation() {
         return this.annotation;
-    }
-
-    /**
-     * Set service annotation.
-     * @param annotation A service annotation.
-     */
-    public void setAnnotation(final Annotation annotation) {
-        this.annotation = annotation;
     }
 
 }

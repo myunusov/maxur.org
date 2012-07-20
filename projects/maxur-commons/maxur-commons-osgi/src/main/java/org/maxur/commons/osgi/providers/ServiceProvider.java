@@ -1,7 +1,7 @@
 package org.maxur.commons.osgi.providers;
 
 import com.google.inject.Provider;
-import org.maxur.commons.osgi.base.AbstractService;
+import org.maxur.commons.osgi.base.ServiceAnnotation;
 import org.osgi.framework.ServiceReference;
 
 import java.lang.annotation.Annotation;
@@ -10,14 +10,16 @@ import java.lang.annotation.Annotation;
  * @author Maxim Yunusov
  * @version 1.0 13.06.12
  */
-public final class ServiceProvider extends AbstractService implements Provider<Object> {
+public final class ServiceProvider implements Provider<Object> {
 
     private Object instance;
 
+    private ServiceAnnotation annotation;
+
     private ServiceProvider() {
-        super();
     }
 
+    @Override
     public Object get() {
         return instance;
     }
@@ -41,25 +43,34 @@ public final class ServiceProvider extends AbstractService implements Provider<O
         return new Builder();
     }
 
+    public boolean isAnnotated() {
+        return annotation.isAnnotated();
+    }
+
+    public Annotation getAnnotation() {
+        return annotation.getAnnotation();
+    }
+
     public static final class Builder {
 
-        private final ServiceProvider result;
+        private Object instance;
 
-        public Builder() {
-            result = new ServiceProvider();
-        }
+        private Annotation annotation;
 
         public Builder instance(final Object instance) {
-            this.result.instance = instance;
+            this.instance = instance;
             return this;
         }
 
         public Builder reference(final ServiceReference reference) {
-            this.result.setAnnotation((Annotation) reference.getProperty(ANNOTATION));
+            annotation = (Annotation) reference.getProperty(ServiceAnnotation.ANNOTATION);
             return this;
         }
 
         public ServiceProvider build() {
+            final ServiceProvider result = new ServiceProvider();
+            result.instance = this.instance;
+            result.annotation = new ServiceAnnotation(annotation);
             return result;
         }
     }

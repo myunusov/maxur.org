@@ -25,10 +25,14 @@ public class BaseServiceFactory implements ServiceFactory {
 
     private final Refresher<Injector> refresher;
 
-    public BaseServiceFactory(final Serializable service, final Class<?> interfaceClass, final String pid) {
+    public BaseServiceFactory(
+            final Serializable service,
+            final Class<?> interfaceClass,
+            final InjectorRefresher refresher
+    ) {
         this.service = service;
         this.interfaceClass = interfaceClass;
-        this.refresher = new InjectorRefresher(pid);
+        this.refresher = refresher;
     }
 
     @Override
