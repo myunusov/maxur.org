@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.maxur</groupId>
     <artifactId>super-pom</artifactId>
     <!-- If you are deploying to a release Nexus repository, you cannot overwrite an existing file -->
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.0.1</version>
     <packaging>pom</packaging>
 
     <url>http://www.maxur.org</url>
@@ -184,8 +183,8 @@
                                 <requireReleaseDeps>
                                     <message>No Snapshots Allowed!</message>
                                 </requireReleaseDeps>
-                                <requireUpperBoundDeps/>
-                                <DependencyConvergence/>
+                                <requireUpperBoundDeps />
+                                <DependencyConvergence />
                             </rules>
                             <fail>true</fail>
                         </configuration>
