@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2013 Maxim Yunusov
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.maxur</groupId>
     <artifactId>super-pom</artifactId>
     <!-- If you are deploying to a release Nexus repository, you cannot overwrite an existing file -->
-    <version>2.0.1</version>
+    <version>2.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <url>http://www.maxur.org</url>
@@ -64,6 +79,7 @@
     </properties>
 
     <modules>
+        <module>assemblies</module>
     </modules>
 
     <profiles>
@@ -141,7 +157,6 @@
         </pluginManagement>
 
         <plugins>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
@@ -160,7 +175,6 @@
                     </execution>
                 </executions>
             </plugin>
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -293,7 +307,6 @@
                     <excludePackageNames>*.it,*.test</excludePackageNames>
                     <useStandardDocletOptions>true</useStandardDocletOptions>
                     <aggregate>true</aggregate>
-
                     <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
                     <docletArtifact>
                         <groupId>gr.spinellis</groupId>
@@ -314,10 +327,9 @@
                         -nodefonttagname "Trebuchet MS"
                         -link "http://java.sun.com/javase/7/docs/api/"
                     </additionalparam>
-
                     <links>
                         <link>http://java.sun.com/javase/7/docs/api/</link>
-                        <link>http://wicket.apache.org/apidocs/1.5/</link>
+                        <link>http://ci.apache.org/projects/wicket/apidocs/6.x/</link>
                         <link>http://google-guice.googlecode.com/git/javadoc/</link>
                         <link>http://www.slf4j.org/api/</link>
                         <link>http://commons.apache.org/logging/commons-logging-1.0.3/docs/api/</link>

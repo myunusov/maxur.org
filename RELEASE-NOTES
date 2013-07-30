@@ -13,7 +13,26 @@
 #    limitations under the License.
 #
 
-# suppress inspection "UnusedProperty" for whole file
+                    Maxur 1.2.0
+                    ========================
 
-slf4j.version=1.7.5
-log4j.version=1.2.17
+  Overview
+  --------
+
+ TBD
+
+  Changelog
+  ---------
+
+ The following list shows the bug fixes and enhancements included in this release:
+
+** Sub-task
+    * [MAXUR-0001] - TBD
+
+** Bug
+
+** Improvement
+
+** New Feature
+
+** Task
