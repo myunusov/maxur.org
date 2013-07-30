@@ -1,12 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2013 Maxim Yunusov
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.maxur</groupId>
-    <artifactId>assemblies</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
+    <parent>
+        <groupId>org.maxur</groupId>
+        <artifactId>super-pom</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
-    
+    <artifactId>assemblies</artifactId>
+    <packaging>pom</packaging>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Assemblies POM for Maxur Project</description>
+
+    <properties>
+        <project.root>${project.basedir}/..</project.root>
+        <!-- tattletale defaults -->
+        <tattletale.failOnInfo>false</tattletale.failOnInfo>
+        <tattletale.failOnWarn>false</tattletale.failOnWarn>
+        <tattletale.failOnError>true</tattletale.failOnError>
+    </properties>
+
+
+    <modules>
+        <module>maxur-build</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jboss.tattletale</groupId>
+                    <artifactId>tattletale-maven</artifactId>
+                    <version>1.1.2.Final</version>
+                    <configuration>
+                        <failOnInfo>${tattletale.failOnInfo}</failOnInfo>
+                        <failOnWarn>${tattletale.failOnWarn}</failOnWarn>
+                        <failOnError>${tattletale.failOnError}</failOnError>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>tattletale</id>
+            <properties>
+                <tattletale.dist.groupId>${project.groupId}</tattletale.dist.groupId>
+                <tattletale.dist.artifactId>${project.artifactId}</tattletale.dist.artifactId>
+                <tattletale.dist.classifier>bundle</tattletale.dist.classifier>
+                <tattletale.dist.type>zip</tattletale.dist.type>
+                <tattletale.dist.version>${project.version}</tattletale.dist.version>
+            </properties>
+            <build>
+                <plugins>
+                    <!--
+                    Extract the distribution, so that tattletale can inspect it.  Could potentially include dir format, but unsure if m-assembly-p would behave itself.
+                    -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>tattletale</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>${tattletale.dist.groupId}</groupId>
+                                            <artifactId>${tattletale.dist.artifactId}</artifactId>
+                                            <classifier>${tattletale.dist.classifier}</classifier>
+                                            <type>${tattletale.dist.type}</type>
+                                            <version>${tattletale.dist.version}</version>
+                                            <outputDirectory>${project.build.directory}/tattletale/dist</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.jboss.tattletale</groupId>
+                        <artifactId>tattletale-maven</artifactId>
+                        <executions>
+                            <execution>
+                                <id>tattletale</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <source>${project.build.directory}/tattletale/dist</source>
+                                    <destination>${project.build.directory}/tattletale/report</destination>
+                                    <reports>
+                                        <!-- FIXME: There are some reports disable here, probably shouldn't be -->
+                                        <report>classdependants</report>
+                                        <report>classdependson</report>
+                                        <report>dependants</report>
+                                        <report>dependson</report>
+                                        <report>graphviz</report>
+                                        <report>transitivedependants</report>
+                                        <report>transitivedependson</report>
+                                        <!--<report>circulardependency</report>-->
+                                        <report>classlocation</report>
+                                        <!--<report>osgi</report>-->
+                                        <report>sealed</report>
+                                        <report>sign</report>
+                                        <report>eliminatejars</report>
+                                        <!--<report>invalidversion</report>-->
+                                        <report>multiplejars</report>
+                                        <report>multiplejarspackage</report>
+                                        <report>multiplelocations</report>
+                                        <report>unusedjar</report>
+                                        <report>blacklisted</report>
+                                        <!--<report>noversion</report>-->
+                                        <report>jar</report>
+                                    </reports>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+
 </project>

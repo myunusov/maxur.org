@@ -14,13 +14,14 @@
   ~    limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.maxur</groupId>
     <artifactId>super-pom</artifactId>
     <!-- If you are deploying to a release Nexus repository, you cannot overwrite an existing file -->
-    <version>2.0.2-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <url>http://www.maxur.org</url>
@@ -101,7 +102,8 @@
                 </snapshotRepository>
                 <site>
                     <id>website</id>
-                    <url>file:///${project.basedir}/site/maxur.org</url>
+                   <!--see http://jira.codehaus.org/browse/MSITE-135 -->
+                    <url>file:///J:/work/ml/maxur.org/site</url>
                 </site>
             </distributionManagement>
         </profile>
@@ -169,7 +171,7 @@
                         </goals>
                         <configuration>
                             <files>
-                                <file>${project.basedir}/version.properties</file>
+                                <file>${project.root}/version.properties</file>
                             </files>
                         </configuration>
                     </execution>
@@ -196,9 +198,14 @@
                                 </requireJavaVersion>
                                 <requireReleaseDeps>
                                     <message>No Snapshots Allowed!</message>
+                                    <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
+                                    <excludes>
+                                        <exclude>org.maxur:*</exclude>
+                                        <exclude>org.maxur:super-pom</exclude>
+                                    </excludes>
                                 </requireReleaseDeps>
-                                <requireUpperBoundDeps />
-                                <DependencyConvergence />
+                                <requireUpperBoundDeps/>
+                                <DependencyConvergence/>
                             </rules>
                             <fail>true</fail>
                         </configuration>
@@ -292,14 +299,32 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8</version>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.3</version>
+                <reportSets>
+                    <reportSet>
+                        <id>aggregate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9.1</version>
+                <reportSets>
+                    <reportSet>
+                        <id>aggregate</id>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
                 <configuration>
                     <source>${project.source.compile}</source>
                     <encoding>${project.source.encoding}</encoding>
