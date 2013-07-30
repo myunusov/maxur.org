@@ -1,1 +1,1 @@
-Init repository
+Maxur project's Repository.
