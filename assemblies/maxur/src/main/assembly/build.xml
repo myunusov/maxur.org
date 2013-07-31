@@ -57,4 +57,16 @@
         </fileSet>
     </fileSets>
 
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>${project.build.finalName}/utils</outputDirectory>
+            <fileMode>0755</fileMode>
+            <directoryMode>0755</directoryMode>
+            <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>org.maxur:telnet-sender</include>
+            </includes>
+        </dependencySet>
+    </dependencySets>
+
 </assembly>

@@ -34,6 +34,14 @@
         <project.root>${project.basedir}/../..</project.root>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.maxur</groupId>
+            <artifactId>telnet-sender</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

@@ -26,6 +26,7 @@
     </parent>
 
     <artifactId>telnet-sender</artifactId>
+    <version>1.0.1</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Standalone components of Maxur Project</description>
     <packaging>jar</packaging>
