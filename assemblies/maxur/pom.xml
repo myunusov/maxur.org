@@ -25,7 +25,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>maxur-build</artifactId>
+    <artifactId>maxur</artifactId>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Assembly POM for Maxur Project</description>
     <packaging>pom</packaging>
