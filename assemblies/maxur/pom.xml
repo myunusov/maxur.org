@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.maxur</groupId>
             <artifactId>telnet-sender</artifactId>
-            <version>1.0.1</version>
+            <version>[1.0.0,2.0.0)</version>
         </dependency>
     </dependencies>
 

@@ -18,19 +18,9 @@ package org.maxur.telnetsender;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.Delimiters;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * Telnet Sender Launcher.
@@ -39,9 +29,15 @@ import io.netty.handler.codec.string.StringEncoder;
  * @version 1.0
  * @since <pre>31/07/13</pre>
  */
-public class Launcher {
+public final class Launcher {
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * Utility classes should not have a public or default constructor.
+     */
+    private Launcher() {
+    }
+
+    public static void main(String[] args) {
         if (args.length != 3) {
             System.err.println("Usage with arguments: <host> <port> <command>");
             return;
@@ -49,7 +45,11 @@ public class Launcher {
         final String host = args[0];
         final int port = Integer.parseInt(args[1]);
         final String command = args[2];
-        run(host, port, command);
+        try {
+            run(host, port, command);
+        } catch (InterruptedException e) {
+            System.err.println("Unexpected exception.\n" + e.getMessage());
+        }
     }
 
     private static void run(String host, int port, String command) throws InterruptedException {
@@ -72,44 +72,4 @@ public class Launcher {
         }
     }
 
-    /**
-     * Creates a newly configured {@link io.netty.channel.ChannelPipeline} for a new channel.
-     *
-     */
-    private static class TelnetClientInitializer extends ChannelInitializer<SocketChannel> {
-
-        private static final StringDecoder DECODER = new StringDecoder();
-
-        private static final StringEncoder ENCODER = new StringEncoder();
-
-        private static final TelnetClientHandler CLIENTHANDLER = new TelnetClientHandler();
-
-        @Override
-        public void initChannel(final SocketChannel channel) throws Exception {
-            final ChannelPipeline pipeline = channel.pipeline();
-            pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-            pipeline.addLast("decoder", DECODER);
-            pipeline.addLast("encoder", ENCODER);
-            pipeline.addLast("handler", CLIENTHANDLER);
-        }
-    }
-
-    /**
-     * Handles a client-side channel.
-     *
-     */
-    @ChannelHandler.Sharable
-    private static class TelnetClientHandler extends SimpleChannelInboundHandler<String> {
-
-        @Override
-        protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-            System.out.println(msg);
-        }
-
-        @Override
-        public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-            System.err.println("Unexpected exception from downstream.\n" + cause.getMessage());
-            ctx.close();
-        }
-    }
 }

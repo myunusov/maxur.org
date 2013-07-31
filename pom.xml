@@ -80,8 +80,9 @@
     </properties>
 
     <modules>
-        <module>assemblies</module>
+        <module>tools</module>
         <module>components</module>
+        <module>assemblies</module>
     </modules>
 
     <profiles>
@@ -351,71 +352,9 @@
                 </reportSets>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.3</version>
-                <reportSets>
-                    <reportSet>
-                        <id>aggregate</id>
-                        <inherited>false</inherited>
-                        <reports>
-                            <report>aggregate</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <reportSets>
-                    <reportSet>
-                        <id>aggregate</id>
-                        <inherited>false</inherited>
-                        <reports>
-                            <report>aggregate</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-                <configuration>
-                    <source>${project.source.compile}</source>
-                    <encoding>${project.source.encoding}</encoding>
-                    <linksource>true</linksource>
-                    <excludePackageNames>*.it,*.test</excludePackageNames>
-                    <useStandardDocletOptions>true</useStandardDocletOptions>
-                    <aggregate>true</aggregate>
-                    <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
-                    <docletArtifact>
-                        <groupId>gr.spinellis</groupId>
-                        <artifactId>UmlGraph</artifactId>
-                        <version>4.6</version>
-                    </docletArtifact>
-                    <additionalparam>
-                        -inferrel -inferdep -quiet -hide java.*
-                        -collpackages java.util.* -qualify
-                        -postfixpackage -nodefontsize 9
-                        -nodefontpackagesize 7
-                        -edgefontname "Trebuchet MS"
-                        -nodefontabstractname "Trebuchet MS"
-                        -nodefontclassabstractname "Trebuchet MS"
-                        -nodefontclassname "Trebuchet MS"
-                        -nodefontname "Trebuchet MS"
-                        -nodefontpackagename "Trebuchet MS"
-                        -nodefonttagname "Trebuchet MS"
-                        -link "http://java.sun.com/javase/7/docs/api/"
-                    </additionalparam>
-                    <links>
-                        <link>http://java.sun.com/javase/7/docs/api/</link>
-                        <link>http://ci.apache.org/projects/wicket/apidocs/6.x/</link>
-                        <link>http://google-guice.googlecode.com/git/javadoc/</link>
-                        <link>http://www.slf4j.org/api/</link>
-                        <link>http://commons.apache.org/logging/commons-logging-1.0.3/docs/api/</link>
-                    </links>
-                </configuration>
-            </plugin>
         </plugins>
+
+
     </reporting>
 
     <!-- AVOID RELEASE repositories/pluginRepositories: -->
