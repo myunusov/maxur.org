@@ -16,9 +16,6 @@
             <property name="ignoreSetter" value="true"/>
             <property name="ignoreAbstractMethods" value="true"/>
         </module>
-        <module name="DoubleCheckedLocking">
-            <property name="severity" value="warning"/>
-        </module>
         <module name="StringLiteralEquality">
             <property name="severity" value="warning"/>
         </module>
