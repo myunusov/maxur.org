@@ -144,6 +144,48 @@
                 </repository>
             </repositories>
         </profile>
+        <profile>
+            <id>sonar</id>
+            <properties>
+                <sonar.host.url>http://127.0.0.1:8081/sonar</sonar.host.url>
+                <sonar.jdbc.url>jdbc:h2:tcp://localhost:9092/sonar</sonar.jdbc.url>
+                <sonar.jdbc.driverClassName>org.h2.Driver</sonar.jdbc.driverClassName>
+                <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                <sonar.jdbc.password>sonar</sonar.jdbc.password>
+                <!--
+                                <sonar.jdbc.url>jdbc:oracle:thin:@omsk-dhl-05.omsk.luxoft.com:1521:dhl2</sonar.jdbc.url>
+                                <sonar.jdbc.driverClassName>oracle.jdbc.OracleDriver</sonar.jdbc.driverClassName>
+                                <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                                <sonar.jdbc.password>sonar</sonar.jdbc.password>
+                -->
+                <sonar.forceAnalysis>true</sonar.forceAnalysis>
+                <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
+                <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+                <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
+                <sonar.cobertura.reportPath>
+                    ${project.reporting.outputDirectory}/cobertura/coverage.xml
+                </sonar.cobertura.reportPath>
+                <sonar.java.source>${project.source.compile}</sonar.java.source>
+                <sonar.java.target>${project.target.compile}</sonar.java.target>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.sonar</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>3.6.2</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.h2database</groupId>
+                                <artifactId>h2</artifactId>
+                                <version>1.3.173</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
     <build>

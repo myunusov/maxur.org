@@ -15,7 +15,7 @@ import io.netty.handler.codec.string.StringEncoder;
  * @version 1.0
  * @since <pre>31/07/13</pre>
  */
-public class TelnetClientInitializer extends ChannelInitializer<SocketChannel> {
+class TelnetClientInitializer extends ChannelInitializer<SocketChannel> {
 
     private static final StringDecoder DECODER = new StringDecoder();
 

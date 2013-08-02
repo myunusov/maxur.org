@@ -12,7 +12,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @since <pre>31/07/13</pre>
  */
 @ChannelHandler.Sharable
-public class TelnetClientHandler extends SimpleChannelInboundHandler<String> {
+class TelnetClientHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     protected void channelRead0(final ChannelHandlerContext ctx, final String msg) {

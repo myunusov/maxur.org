@@ -31,6 +31,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  */
 public final class Launcher {
 
+    public static final int REQ_ARGS_NUMBER = 3;
+
     /**
      * Utility classes should not have a public or default constructor.
      */
@@ -38,7 +40,7 @@ public final class Launcher {
     }
 
     public static void main(String[] args) {
-        if (args.length != 3) {
+        if (args.length != REQ_ARGS_NUMBER) {
             System.err.println("Usage with arguments: <host> <port> <command>");
             return;
         }
