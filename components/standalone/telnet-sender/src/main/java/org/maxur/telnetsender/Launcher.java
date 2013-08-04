@@ -15,13 +15,6 @@
 
 package org.maxur.telnetsender;
 
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioSocketChannel;
-
 /**
  * Telnet Sender Launcher.
  *
@@ -31,7 +24,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  */
 public final class Launcher {
 
-    public static final int REQ_ARGS_NUMBER = 3;
+    private static final int REQ_ARGS_NUMBER = 3;
 
     /**
      * Utility classes should not have a public or default constructor.
@@ -39,39 +32,35 @@ public final class Launcher {
     private Launcher() {
     }
 
+    /**
+     * Command line entry point. This method kicks off the building of a project object
+     * and executes a build using either a given target or the default target.
+     *
+     * @param args - host port command.
+     */
     public static void main(String[] args) {
-        if (args.length != REQ_ARGS_NUMBER) {
-            System.err.println("Usage with arguments: <host> <port> <command>");
-            return;
-        }
-        final String host = args[0];
-        final int port = Integer.parseInt(args[1]);
-        final String command = args[2];
         try {
-            run(host, port, command);
+            makeSender(args).send();
         } catch (InterruptedException e) {
-            System.err.println("Unexpected exception.\n" + e.getMessage());
+            Terminal.error("Unexpected exception.\n" + "Usage with arguments: <host> <port> <command>");
+        } catch (IllegalArgumentException e) {
+            Terminal.error("Illegal argument exception.\n" + "Usage with arguments: <host> <port> <command>");
         }
     }
 
-    private static void run(String host, int port, String command) throws InterruptedException {
-        final EventLoopGroup group = new NioEventLoopGroup();
-        try {
-            final Bootstrap bootstrap = new Bootstrap();
-            bootstrap.group(group)
-                    .channel(NioSocketChannel.class)
-                    .handler(new TelnetClientInitializer());
-
-            final Channel channel = bootstrap.connect(host, port).sync().channel();
-            final ChannelFuture lastWriteFuture = channel.writeAndFlush(command + "\r\n");
-            channel.closeFuture().sync();
-            if (lastWriteFuture != null) {
-                lastWriteFuture.sync();
-            }
-        } finally {
-            group.shutdownGracefully();
-
+    private static Sender makeSender(final String[] args) {
+        if (args.length != REQ_ARGS_NUMBER) {
+            throw new IllegalArgumentException();
         }
+        try {
+            final String host = args[0];
+            final int port = Integer.parseInt(args[1]);
+            final String command = args[2];
+            return new Sender(host, port, command);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(e);
+        }
+
     }
 
 }
