@@ -13,7 +13,7 @@
  *    limitations under the License.
  */
 
-package org.maxur.telnetsender;
+package org.maxur.clitelnetclient;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;

@@ -82,7 +82,7 @@
                         <packageBranchRate>85</packageBranchRate>
                         <regexes>
                             <regex>
-                                <pattern>org.maxur.telnetsender.*</pattern>
+                                <pattern>org.maxur.clitelnetclient.*</pattern>
                                 <branchRate>0</branchRate>
                                 <lineRate>0</lineRate>
                             </regex>

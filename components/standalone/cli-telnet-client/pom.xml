@@ -25,7 +25,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>telnet-sender</artifactId>
+    <artifactId>cli-telnet-client</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Tool for send commands via Telnet</description>
@@ -66,7 +66,7 @@
                         <packageBranchRate>0</packageBranchRate>
                         <regexes>
                             <regex>
-                                <pattern>org.maxur.telnetsender.*</pattern>
+                                <pattern>org.maxur.clitelnetclient.*</pattern>
                                 <branchRate>0</branchRate>
                                 <lineRate>0</lineRate>
                             </regex>
@@ -102,7 +102,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>org.maxur.telnetsender.Launcher</mainClass>
+                                    <mainClass>org.maxur.clitelnetclient.Launcher</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
