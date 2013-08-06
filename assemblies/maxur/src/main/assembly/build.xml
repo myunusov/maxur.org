@@ -64,7 +64,7 @@
             <directoryMode>0755</directoryMode>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <includes>
-                <include>org.maxur:telnet-sender</include>
+                <include>org.maxur:cli-telnet-client</include>
             </includes>
         </dependencySet>
     </dependencySets>

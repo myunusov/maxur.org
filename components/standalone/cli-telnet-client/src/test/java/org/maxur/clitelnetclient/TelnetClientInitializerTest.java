@@ -1,4 +1,4 @@
-package org.maxur.telnetsender;
+package org.maxur.clitelnetclient;
 
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

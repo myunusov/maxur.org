@@ -37,7 +37,8 @@
     <dependencies>
         <dependency>
             <groupId>org.maxur</groupId>
-            <artifactId>telnet-sender</artifactId>
+            <artifactId>cli-telnet-client</artifactId>
+            <classifier>jar-with-dependencies</classifier>
             <version>[1.0.0,2.0.0)</version>
         </dependency>
     </dependencies>

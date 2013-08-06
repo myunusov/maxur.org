@@ -13,7 +13,7 @@
  *    limitations under the License.
  */
 
-package org.maxur.telnetsender;
+package org.maxur.clitelnetclient;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -22,46 +22,31 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
-/**
- * Telnet Sender Launcher.
- *
- * @author Maxim Yunusov
- * @version 1.0
- * @since <pre>31/07/13</pre>
- */
-public final class Launcher {
+final class Sender {
 
-    /**
-     * Utility classes should not have a public or default constructor.
-     */
-    private Launcher() {
+    public static final String EOL = "\r\n";
+
+    private final String host;
+
+    private final int port;
+
+    private final String command;
+
+    Sender(final String host, final int port, final String command) {
+        this.host = host;
+        this.port = port;
+        this.command = command;
     }
 
-    public static void main(String[] args) {
-        if (args.length != 3) {
-            System.err.println("Usage with arguments: <host> <port> <command>");
-            return;
-        }
-        final String host = args[0];
-        final int port = Integer.parseInt(args[1]);
-        final String command = args[2];
-        try {
-            run(host, port, command);
-        } catch (InterruptedException e) {
-            System.err.println("Unexpected exception.\n" + e.getMessage());
-        }
-    }
-
-    private static void run(String host, int port, String command) throws InterruptedException {
+    void send() throws InterruptedException {
         final EventLoopGroup group = new NioEventLoopGroup();
         try {
             final Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(group)
                     .channel(NioSocketChannel.class)
                     .handler(new TelnetClientInitializer());
-
             final Channel channel = bootstrap.connect(host, port).sync().channel();
-            final ChannelFuture lastWriteFuture = channel.writeAndFlush(command + "\r\n");
+            final ChannelFuture lastWriteFuture = channel.writeAndFlush(command + EOL);
             channel.closeFuture().sync();
             if (lastWriteFuture != null) {
                 lastWriteFuture.sync();
