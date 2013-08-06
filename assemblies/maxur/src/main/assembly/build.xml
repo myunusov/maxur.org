@@ -59,6 +59,7 @@
 
     <dependencySets>
         <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>${project.build.finalName}/utils</outputDirectory>
             <fileMode>0755</fileMode>
             <directoryMode>0755</directoryMode>
@@ -67,6 +68,18 @@
                 <include>org.maxur:cli-telnet-client</include>
             </includes>
         </dependencySet>
+
+        <dependencySet>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>${project.build.finalName}/felix/bundle</outputDirectory>
+            <fileMode>0755</fileMode>
+            <directoryMode>0755</directoryMode>
+            <excludes>
+                <exclude>org.maxur:cli-telnet-client:*</exclude>
+            </excludes>
+        </dependencySet>
+
     </dependencySets>
+
 
 </assembly>
