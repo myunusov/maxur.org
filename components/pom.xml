@@ -34,6 +34,39 @@
         <project.root>${project.basedir}/..</project.root>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>pitest</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <configuration>
+                            <jvmArgs>
+                                <value>-XX:-UseSplitVerifier</value>
+                                <jvmArg>-ea</jvmArg>
+                            </jvmArgs>
+                            <outputFormats>
+                                <outputFormat>HTML</outputFormat>
+                                <outputFormat>XML</outputFormat>
+                            </outputFormats>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>mutationCoverage</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>mutationCoverage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <modules>
         <module>standalone</module>
     </modules>

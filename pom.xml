@@ -92,8 +92,9 @@
         </sonar.cobertura.reportPath>
         <sonar.java.source>${project.source.compile}</sonar.java.source>
         <sonar.java.target>${project.target.compile}</sonar.java.target>
-    </properties>
 
+        <sonar.pitest.mode>skip</sonar.pitest.mode>
+    </properties>
 
 
     <modules>
@@ -161,6 +162,9 @@
                 </repository>
             </repositories>
         </profile>
+        <profile>
+            <id>pitest</id>
+        </profile>
     </profiles>
 
     <build>
@@ -223,7 +227,7 @@
                 <plugin>
                     <groupId>org.pitest</groupId>
                     <artifactId>pitest-maven</artifactId>
-                    <version>0.27</version>
+                    <version>0.30</version>
                 </plugin>
 
 
